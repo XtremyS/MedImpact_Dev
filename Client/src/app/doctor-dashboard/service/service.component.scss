@@ -1,0 +1,15 @@
+// SERVICE ACCORDION
+.accordion-button {
+  flex-wrap: wrap !important;
+  .edit-acc-container {
+    flex-wrap: wrap !important;
+  }
+  &::after {
+    content: none !important;
+  }
+}
+select.form-control:not([size]):not([multiple]) {
+  height: calc(2.25rem + 20px);
+}
+
+// ACCORDION ITEM

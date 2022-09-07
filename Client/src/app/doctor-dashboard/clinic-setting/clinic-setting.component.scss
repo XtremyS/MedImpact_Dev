@@ -1,0 +1,46 @@
+// SERVICE ACCORDION
+.accordion-button {
+  flex-wrap: wrap !important;
+  .edit-acc-container {
+    flex-wrap: wrap !important;
+  }
+  &::after {
+    content: none !important;
+  }
+}
+
+.recent-apt-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  .apt-list-recent-apt-img-container {
+    width: 200px;
+    height: 200px;
+    // background-image: url("src\assets\doctor dashboard assets\oops.png");
+  }
+  p {
+  }
+}
+
+select.form-control:not([size]):not([multiple]) {
+  height: calc(2.25rem + 20px);
+}
+
+.download-file-input {
+  line-height: 2 !important;
+}
+
+.date-input {
+  padding: 0.5rem;
+  width: 100%;
+  &:focus {
+    border: 1px solid black !important;
+  }
+}
+
+@media (min-width: 992px) {
+  .book-appointment-modal {
+    width: 600px !important;
+  }
+}
