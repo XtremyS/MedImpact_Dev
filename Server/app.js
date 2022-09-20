@@ -1,11 +1,11 @@
-// ENV MODULE
-const dotenv = require("dotenv").config({ path: "./Server/config.env" });
+// ENV MODULE //! IF NODEJS THROWS ERROR EMPTY STRING ADD ONE . TO ENV PATH
+const dotenv = require("dotenv").config({ path: "../Server/config.env" });
 
 //DB MODULE
 require("./DB/connection");
 
 //DB USER DATA INSTANCE
-const User = require("./DBSchema/schema");
+const User = require("./DBSchema/doc_schema");
 
 const express = require("express");
 const app = express();

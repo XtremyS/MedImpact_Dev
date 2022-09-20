@@ -2,7 +2,7 @@
 const jwt = require("jsonwebtoken");
 
 //USER DB SCHEMA
-const Doctor = require("../DBSchema/schema");
+const Doctor = require("../DBSchema/doc_schema");
 
 const Middleware = async (req, res, next) => {
   try {
