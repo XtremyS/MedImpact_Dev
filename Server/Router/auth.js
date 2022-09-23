@@ -3,6 +3,8 @@ const router = express.Router();
 
 const cookieParser = require("cookie-parser");
 
+const FileUpload = require("../Middleware/fileupload")
+
 //* JSON WEB TOKEN MODULE
 const jwt = require("jsonwebtoken");
 
@@ -27,9 +29,9 @@ const Middleware = require("../Middleware/middleware");
 router.use(cookieParser());
 
 //*  POST DOCTORS REGISTRATION
-router.post("/doctors-registration", async (req, res) => {
+router.post("/doctors-registration", FileUpload,async (req, res) => {
   //* DESTRUCTURED USER FILLED DATA
-  const { full_name, gender, email, role, age, phone, password, cpassword } =
+  const { full_name, gender, email, role, age, phone, password, cpassword ,img} =
     req.body;
 
   //* CHECKING IF THE SAME EMAIL IS REGISTERED IN OTHER COLLECTION IN DATABASE
@@ -74,6 +76,7 @@ router.post("/doctors-registration", async (req, res) => {
         role,
         password,
         cpassword,
+        img
       });
 
       //* HASHING PASSWORD HERE FROM SCHEMA.JS THROUGH MIDDLEWARE
@@ -584,6 +587,12 @@ router.patch("/add_medicine", async (req, res) => {
     console.log(error);
   }
 });
+
+//*  UPLOAD FILE
+router.post("/upload-img", FileUpload,(req, res) => {
+  res.send("File Uploaded!");
+});
+
 
 //*  GET ABOUT
 router.get("/about", Middleware, (req, res) => {

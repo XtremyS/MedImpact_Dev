@@ -22,6 +22,7 @@ const UserSchema = new mongoose.Schema({
     patients_age:{type:Number,required:true},
     visting_reason:{type:String},
   }],
+  img: { type: String, },
   date: { type: Date, default: Date.now },
   tokens: [{ token: { type: String, required: true } }],
 });

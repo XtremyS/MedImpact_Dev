@@ -1,4 +1,4 @@
-// JWT MODULE
+//* JWT MODULE
 const jwt = require("jsonwebtoken");
 
 //USER DB SCHEMA
@@ -32,5 +32,8 @@ const Middleware = async (req, res, next) => {
     res.status(401).send("Unauthorized Token!" + error);
   }
 };
+
+
+
 
 module.exports = Middleware;

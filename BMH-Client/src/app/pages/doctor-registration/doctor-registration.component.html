@@ -20,6 +20,8 @@
             <div class="dc-joinforms">
               <form
                 [formGroup]="DoctorForm"
+                method="POST"
+                action="/upload-img"
                 class="dc-formtheme dc-formregister"
               >
                 <fieldset class="dc-registerformgroup">
@@ -91,8 +93,9 @@
                       placeholder="Confirm Password"
                     />
                   </div>
+
                   <div class="form-group form-group-full">
-                    <input class="form-control form-control-sm" id="formFileSm" type="file">
+                    <input class="form-control form-control-sm" formControlName="img" id="formFileSm" type="file">
                   </div>
 
                   <div class="form-group">

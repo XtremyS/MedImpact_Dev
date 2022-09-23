@@ -31,9 +31,25 @@ export class DoctorRegistrationComponent implements OnInit {
       password: '',
       cpassword: '',
       role: 'Doctor',
+      img: '',
     });
   }
   async Register() {
+    (async () => {
+      const rawResponse = await fetch('/upload-img', {
+        method: 'POST',
+        headers:{
+          'Accept': 'application/json',
+        },
+        body: this.DoctorForm.value.img,
+      });
+      const content = await rawResponse.json();
+
+      console.log(content);
+    })();
+
+    console.log(this.DoctorForm.value);
+
     this._Service.RegisterDoctor(this.DoctorForm.value).subscribe((data) => {
       console.log(data);
     });
