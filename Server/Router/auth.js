@@ -25,11 +25,12 @@ router.get("/", (req, res) => {
 
 //* MIDDLEWARE MODULE
 const Middleware = require("../Middleware/middleware");
+const { log } = require("console");
 
 router.use(cookieParser());
 
 //*  POST DOCTORS REGISTRATION
-router.post("/doctors-registration", FileUpload,async (req, res) => {
+router.post("/doctors-registration", FileUpload.single("img"),async (req, res) => {
   //* DESTRUCTURED USER FILLED DATA
   const { full_name, gender, email, role, age, phone, password, cpassword ,img} =
     req.body;
@@ -589,7 +590,7 @@ router.patch("/add_medicine", async (req, res) => {
 });
 
 //*  UPLOAD FILE
-router.post("/upload-img", FileUpload,(req, res) => {
+router.post("/upload-img", FileUpload.single("img"),(req, res) => {
   res.send("File Uploaded!");
 });
 

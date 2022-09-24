@@ -12,6 +12,8 @@ import { Service } from 'src/services/service.service';
 export class DoctorRegistrationComponent implements OnInit {
   DoctorForm = new FormGroup({});
   PageTitle = 'Book My Health | Register Doctor';
+  ImgFormData = new FormData();
+  Images: any;
 
   constructor(
     private Route: Router,
@@ -34,23 +36,21 @@ export class DoctorRegistrationComponent implements OnInit {
       img: '',
     });
   }
+
+  GetImg(event: any) {
+    if (event.target.files.length > 0) {
+      const file = event.target.files[0];
+      this.Images = file;
+      console.log(this.Images);
+    }
+  }
   async Register() {
-    (async () => {
-      const rawResponse = await fetch('/upload-img', {
-        method: 'POST',
-        headers:{
-          'Accept': 'application/json',
-        },
-        body: this.DoctorForm.value.img,
-      });
-      const content = await rawResponse.json();
-
-      console.log(content);
-    })();
-
-    console.log(this.DoctorForm.value);
+    this.ImgFormData.append('img', this.Images);
 
     this._Service.RegisterDoctor(this.DoctorForm.value).subscribe((data) => {
+      console.log(data);
+    });
+    this._Service.FileUpload(this.ImgFormData).subscribe((data) => {
       console.log(data);
     });
   }

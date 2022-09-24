@@ -7,20 +7,25 @@ import { Observable } from 'rxjs';
 })
 export class Service {
   constructor(private http: HttpClient) {}
-
+  //! REGISTRATION APIS
   UrlDoctor = '/doctors-registration';
   UrlPatients = '/patients-registration';
   UrlLabs = '/labs-registration';
   UrlPharmacy = '/pharmacy-registration';
 
+  //! LOGIN APIS
   UrlDocLogin = '/login-doctor';
   UrlPatientsLogin = '/login-patient';
   UrlLabLogin = '/login-lab';
   UrlPharmacyLogin = '/login-pharmacy';
 
+  //! FILE UPLOAD APIS
+  UrlFileUpload = '/upload-img';
+
+  //! LOGOUT APIS
   LogOutUrl = '/logout';
 
-  //REGISTRATION FUNCTIONS
+  //! REGISTRATION FUNCTIONS
   RegisterDoctor(Data: any): Observable<any> {
     return this.http.post(this.UrlDoctor, Data);
   }
@@ -35,7 +40,7 @@ export class Service {
     return this.http.post(this.UrlPharmacy, Data);
   }
 
-  //LOGIN FUNCTIONS
+  //! LOGIN FUNCTIONS
   DoctorLogin(Data: any): Observable<any> {
     return this.http.post(this.UrlDocLogin, Data);
   }
@@ -50,8 +55,15 @@ export class Service {
   PharmacyLogin(Data: any): Observable<any> {
     return this.http.post(this.UrlPharmacyLogin, Data);
   }
-  // LOGOUT FUNCTION
+  //! LOGOUT FUNCTION
   LogOut(Data: any): Observable<any> {
     return this.http.get(this.LogOutUrl, Data);
   }
+
+  //! IMAGE UPLOAD API
+  FileUpload(Data: any): Observable<any> {
+    return this.http.post(this.UrlFileUpload,Data,{responseType: 'text'});
+  }
+
+
 }
