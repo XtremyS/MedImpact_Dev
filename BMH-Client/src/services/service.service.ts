@@ -55,15 +55,18 @@ export class Service {
   PharmacyLogin(Data: any): Observable<any> {
     return this.http.post(this.UrlPharmacyLogin, Data);
   }
-  //! LOGOUT FUNCTION
-  LogOut(Data: any): Observable<any> {
-    return this.http.get(this.LogOutUrl, Data);
-  }
 
   //! IMAGE UPLOAD API
   FileUpload(Data: any): Observable<any> {
     return this.http.post(this.UrlFileUpload,Data,{responseType: 'text'});
   }
+
+  //! LOGOUT FUNCTION
+  LogOut(Data: any): Observable<any> {
+    return this.http.get(this.LogOutUrl, Data);
+  }
+
+
 
 
 }

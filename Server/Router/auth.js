@@ -3,7 +3,7 @@ const router = express.Router();
 
 const cookieParser = require("cookie-parser");
 
-const FileUpload = require("../Middleware/fileupload")
+const FileUpload = require("../Middleware/fileupload");
 
 //* JSON WEB TOKEN MODULE
 const jwt = require("jsonwebtoken");
@@ -30,69 +30,82 @@ const { log } = require("console");
 router.use(cookieParser());
 
 //*  POST DOCTORS REGISTRATION
-router.post("/doctors-registration", FileUpload.single("img"),async (req, res) => {
-  //* DESTRUCTURED USER FILLED DATA
-  const { full_name, gender, email, role, age, phone, password, cpassword ,img} =
-    req.body;
+router.post(
+  "/doctors-registration",
+  FileUpload.single("img"),
+  async (req, res) => {
+    //* DESTRUCTURED USER FILLED DATA
+    const {
+      full_name,
+      gender,
+      email,
+      role,
+      age,
+      phone,
+      password,
+      cpassword,
+      img,
+    } = req.body;
 
-  //* CHECKING IF THE SAME EMAIL IS REGISTERED IN OTHER COLLECTION IN DATABASE
-  const PatientsEmailExists = await Patient.findOne({ email: email });
-  const LabEmailExists = await Lab.findOne({ email: email });
+    //* CHECKING IF THE SAME EMAIL IS REGISTERED IN OTHER COLLECTION IN DATABASE
+    const PatientsEmailExists = await Patient.findOne({ email: email });
+    const LabEmailExists = await Lab.findOne({ email: email });
 
-  if (PatientsEmailExists || LabEmailExists) {
-    return res.status(422).json({ error: "Email Already In Use!" });
-  }
-
-  //* CHECKING IF THE FIELDS ARE EMPTY OR NOT
-  if (
-    !full_name ||
-    !gender ||
-    !email ||
-    !age ||
-    !phone ||
-    !password ||
-    !cpassword
-  ) {
-    return res.status(422).json({ error: "Fields Cannot Be Empty!" });
-  }
-  try {
-    //* USER DETAILS WHICH EMAILS MATCH IN DB
-    const userExist = await Doctor.findOne({ email: email });
-    //* CHECKING PASS AND C PASS
-    if (password !== cpassword) {
-      return res
-        .status(400)
-        .json({ error: "Password & Confirm Password Mismatch!" });
-    } else if (userExist) {
-      //*  CHECKING EMAIL ALREADY EXIST IN DB
-      return res.status(422).json({ error: "Email Already Exist!" });
-    } else {
-      //* IF USER NOT EXIST CREATING NEW USER IN DB
-      const Doctors = new Doctor({
-        full_name,
-        gender,
-        email,
-        phone,
-        age,
-        role,
-        password,
-        cpassword,
-        img
-      });
-
-      //* HASHING PASSWORD HERE FROM SCHEMA.JS THROUGH MIDDLEWARE
-
-      //* SAVING DATA IN DB
-
-      await Doctors.save();
-
-      //* SENDING RESPONSE
-      res.status(201).json({ response: "User Registered!" });
+    if (PatientsEmailExists || LabEmailExists) {
+      return res.status(422).json({ error: "Email Already In Use!" });
     }
-  } catch (error) {
-    res.status(500).json({ error: error.message });
+
+    //* CHECKING IF THE FIELDS ARE EMPTY OR NOT
+    if (
+      !full_name ||
+      !gender ||
+      !email ||
+      !age ||
+      !phone ||
+      !password ||
+      !cpassword
+    ) {
+      return res.status(422).json({ error: "Fields Cannot Be Empty!" });
+    }
+    try {
+      //* USER DETAILS WHICH EMAILS MATCH IN DB
+      const userExist = await Doctor.findOne({ email: email });
+      //* CHECKING PASS AND C PASS
+      if (password !== cpassword) {
+        return res
+          .status(400)
+          .json({ error: "Password & Confirm Password Mismatch!" });
+      } else if (userExist) {
+        //*  CHECKING EMAIL ALREADY EXIST IN DB
+        return res.status(422).json({ error: "Email Already Exist!" });
+      } else {
+        //* IF USER NOT EXIST CREATING NEW USER IN DB
+        const Doctors = new Doctor({
+          full_name,
+          gender,
+          email,
+          phone,
+          age,
+          role,
+          password,
+          cpassword,
+          img,
+        });
+
+        //* HASHING PASSWORD HERE FROM SCHEMA.JS THROUGH MIDDLEWARE
+
+        //* SAVING DATA IN DB
+
+        await Doctors.save();
+
+        //* SENDING RESPONSE
+        res.status(201).json({ response: "User Registered!" });
+      }
+    } catch (error) {
+      res.status(500).json({ error: error.message });
+    }
   }
-});
+);
 
 //* POST PATIENTS REGISTRATIONS
 router.post("/patients-registration", async (req, res) => {
@@ -321,30 +334,31 @@ router.post("/login-doctor", async (req, res) => {
     //* GETTING THE SPECIFIC DATA OF SAME EMAIL
     const UserLogin = await Doctor.findOne({ email: Email });
     if (!UserLogin || UserLogin == null) {
-      res.status(404).json({ message: "No User Found" });
+      return res.status(404).json({ message: "No User Found" });
     } else {
-      res.status(200).json(UserLogin);
-    }
-    console.log("USER DETAILS  " + UserLogin);
+      //* DECRYPTING DB USER PASSWORD AND COMPARING IT FOR LOGIN
+      const HashPassword = await bcrypt.compare(Password, UserLogin.password);
 
-    //* DECRYPTING DB USER PASSWORD AND COMPARING IT FOR LOGIN
-    const HashPassword = await bcrypt.compare(Password, UserLogin.password);
+      //* CHECKING IF THE USER EXIST IN DB OR NOT WHILE LOGIN
+      if (UserLogin && HashPassword) {
+        //* GENERATING AUTH TOKEN WHILE LOGIN (USING MIDDLEWEARE)
+        const token = await UserLogin.generateAuthToken();
+        //*  console.log(token);
 
-    //* CHECKING IF THE USER EXIST IN DB OR NOT WHILE LOGIN
-    if (UserLogin && HashPassword) {
-      //* GENERATING AUTH TOKEN WHILE LOGIN (USING MIDDLEWEARE)
-      const token = await UserLogin.generateAuthToken();
-      //*  console.log(token);
+        //* SAVING AUTH TOKEN IN COOKIE
+        res.cookie("jwt", token, {
+          expires: new Date(Date.now() + 300000),
+          httpOnly: true,
+        });
 
-      //* SAVING AUTH TOKEN IN COOKIE
-      res.cookie("jwt", token, {
-        expires: new Date(Date.now() + 300000),
-        httpOnly: true,
-      });
-
-      res.json(UserLogin + "SignIn Successfully!!");
-    } else {
-      res.status(400).json({ error: "Sign in Failure,No Such Id Exist!!" });
+        return res
+          .status(200)
+          .json({ response: UserLogin, message: "Singed in Successfully!" });
+      } else {
+        return res
+          .status(400)
+          .json({ error: "Sign in Failure,No Such Id Exist!!" });
+      }
     }
   } catch (error) {
     console.log(error);
@@ -368,28 +382,29 @@ router.post("/login-patient", async (req, res) => {
     if (!UserLogin || UserLogin == null) {
       res.status(404).json({ message: "No User Found" });
     } else {
-      res.status(200).json(UserLogin);
-    }
-    console.log("USER DETAILS  " + UserLogin);
+      //* DECRYPTING DB USER PASSWORD AND COMPARING IT FOR LOGIN
+      const HashPassword = await bcrypt.compare(Password, UserLogin.password);
 
-    //* DECRYPTING DB USER PASSWORD AND COMPARING IT FOR LOGIN
-    const HashPassword = await bcrypt.compare(Password, UserLogin.password);
+      //* CHECKING IF THE USER EXIST IN DB OR NOT WHILE LOGIN
+      if (UserLogin && HashPassword) {
+        //* GENERATING AUTH TOKEN WHILE LOGIN (USING MIDDLEWEARE)
+        const token = await UserLogin.generateAuthToken();
+        //*  console.log(token);
 
-    //* CHECKING IF THE USER EXIST IN DB OR NOT WHILE LOGIN
-    if (UserLogin && HashPassword) {
-      //* GENERATING AUTH TOKEN WHILE LOGIN (USING MIDDLEWEARE)
-      const token = await UserLogin.generateAuthToken();
-      //*  console.log(token);
+        //* SAVING AUTH TOKEN IN COOKIE
+        res.cookie("jwt", token, {
+          expires: new Date(Date.now() + 300000),
+          httpOnly: true,
+        });
 
-      //* SAVING AUTH TOKEN IN COOKIE
-      res.cookie("jwt", token, {
-        expires: new Date(Date.now() + 300000),
-        httpOnly: true,
-      });
-
-      res.json(UserLogin + "SignIn Successfully!!");
-    } else {
-      res.status(400).json({ error: "Sign in Failure,No Such Id Exist!!" });
+        return res
+          .status(200)
+          .json({ response: UserLogin, message: "Singed in Successfully!" });
+      } else {
+        return res
+          .status(400)
+          .json({ error: "Sign in Failure,No Such Id Exist!!" });
+      }
     }
   } catch (error) {
     console.log(error);
@@ -413,28 +428,29 @@ router.post("/login-lab", async (req, res) => {
     if (!UserLogin || UserLogin == null) {
       res.status(404).json({ message: "No User Found" });
     } else {
-      res.status(200).json(UserLogin);
-    }
-    console.log("USER DETAILS  " + UserLogin);
+      //* DECRYPTING DB USER PASSWORD AND COMPARING IT FOR LOGIN
+      const HashPassword = await bcrypt.compare(Password, UserLogin.password);
 
-    //* DECRYPTING DB USER PASSWORD AND COMPARING IT FOR LOGIN
-    const HashPassword = await bcrypt.compare(Password, UserLogin.password);
+      //* CHECKING IF THE USER EXIST IN DB OR NOT WHILE LOGIN
+      if (UserLogin && HashPassword) {
+        //* GENERATING AUTH TOKEN WHILE LOGIN (USING MIDDLEWEARE)
+        const token = await UserLogin.generateAuthToken();
+        //*  console.log(token);
 
-    //* CHECKING IF THE USER EXIST IN DB OR NOT WHILE LOGIN
-    if (UserLogin && HashPassword) {
-      //* GENERATING AUTH TOKEN WHILE LOGIN (USING MIDDLEWEARE)
-      const token = await UserLogin.generateAuthToken();
-      //*  console.log(token);
+        //* SAVING AUTH TOKEN IN COOKIE
+        res.cookie("jwt", token, {
+          expires: new Date(Date.now() + 300000),
+          httpOnly: true,
+        });
 
-      //* SAVING AUTH TOKEN IN COOKIE
-      res.cookie("jwt", token, {
-        expires: new Date(Date.now() + 300000),
-        httpOnly: true,
-      });
-
-      res.json(UserLogin + "SignIn Successfully!!");
-    } else {
-      res.status(400).json({ error: "Sign in Failure,No Such Id Exist!!" });
+        return res
+          .status(200)
+          .json({ response: UserLogin, message: "Singed in Successfully!" });
+      } else {
+        return res
+          .status(400)
+          .json({ error: "Sign in Failure,No Such Id Exist!!" });
+      }
     }
   } catch (error) {
     console.log(error);
@@ -458,36 +474,36 @@ router.post("/login-pharmacy", async (req, res) => {
     if (!UserLogin || UserLogin == null) {
       res.status(404).json({ message: "No User Found" });
     } else {
-      res.status(200).json(UserLogin);
-    }
-    console.log("USER DETAILS  " + UserLogin);
+      //* DECRYPTING DB USER PASSWORD AND COMPARING IT FOR LOGIN
+      const HashPassword = await bcrypt.compare(Password, UserLogin.password);
 
-    //* DECRYPTING DB USER PASSWORD AND COMPARING IT FOR LOGIN
-    const HashPassword = await bcrypt.compare(Password, UserLogin.password);
+      //* CHECKING IF THE USER EXIST IN DB OR NOT WHILE LOGIN
+      if (UserLogin && HashPassword) {
+        //* GENERATING AUTH TOKEN WHILE LOGIN (USING MIDDLEWEARE)
+        const token = await UserLogin.generateAuthToken();
+        //*  console.log(token);
 
-    //* CHECKING IF THE USER EXIST IN DB OR NOT WHILE LOGIN
-    if (UserLogin && HashPassword) {
-      //* GENERATING AUTH TOKEN WHILE LOGIN (USING MIDDLEWEARE)
-      const token = await UserLogin.generateAuthToken();
-      //*  console.log(token);
+        //* SAVING AUTH TOKEN IN COOKIE
+        res.cookie("jwt", token, {
+          expires: new Date(Date.now() + 300000),
+          httpOnly: true,
+        });
 
-      //* SAVING AUTH TOKEN IN COOKIE
-      res.cookie("jwt", token, {
-        expires: new Date(Date.now() + 300000),
-        httpOnly: true,
-      });
-
-      res.json(UserLogin + "SignIn Successfully!!");
-    } else {
-      res.status(400).json({ error: "Sign in Failure,No Such Id Exist!!" });
+        return res
+          .status(200)
+          .json({ response: UserLogin, message: "Singed in Successfully!" });
+      } else {
+        return res
+          .status(400)
+          .json({ error: "Sign in Failure,No Such Id Exist!!" });
+      }
     }
   } catch (error) {
     console.log(error);
   }
 });
 
-
-//*  DOCTOR APPOINTMENT 
+//*  DOCTOR APPOINTMENT
 router.patch("/add_medicine", async (req, res) => {
   try {
     //*  GETTING USER UPDATING INPUT
@@ -590,10 +606,9 @@ router.patch("/add_medicine", async (req, res) => {
 });
 
 //*  UPLOAD FILE
-router.post("/upload-img", FileUpload.single("img"),(req, res) => {
+router.post("/upload-img", FileUpload.single("img"), (req, res) => {
   res.send("File Uploaded!");
 });
-
 
 //*  GET ABOUT
 router.get("/about", Middleware, (req, res) => {
