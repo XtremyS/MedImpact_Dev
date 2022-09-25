@@ -19,6 +19,9 @@ export class Service {
   UrlLabLogin = '/login-lab';
   UrlPharmacyLogin = '/login-pharmacy';
 
+  //! GET APIS
+  UrlLabData = '/lab-list';
+
   //! FILE UPLOAD APIS
   UrlFileUpload = '/upload-img';
 
@@ -56,17 +59,17 @@ export class Service {
     return this.http.post(this.UrlPharmacyLogin, Data);
   }
 
+  GetLabData(): Observable<any> {
+    return this.http.get(this.UrlLabData);
+  }
+
   //! IMAGE UPLOAD API
   FileUpload(Data: any): Observable<any> {
-    return this.http.post(this.UrlFileUpload,Data,{responseType: 'text'});
+    return this.http.post(this.UrlFileUpload, Data, { responseType: 'text' });
   }
 
   //! LOGOUT FUNCTION
   LogOut(Data: any): Observable<any> {
     return this.http.get(this.LogOutUrl, Data);
   }
-
-
-
-
 }

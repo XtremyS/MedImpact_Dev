@@ -5,7 +5,7 @@
  is the file you need to edit to change the look of the
  theme.
  However we used Less script to make things easy to maintain, this is the compressed ourput, we recommend to edit the less files and then recombile the files and add the result here, if you don't like to use less you can edit this file here.
- 
+
  This files contents are outlined below.
  01.	Theme Reset Style
  02.	Theme Color
@@ -1990,7 +1990,7 @@ body.dc-userlogin .dc-loginarea {
 }
 /*Silder Style*/
 .dc-homesliderholder {
-  background: url(../images/slider/banner-img.png);
+  background: url(../images/slider/banner-img.jpg);
   background-size: cover;
   background-repeat: no-repeat;
 }
@@ -6535,7 +6535,7 @@ body.dc-userlogin .dc-loginarea {
     rgba(61, 68, 97, 1) 0%,
     rgba(61, 68, 97, 0) 100%
   );
-  filter: progid:DXImageTransform.Microsoft.gradient( 
+  filter: progid:DXImageTransform.Microsoft.gradient(
 	startColorstr='var(--terthemecolor)',
 	 endColorstr='#003d4461',
 	 GradientType=1 );

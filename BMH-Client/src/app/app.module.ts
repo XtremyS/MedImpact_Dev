@@ -27,6 +27,7 @@ import {
   Location,
   LocationStrategy,
 } from '@angular/common';
+import { DoctorListComponent } from './pages/doctor-list/doctor-list.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -48,6 +49,7 @@ import {
     AboutUsComponent,
     DoctorDetailsComponent,
     MainHomeComponent,
+    DoctorListComponent,
   ],
   imports: [
     BrowserModule,

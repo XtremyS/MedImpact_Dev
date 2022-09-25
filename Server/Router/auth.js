@@ -26,6 +26,7 @@ router.get("/", (req, res) => {
 //* MIDDLEWARE MODULE
 const Middleware = require("../Middleware/middleware");
 const { log } = require("console");
+const { response } = require("express");
 
 router.use(cookieParser());
 
@@ -497,6 +498,35 @@ router.post("/login-pharmacy", async (req, res) => {
           .status(400)
           .json({ error: "Sign in Failure,No Such Id Exist!!" });
       }
+    }
+  } catch (error) {
+    console.log(error);
+  }
+});
+
+//* GET DOCTOR DATA
+router.get("/lab-list", async (req, res) => {
+  try {
+    //* GETTING ALL LABS FROM DB
+    const Labs = await Lab.find(
+      {},
+      {
+        lab_name: 1,
+        lab_type: 1,
+        country: 1,
+        email: 1,
+        phone: 1,
+        city: 1,
+        state: 1,
+        address: 1,
+        date: 1,
+      }
+    );
+
+    if (Labs) {
+      return res.status(200).json({ data: Labs });
+    } else {
+      return res.status(404).json({ error: "No labs found!" });
     }
   } catch (error) {
     console.log(error);

@@ -16,6 +16,7 @@ import { AboutUsComponent } from './pages/about-us/about-us.component';
 import { ContactUsComponent } from './pages/contact-us/contact-us.component';
 import { DoctorDetailsComponent } from './pages/doctor-details/doctor-details.component';
 import { MainHomeComponent } from './pages/main-home/main-home.component';
+import { DoctorListComponent } from './pages/doctor-list/doctor-list.component';
 const routes: Routes = [
   {
     path: '',
@@ -41,6 +42,10 @@ const routes: Routes = [
       {
         path: 'register-pharmacy',
         component: PharmacyRegistrationComponent,
+      },
+      {
+        path: 'doctor-list',
+        component: DoctorListComponent,
       },
       {
         path: 'doctor-details',
