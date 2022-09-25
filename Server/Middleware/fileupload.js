@@ -6,10 +6,11 @@ const FileStorage = Multer.diskStorage({
     cb(null, "./uploads");
   },
   filename: (req, file, cb) => {
-    cb(null, Date.now() + "--" + file.originalname);
+    console.log(file);
+    cb(null, Date.now() + "-" + file.originalname);
   },
 });
 
-const Upload = Multer({storage: FileStorage})
+const Upload = Multer({ storage: FileStorage });
 
 module.exports = Upload;

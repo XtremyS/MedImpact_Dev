@@ -504,7 +504,32 @@ router.post("/login-pharmacy", async (req, res) => {
   }
 });
 
-//* GET DOCTOR DATA
+//* GET LAB DATA
+router.get("/doc-list", async (req, res) => {
+  try {
+    //* GETTING ALL LABS FROM DB
+    const Doctors = await Doctor.find(
+      {},
+      {
+        full_name: 1,
+        gender: 1,
+        email: 1,
+        age: 1,
+        img: 1,
+      }
+    );
+
+    if (Doctors) {
+      return res.status(200).json({ data: Doctors });
+    } else {
+      return res.status(404).json({ error: "No doctors found!" });
+    }
+  } catch (error) {
+    console.log(error);
+  }
+});
+
+//* GET LAB DATA
 router.get("/lab-list", async (req, res) => {
   try {
     //* GETTING ALL LABS FROM DB

@@ -20,7 +20,8 @@ export class Service {
   UrlPharmacyLogin = '/login-pharmacy';
 
   //! GET APIS
-  UrlLabData = '/lab-list';
+  GetDoctorUrl = '/doc-list';
+  GetLabDataUrl = '/lab-list';
 
   //! FILE UPLOAD APIS
   UrlFileUpload = '/upload-img';
@@ -59,8 +60,13 @@ export class Service {
     return this.http.post(this.UrlPharmacyLogin, Data);
   }
 
+  //! GET FUNCTIONS
+  GetDocData(): Observable<any> {
+    return this.http.get(this.GetDoctorUrl);
+  }
+
   GetLabData(): Observable<any> {
-    return this.http.get(this.UrlLabData);
+    return this.http.get(this.GetLabDataUrl);
   }
 
   //! IMAGE UPLOAD API
