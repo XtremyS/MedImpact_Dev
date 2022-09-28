@@ -11,7 +11,8 @@ import { Title } from '@angular/platform-browser';
 })
 export class LabRegistrationComponent implements OnInit {
   PageTitle = 'Book My Health | Register Lab';
-
+  ImgFormData = new FormData();
+  Images: any;
   LabForm = new FormGroup({});
   constructor(
     private Route: Router,
@@ -33,12 +34,26 @@ export class LabRegistrationComponent implements OnInit {
       city: '',
       state: '',
       address: '',
+      img: '',
     });
   }
+
+  GetImg(event: any) {
+    if (event.target.files.length > 0) {
+      const file = event.target.files[0];
+      this.Images = file;
+      console.log(this.Images);
+    }
+  }
   async Register() {
+    this.ImgFormData.append('img', this.Images);
+
     this._Service.RegisterLabs(this.LabForm.value).subscribe((data) => {
       console.log(data);
     });
     console.log(this.LabForm.value);
+    this._Service.FileUpload(this.ImgFormData).subscribe((data) => {
+      console.log(data);
+    });
   }
 }

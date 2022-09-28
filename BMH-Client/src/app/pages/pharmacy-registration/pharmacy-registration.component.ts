@@ -11,7 +11,8 @@ import { Service } from 'src/services/service.service';
 })
 export class PharmacyRegistrationComponent implements OnInit {
   PharmacyForm = new FormGroup({});
-
+  ImgFormData = new FormData();
+  Images: any;
   PageTitle = 'Book My Health | Pathologies';
 
   constructor(
@@ -33,13 +34,26 @@ export class PharmacyRegistrationComponent implements OnInit {
       city: '',
       state: '',
       address: '',
+      img: '',
     });
   }
+
+  GetImg(event: any) {
+    if (event.target.files.length > 0) {
+      const file = event.target.files[0];
+      this.Images = file;
+      console.log(this.Images);
+    }
+  }
   async Register() {
+    this.ImgFormData.append('img', this.Images);
     this._Service
       .RegisterPharmacy(this.PharmacyForm.value)
       .subscribe((data) => {
         console.log(data);
       });
+    this._Service.FileUpload(this.ImgFormData).subscribe((data) => {
+      console.log(data);
+    });
   }
 }
