@@ -44,6 +44,7 @@ router.post(
       password,
       cpassword,
       clinic_address,
+      city,
       state,
       country,
       education,
@@ -72,7 +73,8 @@ router.post(
       !education ||
       !speciality ||
       !state ||
-      !country
+      !country ||
+      !city
     ) {
       return res.status(422).json({ error: "Fields Cannot Be Empty!" });
     }
@@ -97,6 +99,7 @@ router.post(
           age,
           role,
           clinic_address,
+          city,
           state,
           country,
           education,
@@ -542,6 +545,7 @@ router.get("/doc-list", async (req, res) => {
         age: 1,
         img: 1,
         clinic_address: 1,
+        city: 1,
         state: 1,
         country: 1,
         education: 1,

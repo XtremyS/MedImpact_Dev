@@ -14,6 +14,7 @@ const UserSchema = new mongoose.Schema({
   email: { type: String, required: true, lowercase: true },
   phone: { type: Number, required: true },
   clinic_address: { type: String, required: true, lowercase: true },
+  city: { type: String, required: true, lowercase: true },
   state: { type: String, required: true },
   country: { type: String, required: true },
   education: { type: Array, required: true },
