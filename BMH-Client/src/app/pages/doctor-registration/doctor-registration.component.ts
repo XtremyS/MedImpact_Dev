@@ -21,13 +21,33 @@ export class DoctorRegistrationComponent implements OnInit {
   ImgFormData = new FormData();
   Images: any;
 
-  //* CHIPS INPUT VARIABLES
-  separatorKeysCodes: number[] = [ENTER, COMMA];
-  fruitCtrl = new FormControl('');
-  filteredFruits: Observable<string[]>;
-  fruits: string[] = ['Lemon'];
-  allFruits: string[] = ['Apple', 'Lemon', 'Lime', 'Orange', 'Strawberry'];
-  @ViewChild('fruitInput') fruitInput: ElementRef<HTMLInputElement>;
+  //* EDUCATION FIELD INPUT VARIABLES
+  @ViewChild('EducationInput') EducationInput: ElementRef<HTMLInputElement>;
+  separatorKeysCodesEducation: number[] = [ENTER, COMMA];
+  EducationFormControl = new FormControl('');
+  FilterdEducationArray: Observable<string[]>;
+  EducationValue: string[] = [];
+  EducationSuggestionArray: string[] = [
+    'MBBS',
+    'TTBPS',
+    'IMBS',
+    'IIMBS',
+    'IIIT',
+  ];
+
+  //* SPECIALITY FIELD INPUT VARIABLES
+  @ViewChild('SpecialityInput') SpecialityInput: ElementRef<HTMLInputElement>;
+  separatorKeysCodesSpeciality: number[] = [ENTER, COMMA];
+  SpecialityFormControl = new FormControl('');
+  FilterdSpecialityArray: Observable<string[]>;
+  SpecialityValue: string[] = [];
+  SpecialitySuggestionArray: string[] = [
+    'NERROSURGOEN',
+    'DENTIST',
+    'CHARDIOLOSITS',
+    'EYE',
+    'ORTHOD',
+  ];
 
   constructor(
     private Route: Router,
@@ -35,50 +55,99 @@ export class DoctorRegistrationComponent implements OnInit {
     private _Service: Service,
     private _titleService: Title
   ) {
-    this.filteredFruits = this.fruitCtrl.valueChanges.pipe(
+    //* EDUCATION FIELD FILTER LOGIC
+    this.FilterdEducationArray = this.EducationFormControl.valueChanges.pipe(
       startWith(null),
-      map((fruit: string | null) =>
-        fruit ? this._filter(fruit) : this.allFruits.slice()
+      map((Data: string | null) =>
+        Data
+          ? this._FilterEducation(Data)
+          : this.EducationSuggestionArray.slice()
+      )
+    );
+
+    //* SPECIALITY FIELD FILTER LOGIC
+    this.FilterdSpecialityArray = this.SpecialityFormControl.valueChanges.pipe(
+      startWith(null),
+      map((Data: string | null) =>
+        Data
+          ? this._FilterSpeciality(Data)
+          : this.SpecialitySuggestionArray.slice()
       )
     );
   }
 
-  add(event: MatChipInputEvent): void {
+  //* EDUCATION FIELD FUNCTIONS
+  AddEducation(event: MatChipInputEvent): void {
     const value = (event.value || '').trim();
 
     // Add our fruit
     if (value) {
-      this.fruits.push(value);
+      this.EducationValue.push(value);
+    }
+
+    // Clear the input value
+    event.chipInput!.clear();
+    this.EducationFormControl.setValue(null);
+  }
+
+  RemoveEducation(fruit: string): void {
+    const index = this.EducationValue.indexOf(fruit);
+
+    if (index >= 0) {
+      this.EducationValue.splice(index, 1);
+    }
+  }
+
+  SelectedEducation(event: MatAutocompleteSelectedEvent): void {
+    this.EducationValue.push(event.option.viewValue);
+    this.EducationInput.nativeElement.value = '';
+    this.EducationFormControl.setValue(null);
+  }
+
+  private _FilterEducation(value: string): string[] {
+    const filterValue = value.toLowerCase();
+
+    return this.EducationSuggestionArray.filter((fruit) =>
+      fruit.toLowerCase().includes(filterValue)
+    );
+  }
+
+  //* SPECIALITY FIELD FUNCTIONS
+  AddSpeciality(event: MatChipInputEvent): void {
+    const value = (event.value || '').trim();
+
+    // Add our fruit
+    if (value) {
+      this.SpecialityValue.push(value);
     }
 
     // Clear the input value
     event.chipInput!.clear();
 
-    this.fruitCtrl.setValue(null);
+    this.SpecialityFormControl.setValue(null);
   }
 
-  remove(fruit: string): void {
-    const index = this.fruits.indexOf(fruit);
+  RemoveSpeciality(fruit: string): void {
+    const index = this.SpecialityValue.indexOf(fruit);
 
     if (index >= 0) {
-      this.fruits.splice(index, 1);
+      this.SpecialityValue.splice(index, 1);
     }
   }
 
-  selected(event: MatAutocompleteSelectedEvent): void {
-    this.fruits.push(event.option.viewValue);
-    this.fruitInput.nativeElement.value = '';
-    this.fruitCtrl.setValue(null);
+  SelectedSpeciality(event: MatAutocompleteSelectedEvent): void {
+    this.SpecialityValue.push(event.option.viewValue);
+    this.SpecialityInput.nativeElement.value = '';
+    this.SpecialityFormControl.setValue(null);
   }
 
-  private _filter(value: string): string[] {
+  private _FilterSpeciality(value: string): string[] {
     const filterValue = value.toLowerCase();
 
-    return this.allFruits.filter((fruit) =>
+    return this.SpecialitySuggestionArray.filter((fruit) =>
       fruit.toLowerCase().includes(filterValue)
     );
   }
-
   ngOnInit() {
     this._titleService.setTitle(this.PageTitle);
     this.DoctorForm = this._FormBuilder.group({
@@ -106,6 +175,9 @@ export class DoctorRegistrationComponent implements OnInit {
     }
   }
   async Register() {
+    console.log(this.EducationValue, 'EDUCATION_INPUT');
+    console.log(this.SpecialityValue, 'SPECIALITY_INPUT');
+
     this.ImgFormData.append('img', this.Images);
 
     this._Service.RegisterDoctor(this.DoctorForm.value).subscribe((data) => {
