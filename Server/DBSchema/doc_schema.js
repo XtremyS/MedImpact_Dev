@@ -21,6 +21,7 @@ const UserSchema = new mongoose.Schema({
   speciality: { type: Array, required: true },
   age: { type: Number, required: true },
   role: { type: String },
+  isVerified: { type: Boolean },
   img: { type: String, required: true },
   password: { type: String, required: true },
   cpassword: { type: String, required: true },

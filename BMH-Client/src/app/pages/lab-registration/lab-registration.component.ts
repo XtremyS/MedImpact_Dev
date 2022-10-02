@@ -52,8 +52,5 @@ export class LabRegistrationComponent implements OnInit {
       console.log(data);
     });
     console.log(this.LabForm.value);
-    this._Service.FileUpload(this.ImgFormData).subscribe((data) => {
-      console.log(data);
-    });
   }
 }

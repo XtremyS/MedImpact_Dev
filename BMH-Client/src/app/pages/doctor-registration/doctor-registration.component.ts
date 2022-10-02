@@ -155,6 +155,8 @@ export class DoctorRegistrationComponent implements OnInit {
       full_name: '',
       phone: '',
       age: '',
+      education: '',
+      speciality: '',
       clinic_address: '',
       city: '',
       state: '',
@@ -175,16 +177,34 @@ export class DoctorRegistrationComponent implements OnInit {
     }
   }
   async Register() {
-    console.log(this.EducationValue, 'EDUCATION_INPUT');
-    console.log(this.SpecialityValue, 'SPECIALITY_INPUT');
+    this.DoctorForm.patchValue({
+      education: this.EducationValue,
+      speciality: this.SpecialityValue,
+    });
 
+    this.ImgFormData.append('gender', this.DoctorForm.value.gender);
+    this.ImgFormData.append('full_name', this.DoctorForm.value.full_name);
+    this.ImgFormData.append('phone', this.DoctorForm.value.phone);
+    this.ImgFormData.append('age', this.DoctorForm.value.age);
+    this.ImgFormData.append('education', this.DoctorForm.value.education);
+    this.ImgFormData.append('speciality', this.DoctorForm.value.speciality);
+    this.ImgFormData.append(
+      'clinic_address',
+      this.DoctorForm.value.clinic_address
+    );
+    this.ImgFormData.append('city', this.DoctorForm.value.city);
+    this.ImgFormData.append('state', this.DoctorForm.value.state);
+    this.ImgFormData.append('country', this.DoctorForm.value.country);
+    this.ImgFormData.append('email', this.DoctorForm.value.email);
+    this.ImgFormData.append('password', this.DoctorForm.value.password);
+    this.ImgFormData.append('cpassword', this.DoctorForm.value.cpassword);
     this.ImgFormData.append('img', this.Images);
 
-    this._Service.RegisterDoctor(this.DoctorForm.value).subscribe((data) => {
+    this._Service.RegisterDoctor(this.ImgFormData).subscribe((data) => {
       console.log(data);
     });
-    this._Service.FileUpload(this.ImgFormData).subscribe((data) => {
-      console.log(data);
-    });
+    // this._Service.FileUpload(this.ImgFormData).subscribe((data) => {
+    //   console.log(data);
+    // });
   }
 }

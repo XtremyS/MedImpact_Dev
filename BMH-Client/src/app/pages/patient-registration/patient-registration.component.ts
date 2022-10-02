@@ -49,8 +49,5 @@ export class PatientRegistrationComponent implements OnInit {
     this._Service.RegisterPatient(this.PatientForm.value).subscribe((data) => {
       console.log(data);
     });
-    this._Service.FileUpload(this.ImgFormData).subscribe((data) => {
-      console.log(data);
-    });
   }
 }

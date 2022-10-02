@@ -20,14 +20,13 @@
               </div>
             </div>
           </div>
-          <ng-container *ngFor="let data of DocArray">
-            <div class="dc-searchresult-grid">
-              <div class="row">
+          <div class="dc-searchresult-grid">
+            <div class="row">
+              <ng-container *ngFor="let data of DocArray">
                 <div class="col-12 col-sm-6 col-md-12 col-lg-6 col-xl-4">
                   <div class="dc-docpostholder">
                     <figure class="dc-docpostimg">
                       <img src="{{ data.img }}" alt="img description" />
-                      <h1>{{ data.img }}</h1>
                       <figcaption>
                         <span class="dc-featuredtag"
                           ><i class="fa fa-bolt"></i
@@ -86,32 +85,32 @@
                     </div>
                   </div>
                 </div>
+              </ng-container>
 
-                <div class="col-12 col-sm-12 col-md-12 col-lg-12">
-                  <nav class="dc-pagination">
-                    <ul>
-                      <li class="dc-prevpage">
-                        <a href="javascrip:void(0);"
-                          ><i class="lnr lnr-chevron-left"></i
-                        ></a>
-                      </li>
-                      <li><a href="javascrip:void(0);">1</a></li>
-                      <li><a href="javascrip:void(0);">2</a></li>
-                      <li><a href="javascrip:void(0);">3</a></li>
-                      <li><a href="javascrip:void(0);">4</a></li>
-                      <li><a href="javascrip:void(0);">...</a></li>
-                      <li><a href="javascrip:void(0);">50</a></li>
-                      <li class="dc-nextpage">
-                        <a href="javascrip:void(0);"
-                          ><i class="lnr lnr-chevron-right"></i
-                        ></a>
-                      </li>
-                    </ul>
-                  </nav>
-                </div>
+              <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+                <nav class="dc-pagination">
+                  <ul>
+                    <li class="dc-prevpage">
+                      <a href="javascrip:void(0);"
+                        ><i class="lnr lnr-chevron-left"></i
+                      ></a>
+                    </li>
+                    <li><a href="javascrip:void(0);">1</a></li>
+                    <li><a href="javascrip:void(0);">2</a></li>
+                    <li><a href="javascrip:void(0);">3</a></li>
+                    <li><a href="javascrip:void(0);">4</a></li>
+                    <li><a href="javascrip:void(0);">...</a></li>
+                    <li><a href="javascrip:void(0);">50</a></li>
+                    <li class="dc-nextpage">
+                      <a href="javascrip:void(0);"
+                        ><i class="lnr lnr-chevron-right"></i
+                      ></a>
+                    </li>
+                  </ul>
+                </nav>
               </div>
             </div>
-          </ng-container>
+          </div>
         </div>
       </div>
     </div>

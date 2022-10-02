@@ -52,8 +52,5 @@ export class PharmacyRegistrationComponent implements OnInit {
       .subscribe((data) => {
         console.log(data);
       });
-    this._Service.FileUpload(this.ImgFormData).subscribe((data) => {
-      console.log(data);
-    });
   }
 }
