@@ -40,11 +40,37 @@
 :root {
   --shadowcolor: rgba(63, 171, 243, 0.5);
 }
+
+/* Theme Variables */
+:root {
+  /* Elements */
+  --background-color: #16161a;
+  --headline-color: #fffffe;
+  --para-color: #94a1b2;
+  --button-color: #7f5af0;
+  --button-text-color: #fffffe;
+
+  /* Designs */
+  --stroke-color: #010101;
+  --main-color: #fffffe;
+  --highlight-color: #7f5af0;
+  --secondary-color: #72757e;
+  --tertiary-color: #2cb67d;
+}
+
 body {
-  background: #fff;
+  background: var(--background-color);
   color: var(--terthemecolor);
   font: 400 14px/26px "Poppins", sans-serif;
+  /* -ms-overflow-style: none; /* for Internet Explorer, Edge */
+  /* scrollbar-width: none; for Firefox */
+  /* overflow-y: scroll; */ 
 }
+
+/* body::-webkit-scrollbar {
+  display: none;
+} */
+
 .dc-wrapper {
   overflow-x: hidden;
 }
@@ -54,7 +80,7 @@ body h3,
 body h4,
 body h5,
 body h6 {
-  color: var(--terthemecolor);
+  color: var(--button-text-color);
   margin: 0 0 8px;
   font-weight: 700;
   line-height: 1.5;
@@ -152,10 +178,10 @@ input[type="search"],
 input[type="tel"],
 input[type="color"],
 .uneditable-input {
-  color: #999;
+  color: var(--stroke-color);
   outline: none;
   height: 50px;
-  background: #fff;
+  background: var(--para-color);
   font-size: 14px;
   -webkit-box-shadow: none;
   box-shadow: none;
@@ -164,7 +190,7 @@ input[type="color"],
   border-radius: 4px;
   display: inline-block;
   vertical-align: middle;
-  border: 2px solid #eee;
+  border: 2px solid var(--para-color);
   text-transform: inherit;
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
@@ -176,28 +202,29 @@ textarea.form-control {
   height: 210px;
 }
 .form-control::-webkit-input-placeholder {
-  color: #999;
+  color: var(--stroke-color);
 } /* WebKit, Blink, Edge */
 .form-control:-moz-placeholder {
-  color: #999;
+  color: var(--stroke-color);
 } /* Mozilla Firefox 4 to 18 */
 .form-control::-moz-placeholder {
-  color: #999;
+  color: var(--stroke-color);
 } /* Mozilla Firefox 19+ */
 .form-control:-ms-input-placeholder {
-  color: #999;
+  color: var(--stroke-color);
 } /* Internet Explorer 10-11 */
 .form-control::-ms-input-placeholder {
-  color: #999;
+  color: var(--stroke-color);
 } /* Microsoft Edge */
 input:focus,
 .select select:focus,
 .form-control:focus {
-  color: #999;
+  color: var(--stroke-color);
   border-color: #eee;
   -webkit-box-shadow: none !important;
+  background-color: var(--para-color);
   box-shadow: none !important;
-  border-color: var(--themecolor);
+  border-color: var(--tertiary-color);
 }
 .form-group {
   width: 100%;
@@ -599,6 +626,7 @@ address {
 }
 .dc-main-section {
   padding: 80px 0;
+  /* background-color: green; */
 }
 .dc-locationmap {
   width: 100%;
@@ -615,15 +643,15 @@ address {
   display: inline-block;
   vertical-align: middle;
   text-transform: capitalize;
-  color: var(--terthemecolor);
+  color: var(--headline-color);
   font: 400 14px/46px "Poppins", Arial, Helvetica, sans-serif;
-  border-color: var(--themecolor);
+  border-color: var(--tertiary-color);
 }
 .dc-btn[type="submit"] {
   background: transparent;
 }
 .dc-btn-sm {
-  min-width: 145px;
+  min-width: 145px; 
   line-height: 32px;
 }
 .dc-btnactive,
@@ -633,10 +661,10 @@ address {
 }
 .dc-btnactive,
 .dc-btn:hover {
-  border-color: var(--themecolor);
-  background-color: var(--themecolor);
-  -webkit-box-shadow: 0 9px 20px 0 var(--shadowcolor);
-  box-shadow: 0 9px 20px 0 var(--shadowcolor);
+  border-color: var(--button-color);
+  background-color: var(--button-color);
+  -webkit-box-shadow: 0 9px 20px 0 var(--button-color);
+  box-shadow: 0 9px 20px 0 var(--button-color);
 }
 .dc-btn-lg {
   width: 100%;
@@ -1100,6 +1128,7 @@ li.dc-rss a {
 .dc-description {
   width: 100%;
   float: left;
+  color: var(--para-color);
 }
 .dc-bglight {
   background: #f7f7f7;
@@ -1158,7 +1187,7 @@ li.dc-rss a {
   line-height: 20px;
   position: absolute;
   text-align: center;
-  background-color: var(--themecolor);
+  background-color: var(--background-color);
 }
 .dc-dropdowarrow i {
   display: block;
@@ -1178,7 +1207,7 @@ li.dc-rss a {
   margin: 28px 0;
   padding: 6px 10px;
   border-radius: 4px;
-  background-color: var(--secthemecolor);
+  background-color: var(--button-color);
 }
 .navbar-toggler:focus {
   outline: none;
@@ -1221,7 +1250,7 @@ p a:hover,
 a:hover,
 a:focus,
 a:active {
-  color: var(--themecolor);
+  color: var(--tertiary-color);
 }
 /* For Mobile Nav use this code in Responsive.css desired Query */
 /*
@@ -1267,12 +1296,12 @@ a:active {
   color: #fff;
 }
 .dc-pagination ul li a {
-  color: #999;
+  color: var(--stroke-color);
   width: 36px;
   height: 36px;
   display: block;
   font-size: 14px;
-  background: #fff;
+  background: var(--tertiary-color);
   text-align: center;
   position: relative;
   line-height: 36px;
@@ -1286,8 +1315,8 @@ a:active {
 }
 .dc-pagination ul li a:hover {
   color: #fff;
-  border-color: var(--themecolor);
-  background: var(--themecolor);
+  border-color: var(--button-text-color);
+  background: var(--background-color);
 }
 /* Theme BreadCrumb Style */
 .dc-breadcrumbarea {
@@ -1340,7 +1369,7 @@ a:active {
   padding: 20px 0;
 }
 .dc-footer {
-  background: var(--terthemecolor);
+  background: var(--background-color);
 }
 /* Header Style */
 .dc-header {
@@ -1354,7 +1383,9 @@ a:active {
 .dc-navigationarea {
   float: left;
   width: 100%;
-  background: #fff;
+  background: var(--background-color);
+  /* background: #fff; */
+  color: var(--para-color);
 }
 /* Menu Styling */
 .dc-nav {
@@ -1401,7 +1432,7 @@ a:active {
   margin: -1px 0 0 -1px;
   border-radius: 50px;
   position: absolute;
-  background: var(--secthemecolor);
+  background: var(--button-color);
 }
 .dc-navigation > ul > li > a:after {
   bottom: 0;
@@ -1413,14 +1444,14 @@ a:active {
   border-radius: 50px;
   margin-left: -30px;
   border-radius: 3px 3px 0 0;
-  background: var(--themecolor);
+  background: var(--background-color);
 }
 .dc-navigation > ul > li.dc-navactive > a:after {
   height: 4px;
 }
 .dc-navigation ul li a {
   display: block;
-  color: var(--terthemecolor);
+  color: var(--para-color);
 }
 .sub-menu,
 .mega-menu {
@@ -1480,9 +1511,9 @@ a:active {
 }
 .dc-topbar {
   padding: 10px 0;
-  background: #f7f7f7;
-  border-top: 1px solid;
-  border-color: var(--themecolor);
+  background: var(--background-color);
+
+  color: var(--para-color);
 }
 .dc-helpnum {
   line-height: 20px;
@@ -1498,7 +1529,7 @@ a:active {
   font-weight: 700;
   font-size: 20px;
   line-height: inherit;
-  color: var(--secthemecolor);
+  color: var(--tertiary-color);
 }
 .dc-rightarea .dc-loginarea > .dc-btn {
   margin-left: 27px;
@@ -1578,7 +1609,7 @@ ul.sub-menu {
 }
 .dc-navigation > ul > li > .sub-menu > li > a,
 .dc-navigation > ul > li > .mega-menu > li > a {
-  background: #fcfcfc;
+  background: var(--background-color);
 }
 .dc-navigation > ul > li > .sub-menu li:last-child > a,
 .dc-navigation > ul > li > .mega-menu > li:last-child > a {
@@ -1606,15 +1637,15 @@ ul.sub-menu {
 }
 .dc-navigation > ul > li > .sub-menu > li:hover > a,
 .dc-navigation > ul > li > .mega-menu > li:hover > a {
-  background: #fff;
+  background: var(--background-color);
 }
 .dc-navigation > ul > li > .sub-menu > li > .sub-menu > li a,
 .dc-navigation > ul > li > .mega-menu > li > .sub-menu > li a {
-  background: #fff;
+  background: var(--background-color);
 }
 .dc-navigation > ul > li > .sub-menu > li > .sub-menu > li:hover a,
 .dc-navigation > ul > li > .mega-menu > li > .sub-menu > li:hover a {
-  background: #fcfcfc;
+  background: var(--background-color);
 }
 .dc-navigation > ul > li > .sub-menu {
   border-radius: 0 0 5px 5px;
@@ -1629,7 +1660,7 @@ ul.sub-menu {
 .dc-dropdowarrow {
   top: 11px;
   right: 15px;
-  color: #fff;
+  color: var(--background-color);
   z-index: 1;
   width: 20px;
   height: 20px;
@@ -1639,6 +1670,7 @@ ul.sub-menu {
   line-height: 20px;
   position: absolute;
   text-align: center;
+  border: 1px solid var(--button-text-color);
 }
 .dc-navigation ul li .sub-menu li {
   text-align: left;
@@ -1673,7 +1705,8 @@ ul.sub-menu {
   visibility: visible;
 }
 .dc-navigation ul li .sub-menu li + li a {
-  border-top: 1px solid #eee;
+  background-color: var(--background-color);
+  border-top: 1px solid var(--button-text-color);
 }
 .dc-usernav {
   left: 0;
@@ -1792,7 +1825,7 @@ ul.sub-menu {
   float: right;
 }
 .dc-loginarea .dc-loginbtn {
-  color: var(--terthemecolor);
+  color: var(--tertiary-color);
   font: 500 14px/20px "Poppins", sans-serif;
 }
 .dc-loginoption > .dc-btn {
@@ -1811,12 +1844,12 @@ ul.sub-menu {
   right: -65px;
   display: none;
   overflow: hidden;
-  background: #fff;
+  background: var(--background-color);
   border-radius: 4px;
   position: absolute;
   line-height: normal;
-  -webkit-box-shadow: 0 9px 20px 0 rgba(0, 0, 0, 0.2);
-  box-shadow: 0 9px 20px 0 rgba(0, 0, 0, 0.2);
+  -webkit-box-shadow: var(--para-color) 0 5px 15px  ;
+  box-shadow: var(--para-color) 0 5px 15px;
 }
 .dc-loginheader {
   float: left;
@@ -1872,12 +1905,12 @@ ul.sub-menu {
 .dc-loginfooterinfo {
   width: 100%;
   float: left;
-  background: #f7f7f7;
+  background: transparent;
 }
 .dc-loginfooterinfo a {
   width: 50%;
   float: left;
-  color: #55acee;
+  color: var(--tertiary-color);
   font-size: 14px;
   text-align: center;
   position: relative;
@@ -1989,11 +2022,12 @@ body.dc-userlogin .dc-loginarea {
   color: var(--secthemecolor);
 }
 /*Silder Style*/
-.dc-homesliderholder {
-  background: url(../images/slider/banner-img.jpg);
+/* TODO */
+/* .dc-homesliderholder {
+  background: url(../images/slider/undraw_doctor_kw5l.png);
   background-size: cover;
   background-repeat: no-repeat;
-}
+} */
 
 .dc-bannerslider li {
   width: 10px;
@@ -2022,9 +2056,9 @@ body.dc-userlogin .dc-loginarea {
   overflow: visible;
 }
 .dc-bannerimg {
-  margin: 0;
+  margin: 0 ;
   float: left;
-  width: auto;
+  width: 30%;
   position: relative;
 }
 .dc-bannerimg img {
@@ -2125,7 +2159,7 @@ body.dc-userlogin .dc-loginarea {
 .dc-medicalfacility {
   float: left;
   width: 100%;
-  background: #fff;
+  background: var(--para-color);
   margin: 82px 0;
   border-radius: 4px;
 }
@@ -2150,7 +2184,7 @@ body.dc-userlogin .dc-loginarea {
 }
 .dc-medicalfacility .dc-title h2 {
   margin: 0;
-  color: #2d3e50;
+  color: var(--para-color);
   font-size: 30px;
   line-height: 35px;
 }
@@ -2183,10 +2217,10 @@ body.dc-userlogin .dc-loginarea {
 .dc-advancedsearch {
   float: left;
   width: 60%;
-  background: #fff;
-  border-radius: 4px;
-  -webkit-box-shadow: 0 0 20px 0 rgba(165, 165, 165, 0.5);
-  box-shadow: 0 0 20px 0 rgba(165, 165, 165, 0.5);
+  background: var(--background-color);
+  border-radius: 20px;
+  -webkit-box-shadow: var(--para-color) 0px 5px 15px;
+  box-shadow: var(--para-color) 0px 5px 15px;
 }
 .dc-title {
   float: left;
@@ -2194,7 +2228,7 @@ body.dc-userlogin .dc-loginarea {
 }
 .dc-advancedsearch .dc-title {
   padding: 23px 30px;
-  border-bottom: 1px solid #eee;
+  border-bottom: 1px solid var(--headline-color);
 }
 .dc-advancedsearch .dc-title h2 {
   font-size: 24px;
@@ -2204,7 +2238,7 @@ body.dc-userlogin .dc-loginarea {
   vertical-align: middle;
 }
 .dc-docsearch {
-  color: #999;
+  color: var(--tertiary-color);
   float: right;
   text-transform: uppercase;
   font: 400 11px/16px "Poppins", sans-serif;
@@ -2234,7 +2268,7 @@ body.dc-userlogin .dc-loginarea {
   width: 8px;
   height: 8px;
   content: "";
-  background: #fff;
+  background: var(--headline-color);
   position: absolute;
   border-radius: 50px;
   margin: -4px 0 0 -5px;
@@ -2293,15 +2327,15 @@ body.dc-userlogin .dc-loginarea {
   line-height: 50px;
   text-align: center;
   border-radius: 4px;
-  background-color: var(--themecolor);
+  background-color: var(--button-color);
 }
 .dc-formbtn a:hover,
 .dc-formbtn a:focus {
   color: #fff;
 }
 .dc-formbtn a:hover {
-  -webkit-box-shadow: 0 9px 20px 0 var(--shadowcolor);
-  box-shadow: 0 9px 20px 0 var(--shadowcolor);
+  -webkit-box-shadow: 0 9px 20px 0 var(--button-color);
+  box-shadow: 0 9px 20px 0 var(--button-color);
 }
 .dc-jointeamholder {
   float: left;
@@ -2312,9 +2346,10 @@ body.dc-userlogin .dc-loginarea {
   float: left;
   width: 100%;
   position: relative;
-  border-radius: 4px;
+  border-radius: 20px;
+  box-shadow: var(--para-color) 0px 5px 15px;
   padding: 0 10px 0 20px;
-  background: var(--terthemecolor);
+  background: var(--background-color);
 }
 .dc-jointeamimg {
   float: left;
@@ -2326,7 +2361,7 @@ body.dc-userlogin .dc-loginarea {
   padding: 39px 0 39px 30px;
 }
 .dc-jointeamcontent h3 {
-  color: #fff;
+  color: var(--headline-color);
   font-size: 26px;
   margin: 0 0 14px;
   line-height: 30px;
@@ -2343,14 +2378,14 @@ body.dc-userlogin .dc-loginarea {
 .dc-jointeamnoti {
   top: -12px;
   width: 24px;
-  color: #fff;
+  color: var(--stroke-color);
   right: -12px;
   font-size: 14px;
   line-height: 24px;
   border-radius: 50px;
   text-align: center;
   position: absolute;
-  background: var(--secthemecolor);
+  background: var(--tertiary-color);
 }
 .dc-jointeamnoti i {
   display: block;
@@ -2367,7 +2402,7 @@ body.dc-userlogin .dc-loginarea {
   width: 100%;
   padding: 30px;
   height: 300px;
-  background: #fff;
+  background: var(--background-color);
   overflow: hidden;
   position: relative;
   border: 1px solid #eee;
@@ -2405,7 +2440,7 @@ body.dc-userlogin .dc-loginarea {
   white-space: nowrap;
   line-height: inherit;
   text-overflow: ellipsis;
-  color: var(--terthemecolor);
+  color: var(--para-color);
 }
 .dc-doctordetails-holder .dc-btn {
   width: 100%;
@@ -2422,6 +2457,7 @@ body.dc-userlogin .dc-loginarea {
 }
 .dc-doctordetails-holder:hover {
   background: #fcfcfc;
+  color: (--stroke-color);
 }
 .dc-doctordetails-holder:hover .dc-slidercounter {
   opacity: 0;
@@ -2429,6 +2465,9 @@ body.dc-userlogin .dc-loginarea {
 }
 .dc-doctordetails-holder:hover h3 {
   margin: 106px 0 0;
+}
+.dc-doctordetails-holder a {
+  color: var(--stroke-color);
 }
 .dc-titlecolor1 .dc-btn {
   border-color: #1abc9c;
@@ -2563,6 +2602,11 @@ body.dc-userlogin .dc-loginarea {
 .dc-sectionhead .dc-description p {
   font: 400 16px/26px "Open Sans", sans-serif;
 }
+
+.dc-haslayout .dc-sectionhead .dc-description .black-line {
+  color: var(--stroke-color);
+}
+
 .dc-sectionheadvtwo {
   margin: 0;
 }
@@ -2668,7 +2712,10 @@ body.dc-userlogin .dc-loginarea {
   background: url(../images/section-bg.png);
 }
 .dc-bgcolor {
-  background: #e8f6ff;
+  background: var(--button-color);
+  
+  
+  /* background: yellow; */
 }
 /* Work Section Start */
 .dc-workholder {
@@ -2788,6 +2835,7 @@ body.dc-userlogin .dc-loginarea {
   margin-bottom: 5px;
   line-height: 20px;
   font-family: "Poppins", sans-serif;
+  color: var(--para-color);
 }
 .dc-workdetails .dc-title h3 {
   margin: 0;
@@ -2797,7 +2845,8 @@ body.dc-userlogin .dc-loginarea {
 .dc-workdetails .dc-title h3 a {
   display: inline-block;
   vertical-align: middle;
-  color: var(--terthemecolor);
+
+  color: var(--para-color);
 }
 /* Doctors Details  Style*/
 .dc-ratedecontent {
@@ -2808,6 +2857,7 @@ body.dc-userlogin .dc-loginarea {
 .dc-ratedecontent .dc-btnarea {
   margin-top: 3px;
   text-align: center;
+  
 }
 .dc-neurosurgeons-img {
   width: 112px;
@@ -2864,9 +2914,9 @@ body.dc-userlogin .dc-loginarea {
 }
 .dc-docpostholder:hover .dc-docpostcontent .dc-btn {
   color: #fff;
-  background: var(--themecolor);
-  -webkit-box-shadow: 0 9px 20px 0 var(--shadowcolor);
-  box-shadow: 0 9px 20px 0 var(--shadowcolor);
+  background: var(--button-color);
+  -webkit-box-shadow: 0 9px 20px 0 var(--button-color);
+  box-shadow: 0 9px 20px 0 var(--button-color);
 }
 .dc-docpostholder:hover .dc-docpostimg img {
   opacity: 0.7;
@@ -2964,7 +3014,7 @@ body.dc-userlogin .dc-loginarea {
   white-space: nowrap;
   line-height: inherit;
   text-overflow: ellipsis;
-  color: var(--terthemecolor);
+  color: var(--secthemecolor);
 }
 .dc-docpostcontent .dc-title h3 i {
   font-size: 14px;
@@ -3030,7 +3080,7 @@ body.dc-userlogin .dc-loginarea {
 }
 .dc-docinfo li em {
   display: block;
-  color: #767676;
+  color: var(--para-color);
   font-size: 13px;
   font-style: normal;
   line-height: inherit;
@@ -3049,7 +3099,7 @@ body.dc-userlogin .dc-loginarea {
 }
 .dc-doclocation span {
   display: block;
-  color: #767676;
+  color: var(--para-color);
   font-size: 13px;
   line-height: 16px;
 }
@@ -3353,8 +3403,9 @@ body.dc-userlogin .dc-loginarea {
   visibility: visible;
 }
 .dc-fwidgetcontent li.dc-viewmore a {
-  color: #55acee;
+  color: var(--stroke-color);
   font-family: "Poppins", sans-serif;
+  font-weight: 700;
 }
 .dc-footertopbar {
   float: left;
@@ -3648,7 +3699,7 @@ body.dc-userlogin .dc-loginarea {
 .dc-footerbottom {
   float: left;
   width: 100%;
-  background: rgba(0, 0, 0, 0.1);
+  background: rgba(0, 0, 0, 1);
 }
 .dc-copyright {
   margin: 0;
@@ -4286,7 +4337,7 @@ body.dc-userlogin .dc-loginarea {
 }
 .dc-searchresult-head .dc-title h4 {
   margin: 0;
-  color: #767676;
+  color: var(--para-color);
   padding: 8px 0;
   font-size: 14px;
   font-weight: 400;
@@ -4302,6 +4353,8 @@ body.dc-userlogin .dc-loginarea {
 .dc-searchresult-head .dc-rightarea .dc-select select {
   height: 36px;
   padding: 0 30px 0 20px;
+  background-color: var(--para-color);
+  color: var(--stroke-color);
 }
 .dc-searchresult-head .dc-rightarea .dc-select:after {
   line-height: 36px;
@@ -4608,6 +4661,7 @@ body.dc-userlogin .dc-loginarea {
   padding: 0;
   margin-left: 7px;
   position: static;
+  background-color: var(--background-color);
 }
 .dc-doclocationvtwo .dc-btnarea .dc-like i {
   width: 36px;
@@ -4666,12 +4720,13 @@ body.dc-userlogin .dc-loginarea {
 }
 .dc-tags ul li a {
   float: left;
-  color: #767676;
+  color: var(--background-color);
   font-size: 12px;
   padding: 0 14px;
   line-height: 24px;
   border-radius: 4px;
-  background: #f7f7f7;
+  font-weight: 700;
+  background: var(--button-color);
 }
 .dc-tags ul li a:hover {
   color: #fff;
@@ -4721,6 +4776,7 @@ body.dc-userlogin .dc-loginarea {
   right: 30px;
   font-size: 22px;
   position: absolute;
+  background-color: var(--background-color);
 }
 .dc-docsingle-content .dc-like i {
   width: 50px;
@@ -4743,7 +4799,7 @@ body.dc-userlogin .dc-loginarea {
   white-space: nowrap;
   line-height: inherit;
   text-overflow: ellipsis;
-  color: var(--terthemecolor);
+  color: var(--secthemecolor);
 }
 .dc-docsingle-content .dc-title h2 i {
   font-size: 18px;
@@ -4872,12 +4928,16 @@ body.dc-userlogin .dc-loginarea {
 .dc-registerformhold {
   float: left;
   width: 100%;
-  background: #f7f7f7;
+  
 }
 .dc-registerformmain {
   float: left;
   width: 100%;
   padding: 30px;
+  background-color: var(--background-color);
+  border: 1px solid var(--para-color);
+  border-radius: 20px 20px 0 0;
+  outline:none;
 }
 .dc-registerhead {
   float: left;
@@ -5132,8 +5192,11 @@ body.dc-userlogin .dc-loginarea {
   float: left;
   width: 100%;
   padding: 20px;
+  background-color: var(--background-color);
   text-align: center;
-  border-top: 1px solid #ddd;
+  border: 1px solid #ddd;
+  color: var(--para-color);
+  border-radius: 0 0 20px 20px  ;
 }
 .dc-registerformfooter span {
   display: block;
@@ -7860,7 +7923,7 @@ ul {
   -webkit-box-pack: center;
   -ms-flex-pack: center;
   justify-content: center;
-  color: #fff;
+
   text-align: center;
 }
 .dc-carousel-control-prev {
@@ -7871,34 +7934,34 @@ ul {
 }
 .dc-carousel-control-prev-icon {
   left: 0;
-  color: #999;
+  color: var(--stroke-color);
   width: 100px;
   height: 40px;
   padding-top: 6px;
   position: relative;
   padding-left: 26px;
   border-radius: 20px;
-  background-color: #fff;
+  background-color: var(--tertiary-color);
   transition: all 300ms ease-in-out;
   font: 700 14px/14px "Poppins", sans-serif;
   -webkit-transition: all 300ms ease-in-out;
 }
 .dc-carousel-control-next-icon {
-  color: #999;
+  color: var(--stroke-color);
   position: relative;
   border-radius: 20px;
   width: 100px;
   height: 40px;
   padding-right: 26px;
   padding-top: 6px;
-  background-color: #fff;
+  background-color: var(--tertiary-color);
   font: 700 14px/14px "Poppins", sans-serif;
   transition: all 300ms ease-in-out;
   -webkit-transition: all 300ms ease-in-out;
   right: 0;
 }
 .dc-carousel-control-next-icon:hover {
-  color: var(--terthemecolor);
+  color: var(--stroke-color);
   right: 53px;
   box-shadow: 0 9px 20px rgba(153, 153, 153, 0.5);
 }
@@ -7906,7 +7969,7 @@ ul {
   content: "\e628";
   font-family: "themify";
   position: absolute;
-  color: var(--secthemecolor);
+  color: var(--stroke-color);
   top: 30%;
   left: 48%;
   bottom: 0px;
@@ -7920,7 +7983,7 @@ ul {
   visibility: visible;
 }
 .dc-carousel-control-prev-icon:hover {
-  color: #3d4461;
+  color: var(--stroke-color);
   left: 53px;
   box-shadow: 0 9px 20px rgba(153, 153, 153, 0.5);
 }
@@ -7928,7 +7991,7 @@ ul {
   content: "\e629";
   font-family: "themify";
   position: absolute;
-  color: #ff5851;
+  color: var(--stroke-color);
   top: 30%;
   right: 48%;
   bottom: 0px;
@@ -7940,6 +8003,7 @@ ul {
   transition: all ease-in-out 500ms;
   opacity: 1;
   visibility: visible;
+  color: var(--stroke-color);
 }
 #slider-nav.slick-slide.slick-active {
   width: 50px !important;
@@ -7969,7 +8033,7 @@ ul {
 }
 .dc-num {
   font: 300 120px/104px "Poppins", sans-serif;
-  color: rgba(61, 68, 97, 0.1);
+  color: var(--button-color);
   margin-left: -5px;
 }
 .carousel-item-next.carousel-item-left,
@@ -8075,3 +8139,12 @@ ul {
 .dc-articles-mt > div:nth-child(n + 3) {
   margin-top: 30px;
 }
+/* Footer */
+.icons {
+  font-size:3rem;
+}
+
+.dc-view {
+  color: black;
+}
+
