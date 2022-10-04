@@ -7,7 +7,7 @@ const router = express.Router();
 //* COOKIE PARSER MODULE
 const cookieParser = require("cookie-parser");
 
-//* CLOUD MIDDLEWARE
+//* CLOUDINARY MIDDLEWARE
 const CloudinaryFileUpload = require("../Middleware/fileupload");
 
 //* FILE UPLOAD PACKAGE
@@ -21,6 +21,7 @@ const bcrypt = require("bcrypt");
 
 //* DB INSTANCE SCHEMA
 const Admin = require("../DBSchema/admin_schema");
+
 const Doctor = require("../DBSchema/doc_schema");
 const Patient = require("../DBSchema/patient_schema");
 const Lab = require("../DBSchema/lab_schema");
@@ -137,228 +138,216 @@ router.post(
 );
 
 //* POST PATIENTS REGISTRATIONS
-router.post(
-  "/patients-registration",
+router.post("/patients-registration", async (req, res) => {
+  //* DESTRUCTURED USER FILLED DATA
+  const { full_name, gender, email, age, phone, password, cpassword } =
+    req.body;
 
-  async (req, res) => {
-    //* DESTRUCTURED USER FILLED DATA
-    const { full_name, gender, email, age, phone, password, cpassword } =
-      req.body;
+  //* CHECKING IF THE SAME EMAIL IS REGISTERED IN OTHER COLLECTION IN DATABASE
+  const DoctorEmailExists = await Doctor.findOne({ email: email });
+  const LabEmailExists = await Lab.findOne({ email: email });
 
-    //* CHECKING IF THE SAME EMAIL IS REGISTERED IN OTHER COLLECTION IN DATABASE
-    const DoctorEmailExists = await Doctor.findOne({ email: email });
-    const LabEmailExists = await Lab.findOne({ email: email });
-
-    if (DoctorEmailExists || LabEmailExists) {
-      return res.status(422).json({ error: "Email Already In Use!" });
-    }
-
-    //* CHECKING IF THE FIELDS ARE EMPTY OR NOT
-    if (
-      !age ||
-      !full_name ||
-      !gender ||
-      !email ||
-      !phone ||
-      !password ||
-      !cpassword
-    ) {
-      return res.status(422).json({ error: "Fields Cannot Be Empty!" });
-    }
-    try {
-      //* USER DETAILS WHICH EMAILS MATCH IN DB
-      const userExist = await Patient.findOne({ email: email });
-      //* CHECKING PASS AND C PASS
-      if (password !== cpassword) {
-        return res
-          .status(400)
-          .json({ error: "Password & Confirm Password Mismatch!" });
-      } else if (userExist) {
-        //*  CHECKING EMAIL ALREADY EXIST IN DB
-        return res.status(422).json({ error: "Email Already Exist!" });
-      } else {
-        //* IF USER NOT EXIST CREATING NEW USER IN DB
-        const Patients = new Patient({
-          full_name,
-          gender,
-          email,
-          phone,
-          password,
-          cpassword,
-        });
-
-        //*  HASHING PASSWORD HERE FROM SCHEMA.JS THROUGH MIDDLEWARE
-
-        //* SAVING DATA IN DB
-        await Patients.save();
-
-        //* SENDING RESPONSE
-        res.status(201).json({ response: "User Registered!" });
-      }
-    } catch (error) {
-      res.status(500).json({ error: error.message });
-    }
+  if (DoctorEmailExists || LabEmailExists) {
+    return res.status(422).json({ error: "Email Already In Use!" });
   }
-);
+
+  //* CHECKING IF THE FIELDS ARE EMPTY OR NOT
+  if (
+    !age ||
+    !full_name ||
+    !gender ||
+    !email ||
+    !phone ||
+    !password ||
+    !cpassword
+  ) {
+    return res.status(422).json({ error: "Fields Cannot Be Empty!" });
+  }
+  try {
+    //* USER DETAILS WHICH EMAILS MATCH IN DB
+    const userExist = await Patient.findOne({ email: email });
+    //* CHECKING PASS AND C PASS
+    if (password !== cpassword) {
+      return res
+        .status(400)
+        .json({ error: "Password & Confirm Password Mismatch!" });
+    } else if (userExist) {
+      //*  CHECKING EMAIL ALREADY EXIST IN DB
+      return res.status(422).json({ error: "Email Already Exist!" });
+    } else {
+      //* IF USER NOT EXIST CREATING NEW USER IN DB
+      const Patients = new Patient({
+        full_name,
+        gender,
+        email,
+        phone,
+        password,
+        cpassword,
+      });
+
+      //*  HASHING PASSWORD HERE FROM SCHEMA.JS THROUGH MIDDLEWARE
+
+      //* SAVING DATA IN DB
+      await Patients.save();
+
+      //* SENDING RESPONSE
+      res.status(201).json({ response: "User Registered!" });
+    }
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
 
 //* POST LABS REGISTRATIONS
-router.post(
-  "/labs-registration",
+router.post("/labs-registration", async (req, res) => {
+  //* DESTRUCTURED USER FILLED DATA
+  const {
+    lab_name,
+    lab_type,
+    country,
+    email,
+    phone,
+    city,
+    state,
+    address,
+    password,
+    cpassword,
+  } = req.body;
 
-  async (req, res) => {
-    //* DESTRUCTURED USER FILLED DATA
-    const {
-      lab_name,
-      lab_type,
-      country,
-      email,
-      phone,
-      city,
-      state,
-      address,
-      password,
-      cpassword,
-    } = req.body;
+  //* CHECKING IF THE SAME EMAIL IS REGISTERED IN OTHER COLLECTION IN DATABASE
+  const DoctorEmailExists = await Doctor.findOne({ email: email });
+  const PatientEmailExists = await Patient.findOne({ email: email });
 
-    //* CHECKING IF THE SAME EMAIL IS REGISTERED IN OTHER COLLECTION IN DATABASE
-    const DoctorEmailExists = await Doctor.findOne({ email: email });
-    const PatientEmailExists = await Patient.findOne({ email: email });
-
-    if (DoctorEmailExists || PatientEmailExists) {
-      return res.status(422).json({ error: "Email Already In Use!" });
-    }
-
-    //* CHECKING IF THE FIELDS ARE EMPTY OR NOT
-    if (
-      (!lab_name ||
-        !lab_type ||
-        !country ||
-        !email ||
-        !phone ||
-        !city ||
-        !state ||
-        !address,
-      !password || !cpassword)
-    ) {
-      return res.status(422).json({ error: "Fields Cannot Be Empty!" });
-    }
-    try {
-      //* USER DETAILS WHICH EMAILS MATCH IN DB
-      const userExist = await Lab.findOne({ email: email });
-      //* CHECKING PASS AND C PASS
-      if (password !== cpassword) {
-        return res
-          .status(400)
-          .json({ error: "Password & Confirm Password Mismatch!" });
-      } else if (userExist) {
-        //*  CHECKING EMAIL ALREADY EXIST IN DB
-        return res.status(422).json({ error: "Email Already Exist!" });
-      } else {
-        //* IF USER NOT EXIST CREATING NEW USER IN DB
-        const Labs = new Lab({
-          lab_name,
-          lab_type,
-          country,
-          email,
-          phone,
-          city,
-          state,
-          address,
-          password,
-          cpassword,
-        });
-
-        //*  HASHING PASSWORD HERE FROM SCHEMA.JS THROUGH MIDDLEWARE
-
-        //* SAVING DATA IN DB
-        await Labs.save();
-
-        //* SENDING RESPONSE
-        res.status(201).json({ response: "Lab Registered!" });
-      }
-    } catch (error) {
-      res.status(500).json({ error: error.message });
-    }
+  if (DoctorEmailExists || PatientEmailExists) {
+    return res.status(422).json({ error: "Email Already In Use!" });
   }
-);
+
+  //* CHECKING IF THE FIELDS ARE EMPTY OR NOT
+  if (
+    (!lab_name ||
+      !lab_type ||
+      !country ||
+      !email ||
+      !phone ||
+      !city ||
+      !state ||
+      !address,
+    !password || !cpassword)
+  ) {
+    return res.status(422).json({ error: "Fields Cannot Be Empty!" });
+  }
+  try {
+    //* USER DETAILS WHICH EMAILS MATCH IN DB
+    const userExist = await Lab.findOne({ email: email });
+    //* CHECKING PASS AND C PASS
+    if (password !== cpassword) {
+      return res
+        .status(400)
+        .json({ error: "Password & Confirm Password Mismatch!" });
+    } else if (userExist) {
+      //*  CHECKING EMAIL ALREADY EXIST IN DB
+      return res.status(422).json({ error: "Email Already Exist!" });
+    } else {
+      //* IF USER NOT EXIST CREATING NEW USER IN DB
+      const Labs = new Lab({
+        lab_name,
+        lab_type,
+        country,
+        email,
+        phone,
+        city,
+        state,
+        address,
+        password,
+        cpassword,
+      });
+
+      //*  HASHING PASSWORD HERE FROM SCHEMA.JS THROUGH MIDDLEWARE
+
+      //* SAVING DATA IN DB
+      await Labs.save();
+
+      //* SENDING RESPONSE
+      res.status(201).json({ response: "Lab Registered!" });
+    }
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
 
 //* POST PHARMACY REGISTRATIONS
-router.post(
-  "/pharmacy-registration",
+router.post("/pharmacy-registration", async (req, res) => {
+  //* DESTRUCTURED USER FILLED DATA
+  const {
+    pharmacy_name,
+    country,
+    email,
+    phone,
+    city,
+    state,
+    address,
+    password,
+    cpassword,
+  } = req.body;
 
-  async (req, res) => {
-    //* DESTRUCTURED USER FILLED DATA
-    const {
-      pharmacy_name,
-      country,
-      email,
-      phone,
-      city,
-      state,
-      address,
-      password,
-      cpassword,
-    } = req.body;
+  //* CHECKING IF THE SAME EMAIL IS REGISTERED IN OTHER COLLECTION IN DATABASE
+  const DoctorEmailExists = await Doctor.findOne({ email: email });
+  const PatientEmailExists = await Patient.findOne({ email: email });
 
-    //* CHECKING IF THE SAME EMAIL IS REGISTERED IN OTHER COLLECTION IN DATABASE
-    const DoctorEmailExists = await Doctor.findOne({ email: email });
-    const PatientEmailExists = await Patient.findOne({ email: email });
-
-    if (DoctorEmailExists || PatientEmailExists) {
-      return res.status(422).json({ error: "Email Already In Use!" });
-    }
-
-    //* CHECKING IF THE FIELDS ARE EMPTY OR NOT
-    if (
-      (!pharmacy_name ||
-        !country ||
-        !email ||
-        !phone ||
-        !city ||
-        !state ||
-        !address,
-      !password || !cpassword)
-    ) {
-      return res.status(422).json({ error: "Fields Cannot Be Empty!" });
-    }
-    try {
-      //* USER DETAILS WHICH EMAILS MATCH IN DB
-      const userExist = await Pharmacy.findOne({ email: email });
-      //* CHECKING PASS AND C PASS
-      if (password !== cpassword) {
-        return res
-          .status(400)
-          .json({ error: "Password & Confirm Password Mismatch!" });
-      } else if (userExist) {
-        //*  CHECKING EMAIL ALREADY EXIST IN DB
-        return res.status(422).json({ error: "Email Already Exist!" });
-      } else {
-        //* IF USER NOT EXIST CREATING NEW USER IN DB
-        const Pharmacies = new Pharmacy({
-          pharmacy_name,
-          country,
-          email,
-          phone,
-          city,
-          state,
-          address,
-          password,
-          cpassword,
-        });
-
-        //*  HASHING PASSWORD HERE FROM SCHEMA.JS THROUGH MIDDLEWARE
-
-        //* SAVING DATA IN DB
-        await Pharmacies.save();
-
-        //* SENDING RESPONSE
-        res.status(201).json({ response: "Pharmacy Registered!" });
-      }
-    } catch (error) {
-      res.status(500).json({ error: error.message });
-    }
+  if (DoctorEmailExists || PatientEmailExists) {
+    return res.status(422).json({ error: "Email Already In Use!" });
   }
-);
+
+  //* CHECKING IF THE FIELDS ARE EMPTY OR NOT
+  if (
+    (!pharmacy_name ||
+      !country ||
+      !email ||
+      !phone ||
+      !city ||
+      !state ||
+      !address,
+    !password || !cpassword)
+  ) {
+    return res.status(422).json({ error: "Fields Cannot Be Empty!" });
+  }
+  try {
+    //* USER DETAILS WHICH EMAILS MATCH IN DB
+    const userExist = await Pharmacy.findOne({ email: email });
+    //* CHECKING PASS AND C PASS
+    if (password !== cpassword) {
+      return res
+        .status(400)
+        .json({ error: "Password & Confirm Password Mismatch!" });
+    } else if (userExist) {
+      //*  CHECKING EMAIL ALREADY EXIST IN DB
+      return res.status(422).json({ error: "Email Already Exist!" });
+    } else {
+      //* IF USER NOT EXIST CREATING NEW USER IN DB
+      const Pharmacies = new Pharmacy({
+        pharmacy_name,
+        country,
+        email,
+        phone,
+        city,
+        state,
+        address,
+        password,
+        cpassword,
+      });
+
+      //*  HASHING PASSWORD HERE FROM SCHEMA.JS THROUGH MIDDLEWARE
+
+      //* SAVING DATA IN DB
+      await Pharmacies.save();
+
+      //* SENDING RESPONSE
+      res.status(201).json({ response: "Pharmacy Registered!" });
+    }
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
 
 //* POST DOCTOR LOGIN
 router.post("/login-doctor", async (req, res) => {
@@ -374,6 +363,7 @@ router.post("/login-doctor", async (req, res) => {
 
     //* GETTING THE SPECIFIC DATA OF SAME EMAIL
     const UserLogin = await Doctor.findOne({ email: Email });
+
     if (!UserLogin || UserLogin == null) {
       return res.status(404).json({ message: "No User Found" });
     } else {
@@ -704,11 +694,6 @@ router.patch("/add_medicine", async (req, res) => {
   } catch (error) {
     console.log(error);
   }
-});
-
-//*  UPLOAD FILE
-router.post("/upload-img", (req, res) => {
-  res.send("File Uploaded!");
 });
 
 //*  GET ABOUT

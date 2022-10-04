@@ -13,6 +13,7 @@ export class HeaderComponent implements OnInit {
 
   LoginForm = new FormGroup({});
   IsLoggedIn = false;
+  ApiUserDetails: any;
 
   constructor(private _FormBuilder: FormBuilder, private _Service: Service) {
     this.LoginForm = this._FormBuilder.group({
@@ -28,7 +29,10 @@ export class HeaderComponent implements OnInit {
         if (data) {
           this.IsLoggedIn = true;
         }
+        //* SETTING API RESPONSE FROM API IN GLOBAL VARIABLE
+        this.ApiUserDetails = data.response;
         console.log(data);
+        console.log(this.ApiUserDetails.full_name);
       });
       this.LoginForm.patchValue({
         login_email: '',
@@ -39,6 +43,7 @@ export class HeaderComponent implements OnInit {
         if (data) {
           this.IsLoggedIn = true;
         }
+        this.ApiUserDetails = data;
         console.log(data);
       });
       this.LoginForm.patchValue({
@@ -50,6 +55,7 @@ export class HeaderComponent implements OnInit {
         if (data) {
           this.IsLoggedIn = true;
         }
+        this.ApiUserDetails = data;
         console.log(data);
       });
       this.LoginForm.patchValue({
@@ -61,6 +67,7 @@ export class HeaderComponent implements OnInit {
         if (data) {
           this.IsLoggedIn = true;
         }
+        this.ApiUserDetails = data;
         console.log(data);
       });
       this.LoginForm.patchValue({
@@ -73,6 +80,7 @@ export class HeaderComponent implements OnInit {
   }
   Logout() {
     this._Service.LogOut(this.LoginForm.value).subscribe((data) => {
+      this.ApiUserDetails = data;
       console.log(data);
     });
   }

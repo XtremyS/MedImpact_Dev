@@ -1,18 +1,18 @@
 //* JWT MODULE
 const jwt = require("jsonwebtoken");
 
-//USER DB SCHEMA
+//* DOCTOR DB SCHEMA
 const Doctor = require("../DBSchema/doc_schema");
 
 const Middleware = async (req, res, next) => {
   try {
-    //GETTING TOKEN FROM USER
+    //* GETTING TOKEN FROM USER
     const token = req.cookies.jwt;
 
-    //VERIFYING TOKEN
+    //* VERIFYING TOKEN
     const verifyToken = jwt.verify(token, process.env.AUTH_KEY);
 
-    //GETTING THAT USER WHOSE TOKEN IS VERIFIED
+    //* GETTING THAT USER WHOSE TOKEN IS VERIFIED
     const rootUser = await Doctor.findOne({
       _id: verifyToken._id,
       "tokens.token": token,
@@ -32,8 +32,5 @@ const Middleware = async (req, res, next) => {
     res.status(401).send("Unauthorized Token!" + error);
   }
 };
-
-
-
 
 module.exports = Middleware;
