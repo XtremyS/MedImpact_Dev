@@ -20,8 +20,9 @@
             <div class="dc-joinforms">
               <form
                 [formGroup]="DoctorForm"
+                (ngSubmit)="Register()"
                 method="POST"
-                action="/upload-img"
+                enctype="multipart/form-data"
                 class="dc-formtheme dc-formregister"
               >
                 <fieldset class="dc-registerformgroup">
@@ -75,6 +76,127 @@
                       placeholder="Age"
                     />
                   </div>
+                  <!--* EDUCATION FIELD  -->
+                  <div class="form-group form-group-half">
+                    <mat-form-field class="example-chip-list" appearance="fill">
+                      <mat-chip-list
+                        #chipListEducation
+                        aria-label="Education selection"
+                      >
+                        <mat-chip
+                          class="mat_chips"
+                          *ngFor="let Data of EducationValue"
+                          (removed)="RemoveEducation(Data)"
+                        >
+                          {{ Data }}
+                          <button matChipRemove>
+                            <mat-icon>cancel</mat-icon>
+                          </button>
+                        </mat-chip>
+                        <input
+                          placeholder="Add Education"
+                          #EducationInput
+                          [formControl]="EducationFormControl"
+                          [matAutocomplete]="autoEducation"
+                          [matChipInputFor]="chipListEducation"
+                          [matChipInputSeparatorKeyCodes]="
+                            separatorKeysCodesEducation
+                          "
+                          (matChipInputTokenEnd)="AddEducation($event)"
+                        />
+                      </mat-chip-list>
+                      <mat-autocomplete
+                        #autoEducation="matAutocomplete"
+                        (optionSelected)="SelectedEducation($event)"
+                      >
+                        <mat-option
+                          *ngFor="let Data of FilterdEducationArray | async"
+                          [value]="Data"
+                        >
+                          {{ Data }}
+                        </mat-option>
+                      </mat-autocomplete>
+                    </mat-form-field>
+                  </div>
+                  <!--* SPECIALITY FIELD -->
+                  <div class="form-group form-group-half">
+                    <mat-form-field class="example-chip-list" appearance="fill">
+                      <mat-chip-list
+                        #chipListSpeciality
+                        aria-label="Speciality selection"
+                      >
+                        <mat-chip
+                          class="mat_chips"
+                          *ngFor="let Data of SpecialityValue"
+                          (removed)="RemoveSpeciality(Data)"
+                        >
+                          {{ Data }}
+                          <button matChipRemove>
+                            <mat-icon>cancel</mat-icon>
+                          </button>
+                        </mat-chip>
+                        <input
+                          placeholder="Add Speciality"
+                          #SpecialityInput
+                          [formControl]="SpecialityFormControl"
+                          [matAutocomplete]="autoSpeciality"
+                          [matChipInputFor]="chipListSpeciality"
+                          [matChipInputSeparatorKeyCodes]="
+                            separatorKeysCodesSpeciality
+                          "
+                          (matChipInputTokenEnd)="AddSpeciality($event)"
+                        />
+                      </mat-chip-list>
+                      <mat-autocomplete
+                        #autoSpeciality="matAutocomplete"
+                        (optionSelected)="SelectedSpeciality($event)"
+                      >
+                        <mat-option
+                          *ngFor="let Data of FilterdSpecialityArray | async"
+                          [value]="Data"
+                        >
+                          {{ Data }}
+                        </mat-option>
+                      </mat-autocomplete>
+                    </mat-form-field>
+                  </div>
+
+                  <div class="form-group form-group-full">
+                    <input
+                      formControlName="clinic_address"
+                      type="text"
+                      name="clinic_address"
+                      class="form-control"
+                      placeholder="Clinic Address"
+                    />
+                  </div>
+                  <div class="form-group form-group-half">
+                    <input
+                      formControlName="city"
+                      type="text"
+                      name="City"
+                      class="form-control"
+                      placeholder="City"
+                    />
+                  </div>
+                  <div class="form-group form-group-half">
+                    <input
+                      formControlName="state"
+                      type="text"
+                      name="State"
+                      class="form-control"
+                      placeholder="State"
+                    />
+                  </div>
+                  <div class="form-group form-group-full">
+                    <input
+                      formControlName="country"
+                      type="text"
+                      name="Country"
+                      class="form-control"
+                      placeholder="Country"
+                    />
+                  </div>
                   <div class="form-group form-group-half">
                     <input
                       formControlName="password"
@@ -95,13 +217,18 @@
                   </div>
 
                   <div class="form-group form-group-full">
-                    <input class="form-control form-control-sm" (change)="GetImg($event)" formControlName="img" id="formFileSm" type="file">
+                    <input
+                      class="form-control form-control-sm"
+                      (change)="GetImg($event)"
+                      formControlName="img"
+                      name="img"
+                      id="formFileSm"
+                      type="file"
+                    />
                   </div>
 
                   <div class="form-group">
-                    <button type="submit" (click)="Register()" class="dc-btn">
-                      Register
-                    </button>
+                    <button type="submit" class="dc-btn">Register</button>
                   </div>
                 </fieldset>
               </form>

@@ -11,8 +11,9 @@ import { Service } from 'src/services/service.service';
 })
 export class PatientRegistrationComponent implements OnInit {
   PatientForm = new FormGroup({});
-
-  PageTitle = 'MedImpact | Register Patient';
+  ImgFormData = new FormData();
+  Images: any;
+  PageTitle = 'Book My Health | Register Patient';
 
   constructor(
     private Route: Router,
@@ -32,9 +33,19 @@ export class PatientRegistrationComponent implements OnInit {
       password: '',
       cpassword: '',
       role: 'Patient',
+      img: '',
     });
   }
+
+  GetImg(event: any) {
+    if (event.target.files.length > 0) {
+      const file = event.target.files[0];
+      this.Images = file;
+      console.log(this.Images);
+    }
+  }
   async Register() {
+    this.ImgFormData.append('img', this.Images);
     this._Service.RegisterPatient(this.PatientForm.value).subscribe((data) => {
       console.log(data);
     });

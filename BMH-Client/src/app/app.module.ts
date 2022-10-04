@@ -28,6 +28,8 @@ import {
   LocationStrategy,
 } from '@angular/common';
 import { DoctorListComponent } from './pages/doctor-list/doctor-list.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MaterialModuleModule } from './pages/material-module/material-module.module';
 @NgModule({
   declarations: [
     AppComponent,
@@ -56,6 +58,8 @@ import { DoctorListComponent } from './pages/doctor-list/doctor-list.component';
     AppRoutingModule,
     HttpClientModule,
     ReactiveFormsModule,
+    BrowserAnimationsModule,
+    MaterialModuleModule,
   ],
   providers: [
     Location,
