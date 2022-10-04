@@ -8,7 +8,7 @@ import { Title } from '@angular/platform-browser';
   styleUrls: ['./admin-dashboard.component.scss'],
 })
 export class AdminDashboardComponent implements OnInit {
-  PageTitle = 'Book My Health | Admin';
+  PageTitle = 'MedImpact | Admin';
   constructor(private _titleService: Title) {}
   ngOnInit(): void {
     this._titleService.setTitle(this.PageTitle);

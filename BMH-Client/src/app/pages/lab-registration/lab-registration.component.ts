@@ -10,7 +10,7 @@ import { Title } from '@angular/platform-browser';
   styleUrls: ['./lab-registration.component.scss'],
 })
 export class LabRegistrationComponent implements OnInit {
-  PageTitle = 'Book My Health | Register Lab';
+  PageTitle = 'MedImpact | Register Lab';
 
   LabForm = new FormGroup({});
   constructor(

@@ -7,7 +7,7 @@ import { Title } from '@angular/platform-browser';
   styleUrls: ['./pathology.component.scss'],
 })
 export class PathologyComponent implements OnInit {
-  PageTitle = 'Book My Health | Pathologies';
+  PageTitle = 'MedImpact | Pathologies';
 
   constructor(private _titleService: Title) {}
 

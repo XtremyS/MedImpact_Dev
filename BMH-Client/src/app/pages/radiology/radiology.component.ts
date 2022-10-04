@@ -7,7 +7,7 @@ import { Title } from '@angular/platform-browser';
   styleUrls: ['./radiology.component.scss'],
 })
 export class RadiologyComponent implements OnInit {
-  PageTitle = 'Book My Health | Radiologies';
+  PageTitle = 'MedImpact | Radiologies';
   constructor(private _titleService: Title) {}
 
   ngOnInit(): void {

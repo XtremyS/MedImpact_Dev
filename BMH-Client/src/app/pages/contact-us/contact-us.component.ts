@@ -7,7 +7,7 @@ import { Title } from '@angular/platform-browser';
   styleUrls: ['./contact-us.component.scss'],
 })
 export class ContactUsComponent implements OnInit {
-  PageTitle = 'Book My Health | Contact Us';
+  PageTitle = 'MedImpact | Contact Us';
   constructor(private _titleService: Title) {}
   ngOnInit(): void {
     this._titleService.setTitle(this.PageTitle);

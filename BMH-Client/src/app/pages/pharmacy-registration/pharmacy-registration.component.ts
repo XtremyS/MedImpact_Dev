@@ -12,7 +12,7 @@ import { Service } from 'src/services/service.service';
 export class PharmacyRegistrationComponent implements OnInit {
   PharmacyForm = new FormGroup({});
 
-  PageTitle = 'Book My Health | Pathologies';
+  PageTitle = 'MedImpact | Pathologies';
 
   constructor(
     private Route: Router,

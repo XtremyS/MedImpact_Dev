@@ -7,7 +7,7 @@ import { Title } from '@angular/platform-browser';
   styleUrls: ['./error-page.component.scss'],
 })
 export class ErrorPageComponent implements OnInit {
-  PageTitle = 'Book My Health | Error 404';
+  PageTitle = 'MedImpact | Error 404';
 
   constructor(private _titleService: Title) {}
   ngOnInit(): void {

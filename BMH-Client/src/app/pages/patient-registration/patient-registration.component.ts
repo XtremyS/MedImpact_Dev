@@ -12,7 +12,7 @@ import { Service } from 'src/services/service.service';
 export class PatientRegistrationComponent implements OnInit {
   PatientForm = new FormGroup({});
 
-  PageTitle = 'Book My Health | Register Patient';
+  PageTitle = 'MedImpact | Register Patient';
 
   constructor(
     private Route: Router,

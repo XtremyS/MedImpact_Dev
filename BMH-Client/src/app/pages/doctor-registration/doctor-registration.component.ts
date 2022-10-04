@@ -11,7 +11,7 @@ import { Service } from 'src/services/service.service';
 })
 export class DoctorRegistrationComponent implements OnInit {
   DoctorForm = new FormGroup({});
-  PageTitle = 'Book My Health | Register Doctor';
+  PageTitle = 'MedImpact | Register Doctor';
   ImgFormData = new FormData();
   Images: any;
 

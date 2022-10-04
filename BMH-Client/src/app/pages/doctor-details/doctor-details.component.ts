@@ -8,7 +8,7 @@ import { Title } from '@angular/platform-browser';
 })
 export class DoctorDetailsComponent implements OnInit {
   DoctorName = 'Test Doctor';
-  PageTitle = 'Book My Health | ';
+  PageTitle = 'MedImpact | ';
 
   constructor(private _titleService: Title) {}
 
