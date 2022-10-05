@@ -67,9 +67,7 @@ export class HeaderComponent implements OnInit {
           //* SETTING JWT TOKEN IN LOCAL STORAGE
           this._AuthService.SetLocalAuthToken(AuthToken);
           //* SETTING USER DATA FROM API TO  LOCAL
-          this._AuthService.SetUserDataLocal(
-            JSON.stringify(this.ApiUserDetails)
-          );
+          this._AuthService.SetUserDataLocal(this.ApiUserDetails);
         }
       });
       this.LoginForm.patchValue({

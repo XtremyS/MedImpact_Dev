@@ -8,11 +8,13 @@ export class AuthService {
   UserDetails = localStorage.getItem('99105112104101114116101120116');
 
   //! SETTING USER DATA IN LOCAL STORAGE
-  SetUserDataLocal(Data: any) {
+  SetUserDataLocal(UserData: any) {
+    let Data = JSON.stringify(UserData);
     localStorage.setItem('99105112104101114116101120116', Data);
   }
   GetUserDataLocal() {
-    return JSON.stringify(this.UserDetails);
+    let Data = JSON.parse(this.UserDetails!);
+    return Data;
   }
 
   //! MANAGING AUTHTOKEN IN LOCAL STORAGE

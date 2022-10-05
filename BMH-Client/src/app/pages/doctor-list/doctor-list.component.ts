@@ -19,8 +19,8 @@ export class DoctorListComponent implements OnInit {
       this.DocArray = res.body.data;
     });
     //* GETTING USER DATA FROM LOCAL STORAGE
-    let Data = this._AuthService.GetUserDataLocal();
-    this.PatientData = JSON.parse(Data);
+    this.PatientData = this._AuthService.GetUserDataLocal();
+    console.log(this.PatientData);
   }
 
   BookAppointment(DoctorDetails: any) {
@@ -29,6 +29,8 @@ export class DoctorListComponent implements OnInit {
       patients_name: this.PatientData.full_name,
       patients_age: this.PatientData.age,
       visting_reason: this.PatientData.visting_reason,
+      patients_address: this.PatientData.address,
+      patients_phone: this.PatientData.phone,
     };
     this._Service.BookDocAppointment(DoctorObject).subscribe((res) => {
       console.log('RES BOOK APPINT', res);

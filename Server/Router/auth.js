@@ -422,6 +422,10 @@ router.post("/login-patient", async (req, res) => {
           gender: 1,
           date: 1,
           tokens: 1,
+          age: 1,
+          address: 1,
+          phone: 1,
+          appointmen_status: 1,
         }
       );
 
@@ -616,6 +620,8 @@ router.patch("/book_appointment", async (req, res) => {
     const PatientName = req.body.patients_name;
     const PatientAge = req.body.patients_age;
     const PatientVisitingReason = req.body.visting_reason;
+    const PatientAddress = req.body.patients_address;
+    const PatientPhone = req.body.patients_phone;
 
     //* UPDATING SPECIFIC USER WITH ID
     const UpdateUser = await Doctor.updateOne(
@@ -626,6 +632,9 @@ router.patch("/book_appointment", async (req, res) => {
             patients_name: PatientName,
             patients_age: PatientAge,
             visting_reason: PatientVisitingReason,
+            appointmen_status: "pending",
+            patients_address: PatientAddress,
+            patients_phone: PatientPhone,
           },
         },
       }
