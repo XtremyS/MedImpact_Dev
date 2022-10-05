@@ -23,22 +23,33 @@ export class Service {
   GetDoctorUrl = '/doc-list';
   GetLabDataUrl = '/lab-list';
 
+  //! BOOKING DOCTOR APPOINTMENT API
+  UrlBookAppointment = '/book_appointment';
+
   //! LOGOUT APIS
   LogOutUrl = '/logout';
 
   //! REGISTRATION FUNCTIONS
   RegisterDoctor(Data: any): Observable<any> {
-    return this.http.post(this.UrlDoctor, Data);
+    return this.http.post(this.UrlDoctor, Data, {
+      observe: 'response',
+    });
   }
 
   RegisterPatient(Data: any): Observable<any> {
-    return this.http.post(this.UrlPatients, Data);
+    return this.http.post(this.UrlPatients, Data, {
+      observe: 'response',
+    });
   }
   RegisterLabs(Data: any): Observable<any> {
-    return this.http.post(this.UrlLabs, Data);
+    return this.http.post(this.UrlLabs, Data, {
+      observe: 'response',
+    });
   }
   RegisterPharmacy(Data: any): Observable<any> {
-    return this.http.post(this.UrlPharmacy, Data);
+    return this.http.post(this.UrlPharmacy, Data, {
+      observe: 'response',
+    });
   }
 
   //! LOGIN FUNCTIONS
@@ -65,12 +76,22 @@ export class Service {
     });
   }
 
+  BookDocAppointment(Data: any): Observable<any> {
+    return this.http.patch(this.UrlBookAppointment, Data, {
+      observe: 'response',
+    });
+  }
+
   //! GET FUNCTIONS
   GetDocData(): Observable<any> {
-    return this.http.get(this.GetDoctorUrl);
+    return this.http.get(this.GetDoctorUrl, {
+      observe: 'response',
+    });
   }
   GetLabData(): Observable<any> {
-    return this.http.get(this.GetLabDataUrl);
+    return this.http.get(this.GetLabDataUrl, {
+      observe: 'response',
+    });
   }
 
   //! LOGOUT FUNCTION

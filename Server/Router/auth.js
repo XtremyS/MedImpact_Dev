@@ -115,6 +115,8 @@ router.post(
               country,
               education,
               speciality,
+              isVerified: false,
+              SuperExperinced: false,
               password,
               cpassword,
               img: ImgUrl,
@@ -413,6 +415,15 @@ router.post("/login-patient", async (req, res) => {
     if (!UserLogin || UserLogin == null) {
       res.status(404).json({ message: "No User Found" });
     } else {
+      const UserLoginSpecificDetails = await Patient.findOne(
+        { email: Email },
+        {
+          full_name: 1,
+          gender: 1,
+          date: 1,
+        }
+      );
+
       //* DECRYPTING DB USER PASSWORD AND COMPARING IT FOR LOGIN
       const HashPassword = await bcrypt.compare(Password, UserLogin.password);
 
@@ -428,9 +439,10 @@ router.post("/login-patient", async (req, res) => {
           httpOnly: true,
         });
 
-        return res
-          .status(200)
-          .json({ response: UserLogin, message: "Singed in Successfully!" });
+        return res.status(200).json({
+          response: UserLoginSpecificDetails,
+          message: "Singed in Successfully!",
+        });
       } else {
         return res
           .status(400)
@@ -543,7 +555,6 @@ router.get("/doc-list", async (req, res) => {
       {
         full_name: 1,
         gender: 1,
-        email: 1,
         age: 1,
         img: 1,
         clinic_address: 1,
@@ -552,6 +563,8 @@ router.get("/doc-list", async (req, res) => {
         country: 1,
         education: 1,
         speciality: 1,
+        isVerified: 1,
+        SuperExperinced: 1,
       }
     );
 
@@ -619,7 +632,9 @@ router.patch("/book_appointment", async (req, res) => {
 
     //* SENDING RESPONSE
     if (UpdateUser.acknowledged) {
-      res.status(201).json({ response: "Details Updated Successfully!" });
+      res
+        .status(201)
+        .json({ response: "Appoinment reqeust sent successfully!" });
     } else {
       res.status(400).json({ error: "Failed To Updated User Profile!" });
     }

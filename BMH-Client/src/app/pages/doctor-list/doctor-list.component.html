@@ -5,7 +5,11 @@
         <div class="dc-searchresult-holder">
           <div class="dc-searchresult-head">
             <h4>Doctors lists</h4>
-
+            <ng-container *ngIf="DocArray == ''">
+              <div>
+                <p>No Doctors to show.</p>
+              </div>
+            </ng-container>
             <div class="dc-rightarea">
               <div class="dc-select">
                 <select>
@@ -20,6 +24,7 @@
               </div>
             </div>
           </div>
+
           <div class="dc-searchresult-grid">
             <div class="row">
               <ng-container *ngFor="let data of DocArray">
@@ -45,10 +50,12 @@
                           <a href="javascript:void(0);"
                             >Dr. {{ data.full_name }}
                           </a>
+                          <ng-container *ngIf="data.IsVerified">
+                            <i class="fa fa-check-circle dc-awardtooltip"
+                              ><em>Medical Registration Verified</em></i
+                            >
+                          </ng-container>
                           <i class="fa fa-award dc-awardtooltip"
-                            ><em>Medical Registration Verified</em></i
-                          >
-                          <i class="fa fa-check-circle dc-awardtooltip"
                             ><em>Medical Registration Verified</em></i
                           >
                         </h3>
@@ -78,7 +85,7 @@
                           ><i class="ti-calendar"></i> Mo, Tu,
                           <em class="dc-dayon">We</em>, Th, Fr, Sa</span
                         >
-                        <a href="javascript:void(0);" class="dc-btn"
+                        <a (click)="BookAppointment(data)" class="dc-btn"
                           >Book Now</a
                         >
                       </div>

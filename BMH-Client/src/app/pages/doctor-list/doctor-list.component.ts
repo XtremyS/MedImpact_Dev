@@ -13,9 +13,19 @@ export class DoctorListComponent implements OnInit {
 
   ngOnInit(): void {
     this._Service.GetDocData().subscribe((res) => {
-      this.DocArray = res.data;
+      this.DocArray = res.body.data;
+    });
+  }
 
-      // console.log(res.data);
+  BookAppointment(DoctorDetails: any) {
+    let DoctorObject = {
+      _id: DoctorDetails._id,
+      patients_name: 'TESTING',
+      patients_age: 23,
+      visting_reason: 'cancer',
+    };
+    this._Service.BookDocAppointment(DoctorObject).subscribe((res) => {
+      console.log('RES BOOK APPINT', res);
     });
   }
 }

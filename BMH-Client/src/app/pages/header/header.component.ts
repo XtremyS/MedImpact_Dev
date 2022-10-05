@@ -36,7 +36,7 @@ export class HeaderComponent implements OnInit {
   async Login() {
     if (this.model.option == 'Doctor') {
       this._Service.DoctorLogin(this.LoginForm.value).subscribe((data) => {
-        console.log(data.status);
+        console.log(data.body.response);
         if (data.status == 200) {
           //* SETTING API RESPONSE FROM API IN GLOBAL VARIABLE
           this.ApiUserDetails = data.body.response;
@@ -54,7 +54,7 @@ export class HeaderComponent implements OnInit {
       });
     } else if (this.model.option == 'Patient') {
       this._Service.PatientLogin(this.LoginForm.value).subscribe((data) => {
-        console.log(data.status);
+        console.log(data.body.response);
         if (data.status == 200) {
           //* SETTING API RESPONSE FROM API IN GLOBAL VARIABLE
           this.ApiUserDetails = data.body.response;
@@ -72,7 +72,7 @@ export class HeaderComponent implements OnInit {
       });
     } else if (this.model.option == 'Lab') {
       this._Service.LabLogin(this.LoginForm.value).subscribe((data) => {
-        console.log(data.status);
+        console.log(data.body.response);
         if (data.status == 200) {
           //* SETTING API RESPONSE FROM API IN GLOBAL VARIABLE
           this.ApiUserDetails = data.body.response;
@@ -90,7 +90,7 @@ export class HeaderComponent implements OnInit {
       });
     } else if (this.model.option == 'Pharmacy') {
       this._Service.PharmacyLogin(this.LoginForm.value).subscribe((data) => {
-        console.log(data.status);
+        console.log(data.body.response);
         if (data.status == 200) {
           //* SETTING API RESPONSE FROM API IN GLOBAL VARIABLE
           this.ApiUserDetails = data.body.response;

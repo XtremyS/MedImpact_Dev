@@ -22,6 +22,7 @@ const UserSchema = new mongoose.Schema({
   age: { type: Number, required: true },
   role: { type: String },
   isVerified: { type: Boolean },
+  SuperExperinced: { type: Boolean },
   img: { type: String, required: true },
   password: { type: String, required: true },
   cpassword: { type: String, required: true },
