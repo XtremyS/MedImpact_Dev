@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Service } from 'src/services/service.service';
+import { AuthService } from '../../../services/auth.service';
 
 @Component({
   selector: 'app-header',
@@ -14,25 +15,38 @@ export class HeaderComponent implements OnInit {
   LoginForm = new FormGroup({});
   IsLoggedIn = false;
   ApiUserDetails: any;
+  LocalStorageAuthToken = this._AuthService.GetLocalAuthToken();
 
-  constructor(private _FormBuilder: FormBuilder, private _Service: Service) {
+  constructor(
+    private _FormBuilder: FormBuilder,
+    private _Service: Service,
+    private _AuthService: AuthService
+  ) {
     this.LoginForm = this._FormBuilder.group({
       login_email: '',
       login_password: '',
     });
   }
-  ngOnInit() {}
+  ngOnInit() {
+    if (this.LocalStorageAuthToken) {
+      this.IsLoggedIn = true;
+    }
+  }
 
   async Login() {
     if (this.model.option == 'Doctor') {
       this._Service.DoctorLogin(this.LoginForm.value).subscribe((data) => {
-        if (data) {
+        console.log(data.status);
+        if (data.status == 200) {
+          //* SETTING API RESPONSE FROM API IN GLOBAL VARIABLE
+          this.ApiUserDetails = data.body.response;
           this.IsLoggedIn = true;
+          //* GETTING LAST AUTH TOKEN OF USER FROM API AND SETTING IT IN LOCAL STORAGE
+          let AuthToken =
+            this.ApiUserDetails.tokens[this.ApiUserDetails.tokens.length - 1]
+              .token;
+          this._AuthService.SetLocalAuthToken(AuthToken);
         }
-        //* SETTING API RESPONSE FROM API IN GLOBAL VARIABLE
-        this.ApiUserDetails = data.response;
-        console.log(data);
-        console.log(this.ApiUserDetails.full_name);
       });
       this.LoginForm.patchValue({
         login_email: '',
@@ -40,11 +54,17 @@ export class HeaderComponent implements OnInit {
       });
     } else if (this.model.option == 'Patient') {
       this._Service.PatientLogin(this.LoginForm.value).subscribe((data) => {
-        if (data) {
+        console.log(data.status);
+        if (data.status == 200) {
+          //* SETTING API RESPONSE FROM API IN GLOBAL VARIABLE
+          this.ApiUserDetails = data.body.response;
           this.IsLoggedIn = true;
+          //* GETTING LAST AUTH TOKEN OF USER FROM API AND SETTING IT IN LOCAL STORAGE
+          let AuthToken =
+            this.ApiUserDetails.tokens[this.ApiUserDetails.tokens.length - 1]
+              .token;
+          this._AuthService.SetLocalAuthToken(AuthToken);
         }
-        this.ApiUserDetails = data;
-        console.log(data);
       });
       this.LoginForm.patchValue({
         login_email: '',
@@ -52,11 +72,17 @@ export class HeaderComponent implements OnInit {
       });
     } else if (this.model.option == 'Lab') {
       this._Service.LabLogin(this.LoginForm.value).subscribe((data) => {
-        if (data) {
+        console.log(data.status);
+        if (data.status == 200) {
+          //* SETTING API RESPONSE FROM API IN GLOBAL VARIABLE
+          this.ApiUserDetails = data.body.response;
           this.IsLoggedIn = true;
+          //* GETTING LAST AUTH TOKEN OF USER FROM API AND SETTING IT IN LOCAL STORAGE
+          let AuthToken =
+            this.ApiUserDetails.tokens[this.ApiUserDetails.tokens.length - 1]
+              .token;
+          this._AuthService.SetLocalAuthToken(AuthToken);
         }
-        this.ApiUserDetails = data;
-        console.log(data);
       });
       this.LoginForm.patchValue({
         login_email: '',
@@ -64,11 +90,17 @@ export class HeaderComponent implements OnInit {
       });
     } else if (this.model.option == 'Pharmacy') {
       this._Service.PharmacyLogin(this.LoginForm.value).subscribe((data) => {
-        if (data) {
+        console.log(data.status);
+        if (data.status == 200) {
+          //* SETTING API RESPONSE FROM API IN GLOBAL VARIABLE
+          this.ApiUserDetails = data.body.response;
           this.IsLoggedIn = true;
+          //* GETTING LAST AUTH TOKEN OF USER FROM API AND SETTING IT IN LOCAL STORAGE
+          let AuthToken =
+            this.ApiUserDetails.tokens[this.ApiUserDetails.tokens.length - 1]
+              .token;
+          this._AuthService.SetLocalAuthToken(AuthToken);
         }
-        this.ApiUserDetails = data;
-        console.log(data);
       });
       this.LoginForm.patchValue({
         login_email: '',
@@ -76,12 +108,16 @@ export class HeaderComponent implements OnInit {
       });
       console.log(this.LoginForm.value);
     }
-    console.log(this.model);
   }
   Logout() {
     this._Service.LogOut(this.LoginForm.value).subscribe((data) => {
       this.ApiUserDetails = data;
-      console.log(data);
+      console.log(data.message);
+      if (data.message == 'User Logout Successfully!') {
+        this.IsLoggedIn = false;
+        this._AuthService.RemoveLocalAuthToken();
+        location.reload();
+      }
     });
   }
 }

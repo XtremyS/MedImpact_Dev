@@ -203,8 +203,5 @@ export class DoctorRegistrationComponent implements OnInit {
     this._Service.RegisterDoctor(this.ImgFormData).subscribe((data) => {
       console.log(data);
     });
-    // this._Service.FileUpload(this.ImgFormData).subscribe((data) => {
-    //   console.log(data);
-    // });
   }
 }

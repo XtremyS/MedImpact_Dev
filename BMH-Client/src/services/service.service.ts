@@ -43,18 +43,26 @@ export class Service {
 
   //! LOGIN FUNCTIONS
   DoctorLogin(Data: any): Observable<any> {
-    return this.http.post(this.UrlDocLogin, Data);
+    return this.http.post(this.UrlDocLogin, Data, {
+      observe: 'response',
+    });
   }
 
   PatientLogin(Data: any): Observable<any> {
-    return this.http.post(this.UrlPatientsLogin, Data);
+    return this.http.post(this.UrlPatientsLogin, Data, {
+      observe: 'response',
+    });
   }
 
   LabLogin(Data: any): Observable<any> {
-    return this.http.post(this.UrlLabLogin, Data);
+    return this.http.post(this.UrlLabLogin, Data, {
+      observe: 'response',
+    });
   }
   PharmacyLogin(Data: any): Observable<any> {
-    return this.http.post(this.UrlPharmacyLogin, Data);
+    return this.http.post(this.UrlPharmacyLogin, Data, {
+      observe: 'response',
+    });
   }
 
   //! GET FUNCTIONS

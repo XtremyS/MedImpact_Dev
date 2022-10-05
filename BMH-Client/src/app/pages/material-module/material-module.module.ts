@@ -3,12 +3,14 @@ import { MatChipsModule } from '@angular/material/chips';
 import { MatIconModule } from '@angular/material/icon';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatDialogModule } from '@angular/material/dialog';
 
 const MaterialComponent = [
   MatChipsModule,
   MatIconModule,
   MatFormFieldModule,
   MatAutocompleteModule,
+  MatDialogModule,
 ];
 
 @NgModule({

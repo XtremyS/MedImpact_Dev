@@ -30,6 +30,7 @@ import {
 import { DoctorListComponent } from './pages/doctor-list/doctor-list.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModuleModule } from './pages/material-module/material-module.module';
+import { CookieService } from 'ngx-cookie-service';
 @NgModule({
   declarations: [
     AppComponent,
@@ -64,6 +65,7 @@ import { MaterialModuleModule } from './pages/material-module/material-module.mo
   providers: [
     Location,
     { provide: LocationStrategy, useClass: HashLocationStrategy },
+    CookieService,
   ],
   bootstrap: [AppComponent],
 })
