@@ -16,6 +16,7 @@ export class HeaderComponent implements OnInit {
   IsLoggedIn = false;
   ApiUserDetails: any;
   LocalStorageAuthToken = this._AuthService.GetLocalAuthToken();
+  LocalStorageUserDetaials: any;
 
   constructor(
     private _FormBuilder: FormBuilder,
@@ -63,7 +64,10 @@ export class HeaderComponent implements OnInit {
           let AuthToken =
             this.ApiUserDetails.tokens[this.ApiUserDetails.tokens.length - 1]
               .token;
+          //* SETTING JWT TOKEN IN LOCAL STORAGE
           this._AuthService.SetLocalAuthToken(AuthToken);
+          //* SETTING USER DATA FROM API TO  LOCAL
+          this._AuthService.SetUserDataLocal(this.ApiUserDetails);
         }
       });
       this.LoginForm.patchValue({
