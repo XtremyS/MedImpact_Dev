@@ -22,11 +22,7 @@ import { ContactUsComponent } from './pages/contact-us/contact-us.component';
 import { AboutUsComponent } from './pages/about-us/about-us.component';
 import { DoctorDetailsComponent } from './pages/doctor-details/doctor-details.component';
 import { MainHomeComponent } from './pages/main-home/main-home.component';
-import {
-  HashLocationStrategy,
-  Location,
-  LocationStrategy,
-} from '@angular/common';
+import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 import { DoctorListComponent } from './pages/doctor-list/doctor-list.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModuleModule } from './pages/material-module/material-module.module';
@@ -61,7 +57,7 @@ import { MaterialModuleModule } from './pages/material-module/material-module.mo
     BrowserAnimationsModule,
     MaterialModuleModule,
   ],
-  providers: [],
+  providers: [{ provide: LocationStrategy, useClass: HashLocationStrategy }],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
