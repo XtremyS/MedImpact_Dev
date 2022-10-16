@@ -52,7 +52,7 @@ export class Service {
     });
   }
 
-  //! LOGIN FUNCTIONS
+  //! LOGIN API FUNCTIONS
   DoctorLogin(Data: any): Observable<any> {
     return this.http.post(this.UrlDocLogin, Data, {
       observe: 'response',
@@ -82,7 +82,7 @@ export class Service {
     });
   }
 
-  //! GET FUNCTIONS
+  //! GET API FUNCTIONS
   GetDocData(): Observable<any> {
     return this.http.get(this.GetDoctorUrl, {
       observe: 'response',

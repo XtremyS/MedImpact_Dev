@@ -411,6 +411,7 @@ router.post("/login-patient", async (req, res) => {
     }
 
     //* GETTING THE SPECIFIC DATA OF SAME EMAIL
+
     const UserLogin = await Patient.findOne({ email: Email });
     if (!UserLogin || UserLogin == null) {
       res.status(404).json({ message: "No User Found" });
@@ -729,7 +730,7 @@ router.get("/about", Middleware, (req, res) => {
 //*  GET LOGOUT
 router.get("/logout", (req, res) => {
   res.clearCookie("jwt", { path: "/" });
-  res.status(200).json({ message: "User Logout Successfully!" });
+  res.status(200).json({ message: "Logout Successfully!" });
 });
 
 //*  CONTACTUS USER DETAILS REQUEST

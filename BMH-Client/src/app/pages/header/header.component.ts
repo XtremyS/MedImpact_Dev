@@ -47,6 +47,8 @@ export class HeaderComponent implements OnInit {
             this.ApiUserDetails.tokens[this.ApiUserDetails.tokens.length - 1]
               .token;
           this._AuthService.SetLocalAuthToken(AuthToken);
+          //* Reloading Page
+          location.reload();
         }
       });
       this.LoginForm.patchValue({
@@ -66,8 +68,9 @@ export class HeaderComponent implements OnInit {
               .token;
           //* SETTING JWT TOKEN IN LOCAL STORAGE
           this._AuthService.SetLocalAuthToken(AuthToken);
-          //* SETTING USER DATA FROM API TO  LOCAL
-          this._AuthService.SetUserDataLocal(this.ApiUserDetails);
+          //* Reloading Page
+          location.reload();
+
         }
       });
       this.LoginForm.patchValue({
@@ -86,6 +89,8 @@ export class HeaderComponent implements OnInit {
             this.ApiUserDetails.tokens[this.ApiUserDetails.tokens.length - 1]
               .token;
           this._AuthService.SetLocalAuthToken(AuthToken);
+          //* Reloading Page
+          location.reload();
         }
       });
       this.LoginForm.patchValue({
@@ -104,6 +109,8 @@ export class HeaderComponent implements OnInit {
             this.ApiUserDetails.tokens[this.ApiUserDetails.tokens.length - 1]
               .token;
           this._AuthService.SetLocalAuthToken(AuthToken);
+          //* Reloading Page
+          location.reload();
         }
       });
       this.LoginForm.patchValue({
@@ -117,7 +124,7 @@ export class HeaderComponent implements OnInit {
     this._Service.LogOut(this.LoginForm.value).subscribe((data) => {
       this.ApiUserDetails = data;
       console.log(data.message);
-      if (data.message == 'User Logout Successfully!') {
+      if (data.message == 'Logout Successfully!') {
         this.IsLoggedIn = false;
         this._AuthService.RemoveLocalAuthToken();
         location.reload();
