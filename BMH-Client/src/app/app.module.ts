@@ -57,7 +57,7 @@ import { MaterialModuleModule } from './pages/material-module/material-module.mo
     BrowserAnimationsModule,
     MaterialModuleModule,
   ],
-  providers: [{ provide: LocationStrategy, useClass: HashLocationStrategy }],
+  providers: [],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

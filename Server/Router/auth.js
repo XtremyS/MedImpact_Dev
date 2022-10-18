@@ -1,3 +1,5 @@
+const path = require("path");
+
 //* EXPRESS MODULE
 const express = require("express");
 
@@ -31,6 +33,16 @@ const Pharmacy = require("../DBSchema/pharmacy_schema");
 const Middleware = require("../Middleware/middleware");
 
 router.use(cookieParser());
+
+
+router.get('/*', function(req, res) {
+  res.sendFile(path.join(__dirname, '../../BMH-Client/src/index.html'), function(err) {
+    if (err) {
+      res.status(500).send(err)
+    }
+  })
+})
+
 
 //*  POST DOCTORS REGISTRATION
 let ImgUrl = "";
