@@ -8,23 +8,23 @@ import { Observable } from 'rxjs';
 export class Service {
   constructor(private http: HttpClient) {}
   //! REGISTRATION APIS
-  UrlDoctor = '/doctors-registration';
-  UrlPatients = '/patients-registration';
-  UrlLabs = '/labs-registration';
-  UrlPharmacy = '/pharmacy-registration';
+  UrlDoctor = '/api/v1/doctors-registration';
+  UrlPatients = '/api/v1/patients-registration';
+  UrlLabs = '/api/v1/labs-registration';
+  UrlPharmacy = '/api/v1/pharmacy-registration';
 
   //! LOGIN APIS
-  UrlDocLogin = '/login-doctor';
-  UrlPatientsLogin = '/login-patient';
-  UrlLabLogin = '/login-lab';
-  UrlPharmacyLogin = '/login-pharmacy';
+  UrlDocLogin = '/api/v1/login-doctor';
+  UrlPatientsLogin = '/api/v1/login-patient';
+  UrlLabLogin = '/api/v1/login-lab';
+  UrlPharmacyLogin = '/api/v1/login-pharmacy';
 
   //! GET APIS
-  GetDoctorUrl = '/doc-list';
-  GetLabDataUrl = '/lab-list';
+  GetDoctorUrl = '/api/v1/doc-list';
+  GetLabDataUrl = '/api/v1/lab-list';
 
   //! BOOKING DOCTOR APPOINTMENT API
-  UrlBookAppointment = '/book_appointment';
+  UrlBookAppointment = '/api/v1/book_appointment';
 
   //! LOGOUT APIS
   LogOutUrl = '/logout';

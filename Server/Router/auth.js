@@ -35,19 +35,21 @@ const Middleware = require("../Middleware/middleware");
 router.use(cookieParser());
 
 
-router.get('/*', function(req, res) {
-  res.sendFile(path.join(__dirname, '../../BMH-Client/src/index.html'), function(err) {
-    if (err) {
-      res.status(500).send(err)
-    }
-  })
-})
+// router.get('/*', function(req, res) {
+//   res.sendFile(path.join(__dirname, '../../BMH-Client/src/index.html'), function(err) {
+//     if (err) {
+//       res.status(500).send(err)
+//     }
+//   })
+// })
+
+
 
 
 //*  POST DOCTORS REGISTRATION
 let ImgUrl = "";
 router.post(
-  "/doctors-registration",
+  "/api/v1/doctors-registration",
   fileUpload({
     useTempFiles: true,
   }),
@@ -152,7 +154,7 @@ router.post(
 );
 
 //* POST PATIENTS REGISTRATIONS
-router.post("/patients-registration", async (req, res) => {
+router.post("/api/v1/patients-registration", async (req, res) => {
   //* DESTRUCTURED USER FILLED DATA
   const { full_name, gender, email, age, phone, password, cpassword } =
     req.body;
@@ -213,7 +215,7 @@ router.post("/patients-registration", async (req, res) => {
 });
 
 //* POST LABS REGISTRATIONS
-router.post("/labs-registration", async (req, res) => {
+router.post("/api/v1/labs-registration", async (req, res) => {
   //* DESTRUCTURED USER FILLED DATA
   const {
     lab_name,
@@ -290,7 +292,7 @@ router.post("/labs-registration", async (req, res) => {
 });
 
 //* POST PHARMACY REGISTRATIONS
-router.post("/pharmacy-registration", async (req, res) => {
+router.post("/api/v1/pharmacy-registration", async (req, res) => {
   //* DESTRUCTURED USER FILLED DATA
   const {
     pharmacy_name,
@@ -364,7 +366,7 @@ router.post("/pharmacy-registration", async (req, res) => {
 });
 
 //* POST DOCTOR LOGIN
-router.post("/login-doctor", async (req, res) => {
+router.post("/api/v1/login-doctor", async (req, res) => {
   try {
     //* DATA WHICH USER TYPED FOR LOGIN
     const Email = req.body.login_email;
@@ -411,7 +413,7 @@ router.post("/login-doctor", async (req, res) => {
 });
 
 //* POST PATIENTS LOGIN
-router.post("/login-patient", async (req, res) => {
+router.post("/api/v1/login-patient", async (req, res) => {
   try {
     //* DATA WHICH USER TYPED FOR LOGIN
     const Email = req.body.login_email;
@@ -473,7 +475,7 @@ router.post("/login-patient", async (req, res) => {
 });
 
 //* POST LAB LOGIN
-router.post("/login-lab", async (req, res) => {
+router.post("/api/v1/login-lab", async (req, res) => {
   try {
     //* DATA WHICH USER TYPED FOR LOGIN
     const Email = req.body.login_email;
@@ -519,7 +521,7 @@ router.post("/login-lab", async (req, res) => {
 });
 
 //* POST PHARMACY LOGIN
-router.post("/login-pharmacy", async (req, res) => {
+router.post("/api/v1/login-pharmacy", async (req, res) => {
   try {
     //* DATA WHICH USER TYPED FOR LOGIN
     const Email = req.body.login_email;
@@ -565,7 +567,7 @@ router.post("/login-pharmacy", async (req, res) => {
 });
 
 //* GET LAB DATA
-router.get("/doc-list", async (req, res) => {
+router.get("/api/v1/doc-list", async (req, res) => {
   try {
     //* GETTING ALL LABS FROM DB
     const Doctors = await Doctor.find(
@@ -597,7 +599,7 @@ router.get("/doc-list", async (req, res) => {
 });
 
 //* GET LAB DATA
-router.get("/lab-list", async (req, res) => {
+router.get("/api/v1/lab-list", async (req, res) => {
   try {
     //* GETTING ALL LABS FROM DB
     const Labs = await Lab.find(
@@ -626,7 +628,7 @@ router.get("/lab-list", async (req, res) => {
 });
 
 //*  DOCTOR APPOINTMENT
-router.patch("/book_appointment", async (req, res) => {
+router.patch("/api/v1/book_appointment", async (req, res) => {
   try {
     //*  GETTING USER UPDATING INPUT
     const Id = req.body._id;
@@ -667,7 +669,7 @@ router.patch("/book_appointment", async (req, res) => {
 });
 
 //*  ADDING MEDICINES
-router.patch("/add_medicine", async (req, res) => {
+router.patch("/api/v1/add_medicine", async (req, res) => {
   try {
     //*  GETTING USER UPDATING INPUT
     const Id = req.body._id;
@@ -701,7 +703,7 @@ router.patch("/add_medicine", async (req, res) => {
 });
 
 //*  ADDING MEDICINES
-router.patch("/add_medicine", async (req, res) => {
+router.patch("/api/v1/add_medicine", async (req, res) => {
   try {
     //*  GETTING USER UPDATING INPUT
     const Id = req.body._id;
@@ -735,7 +737,7 @@ router.patch("/add_medicine", async (req, res) => {
 });
 
 //*  GET ABOUT
-router.get("/about", Middleware, (req, res) => {
+router.get("/api/v1/about", Middleware, (req, res) => {
   res.send(req.rootUser);
 });
 
