@@ -50,14 +50,16 @@
                           <a href="javascript:void(0);"
                             >Dr. {{ data.full_name }}
                           </a>
-                          <ng-container *ngIf="data.IsVerified">
+                          <ng-container *ngIf="data.isVerified">
                             <i class="fa fa-check-circle dc-awardtooltip"
                               ><em>Medical Registration Verified</em></i
                             >
                           </ng-container>
-                          <i class="fa fa-award dc-awardtooltip"
-                            ><em>Medical Registration Verified</em></i
-                          >
+                          <ng-container *ngIf="data.SuperExperinced">
+                            <i class="fa fa-award dc-awardtooltip"
+                              ><em>Medical Registration Verified</em></i
+                            >
+                          </ng-container>
                         </h3>
                         <ul class="dc-docinfo">
                           <li>
@@ -85,9 +87,13 @@
                           ><i class="ti-calendar"></i> Mo, Tu,
                           <em class="dc-dayon">We</em>, Th, Fr, Sa</span
                         >
-                        <button  type="submit" (click)="BookAppointment(data)" class="dc-btn"
-                          >Book Now</button
+                        <button
+                          type="submit"
+                          (click)="BookAppointment(data)"
+                          class="dc-btn"
                         >
+                          Book Now
+                        </button>
                       </div>
                     </div>
                   </div>

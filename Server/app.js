@@ -1,4 +1,13 @@
-// ENV MODULE //! IF NODEJS THROWS ERROR EMPTY STRING ADD ONE . TO ENV PATH
+//* PATH MODULE
+const path = require("path");
+
+//* FILE SYSTEM MODULE FOR READING HTML FILE
+const fs = require("fs");
+
+//* PATH FOR READING HTML FILE FRONT END
+const indexPath = path.resolve(__dirname, "../BMH-Client/src/index.html");
+
+//* ENV MODULE //! IF NODEJS THROWS ERROR EMPTY STRING ADD ONE . TO ENV PATH
 const dotenv = require("dotenv").config({ path: "../Server/config.env" });
 
 //* DB MODULE
@@ -21,27 +30,14 @@ app.use(require("./Router/auth"));
 //* CONVERTING DATA FROM DB INTO JSON FORMAT
 app.use(express.json());
 
+//* HEROKU RELATED MODULE
 if (process.env.NODE_ENV == "production") {
   app.use(express.static("client/build"));
 }
 
-//* LISTING PORT
-app.listen(port, () => {
-  console.log(`Server is running at PORT: ${port}`);
-});
 
-
-
-
-
-
-
-const path = require("path");
-const fs = require("fs");
-const productionPort = 3015;
-const PORT = productionPort;
-const indexPath = path.resolve(__dirname, "../BMH-Client/src/index.html");
-const defaultMetaData = {
+//* META DETA FOR SEO
+const DefaultMetaData = {
   title: "Spaarks - Local connect, promote business, nearby friends",
   keywords:
     "local,local marketing,marketing,spaarks, spaarksweb,spaark,spaarks web, spaarkweb,spaark web,nearby,nearby business,job,work,want work,friends,make friends,makefriend,announce,market,seller,buyer,vendor,sales",
@@ -49,48 +45,9 @@ const defaultMetaData = {
     "Have a small business? Do local marketing with Spaarks. Get Customers. Promote your Service. Post local jobs. Find work nearby. Make friends in neighbourhood.",
 };
 
-const imgArray = [
-  "https://www.spaarksweb.com/assets/catsubcatimages/questionsimages/q3.png",
-  "https://www.spaarksweb.com/assets/catsubcatimages/questionsimages/q4.png",
-  "https://www.spaarksweb.com/assets/catsubcatimages/questionsimages/q2.png",
-  "https://www.spaarksweb.com/assets/catsubcatimages/questionsimages/q1.png",
-  "https://www.spaarksweb.com/assets/catsubcatimages/questionsimages/q6.png",
-  "https://www.spaarksweb.com/assets/catsubcatimages/questionsimages/q7.png",
-  "https://www.spaarksweb.com/assets/catsubcatimages/questionsimages/q5.png",
-  "https://www.spaarksweb.com/assets/catsubcatimages/questionsimages/q8.png",
-];
-
-let staticMetaData = {
-  title: defaultMetaData.title,
-  keywords: defaultMetaData.keywords,
-  description: defaultMetaData.description,
-  from: "static",
-};
-
-
-app.get("/*", async (req, res, next) => {
-  res.send(await updateIndexHtml(defaultMetaData));
-});
-
-updateIndexHtml = (data, cat = "", city = "") => {
-  let url = "https://www.spaarksweb.com";
-  let imgUrl =
-    "https://res.cloudinary.com/ososbackend/image/upload/v1655979585/angular/images/default_y32zoq_bb6epg.webp";
-  if (!data.preview && !data.imageurl && !data.from) {
-    data = defaultMetaData;
-  } else {
-    url = `https://www.spaarksweb.com/${city}/${cat}`;
-  }
-  if (
-    String(data.imageurl) !==
-      "https://res.cloudinary.com/ososbackend/image/upload/v1655979585/angular/images/default_y32zoq_bb6epg.webp" &&
-    String(data.imageurl) !== ""
-  )
-    imgUrl = data.imageurl;
-  // https://res.cloudinary.com/spaarks/image/upload/v1649847597/spaarks-logo_wkfhbt.png
-  // let title = data.title.length>64 ? data.title.slice(0,61) + '...' : data.title;
-
-  var htmlData = fs.readFileSync(indexPath, "utf8");
+//* METHOD TO GET GET HTML FILE FROM FRONT END
+UpdateIndexHtml = (data) => {
+  let htmlData = fs.readFileSync(indexPath, "utf8");
   htmlData = htmlData
     .replace(
       "<title>Spaarks: Local Search, Find local stores- Clothes, Salon, Daily Service Near You  </title>",
@@ -146,4 +103,15 @@ updateIndexHtml = (data, cat = "", city = "") => {
     );
     return htmlData;
 };
+
+//* THIS METHOD HELPS RENDERING ALL PAGES IN SINGLE PAGE APPLICATION 
+app.get("/*", async (req, res, next) => {
+  res.send(await UpdateIndexHtml(DefaultMetaData));
+});
+
+//* LISTING PORT
+app.listen(port, () => {
+  console.log(`Server is running at PORT: ${port}`);
+});
+
 
