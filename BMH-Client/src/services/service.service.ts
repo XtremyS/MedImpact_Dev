@@ -27,7 +27,7 @@ export class Service {
   UrlBookAppointment = '/api/v1/book_appointment';
 
   //! LOGOUT APIS
-  LogOutUrl = '/logout';
+  LogOutUrl = '/api/v1/logout';
 
   //! REGISTRATION FUNCTIONS
   RegisterDoctor(Data: any): Observable<any> {

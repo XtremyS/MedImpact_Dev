@@ -35,7 +35,6 @@ if (process.env.NODE_ENV == "production") {
   app.use(express.static("client/build"));
 }
 
-
 //* META DETA FOR SEO
 const DefaultMetaData = {
   title: "Spaarks - Local connect, promote business, nearby friends",
@@ -101,17 +100,15 @@ UpdateIndexHtml = (data) => {
       `<meta property="twitter:card" content="summary_large_image">`,
       `<meta property="twitter:card" content="${imgUrl}">`
     );
-    return htmlData;
+  return htmlData;
 };
 
-//* THIS METHOD HELPS RENDERING ALL PAGES IN SINGLE PAGE APPLICATION 
-app.get("/*", async (req, res, next) => {
-  res.send(await UpdateIndexHtml(DefaultMetaData));
-});
+//* THIS METHOD HELPS RENDERING ALL PAGES IN SINGLE PAGE APPLICATION
+// app.get("/*", async (req, res, next) => {
+//   res.send(await UpdateIndexHtml(DefaultMetaData));
+// });
 
 //* LISTING PORT
 app.listen(port, () => {
   console.log(`Server is running at PORT: ${port}`);
 });
-
-

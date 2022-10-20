@@ -27,19 +27,16 @@ export class DoctorListComponent implements OnInit {
   }
 
   BookAppointment(DoctorDetails: any) {
-    this.openDialog();
     let IsAuthenticated: boolean = this._AuthService.GetLocalAuthToken();
 
     if (!IsAuthenticated) {
-      alert('Please Login');
+      this.openDialog();
     } else {
       console.log(DoctorDetails);
     }
   }
 
   openDialog(): void {
-    this.dialog.open(FormModalComponent, {
-      width: '250px',
-    });
+    this.dialog.open(FormModalComponent, {});
   }
 }

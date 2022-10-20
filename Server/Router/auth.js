@@ -34,18 +34,6 @@ const Middleware = require("../Middleware/middleware");
 
 router.use(cookieParser());
 
-
-// router.get('/*', function(req, res) {
-//   res.sendFile(path.join(__dirname, '../../BMH-Client/src/index.html'), function(err) {
-//     if (err) {
-//       res.status(500).send(err)
-//     }
-//   })
-// })
-
-
-
-
 //*  POST DOCTORS REGISTRATION
 let ImgUrl = "";
 router.post(
@@ -742,7 +730,7 @@ router.get("/api/v1/about", Middleware, (req, res) => {
 });
 
 //*  GET LOGOUT
-router.get("/logout", (req, res) => {
+router.get("/api/v1/logout", (req, res) => {
   res.clearCookie("jwt", { path: "/" });
   res.status(200).json({ message: "Logout Successfully!" });
 });

@@ -22,10 +22,10 @@ import { ContactUsComponent } from './pages/contact-us/contact-us.component';
 import { AboutUsComponent } from './pages/about-us/about-us.component';
 import { DoctorDetailsComponent } from './pages/doctor-details/doctor-details.component';
 import { MainHomeComponent } from './pages/main-home/main-home.component';
-import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 import { DoctorListComponent } from './pages/doctor-list/doctor-list.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModuleModule } from './pages/material-module/material-module.module';
+import { FormModalComponent } from './pages/dailog-boxes/form-modal/form-modal.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -48,6 +48,7 @@ import { MaterialModuleModule } from './pages/material-module/material-module.mo
     DoctorDetailsComponent,
     MainHomeComponent,
     DoctorListComponent,
+    FormModalComponent,
   ],
   imports: [
     BrowserModule,
