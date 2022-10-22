@@ -22,15 +22,17 @@ export class DoctorListComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    //* GETTING DOCTOR DATA FROM API
+    //* Getting All Doctors Data From API
     this._Service.GetDocData().subscribe((res) => {
       this.DocArray = res.body.data;
     });
   }
 
   BookAppointment(DoctorDetails: any) {
+    //* Auth Token Initializtion
     let IsAuthenticated: boolean = this._AuthService.GetLocalAuthToken();
 
+    //* Checking Before Booking Appointment IsAuthenticated Or Not
     if (!IsAuthenticated) {
       this.openSnackBar();
     } else {
@@ -38,6 +40,7 @@ export class DoctorListComponent implements OnInit {
     }
   }
 
+  //* Alert Snack Bar Function
   openSnackBar() {
     this._snackBar.openFromComponent(FormModalComponent, {
       duration: this.DurationInSeconds * 1000,
