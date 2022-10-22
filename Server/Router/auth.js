@@ -1,5 +1,3 @@
-const path = require("path");
-
 //* EXPRESS MODULE
 const express = require("express");
 
@@ -14,9 +12,6 @@ const CloudinaryFileUpload = require("../Middleware/fileupload");
 
 //* FILE UPLOAD PACKAGE
 const fileUpload = require("express-fileupload");
-
-//* JSON WEB TOKEN MODULE
-const jwt = require("jsonwebtoken");
 
 //* PASSWORD HASHING MODULE
 const bcrypt = require("bcrypt");
