@@ -5,6 +5,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 const MaterialComponent = [
   MatChipsModule,
@@ -12,6 +13,7 @@ const MaterialComponent = [
   MatFormFieldModule,
   MatAutocompleteModule,
   MatDialogModule,
+  MatSnackBarModule,
   MatButtonModule,
 ];
 

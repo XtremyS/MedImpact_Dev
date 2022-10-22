@@ -3,6 +3,7 @@ import { Service } from 'src/services/service.service';
 import { AuthService } from 'src/services/auth.service';
 import { MatDialog } from '@angular/material/dialog';
 import { FormModalComponent } from '../dailog-boxes/form-modal/form-modal.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-doctor-list',
@@ -12,11 +13,12 @@ import { FormModalComponent } from '../dailog-boxes/form-modal/form-modal.compon
 export class DoctorListComponent implements OnInit {
   DocArray: any;
   PatientData: any;
-
+  DurationInSeconds = 30000;
   constructor(
     private _Service: Service,
     private _AuthService: AuthService,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private _snackBar: MatSnackBar
   ) {}
 
   ngOnInit(): void {
@@ -30,13 +32,15 @@ export class DoctorListComponent implements OnInit {
     let IsAuthenticated: boolean = this._AuthService.GetLocalAuthToken();
 
     if (!IsAuthenticated) {
-      this.openDialog();
+      this.openSnackBar();
     } else {
       console.log(DoctorDetails);
     }
   }
 
-  openDialog(): void {
-    this.dialog.open(FormModalComponent, {});
+  openSnackBar() {
+    this._snackBar.openFromComponent(FormModalComponent, {
+      duration: this.DurationInSeconds * 1000,
+    });
   }
 }
