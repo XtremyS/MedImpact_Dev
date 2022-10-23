@@ -12,12 +12,5 @@ import { MAT_SNACK_BAR_DATA } from '@angular/material/snack-bar';
   styleUrls: ['./form-modal.component.scss'],
 })
 export class FormModalComponent implements OnInit {
-  FormsDialogBox: boolean = false;
-  constructor(@Inject(MAT_SNACK_BAR_DATA) public message: string) {}
-
-  ngOnInit(): void {
-    if (this.message === 'Open_Form_Dialog') {
-      this.FormsDialogBox = true;
-    }
-  }
+  ngOnInit(): void {}
 }

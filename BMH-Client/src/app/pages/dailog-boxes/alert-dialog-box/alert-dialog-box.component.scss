@@ -1,0 +1,18 @@
+.Alert_Div_Parent {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  .Alert_Text_Parent_Div {
+    .Alert_Text {
+      color: red;
+    }
+  }
+  .Alert_Icon_Parent_Div {
+    display: flex;
+    justify-content: center;
+    .Alert_Icon {
+      color: red;
+      margin: 0 5px;
+    }
+  }
+}

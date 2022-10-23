@@ -26,6 +26,7 @@ import { DoctorListComponent } from './pages/doctor-list/doctor-list.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModuleModule } from './pages/material-module/material-module.module';
 import { FormModalComponent } from './pages/dailog-boxes/form-modal/form-modal.component';
+import { AlertDialogBoxComponent } from './pages/dailog-boxes/alert-dialog-box/alert-dialog-box.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -49,6 +50,7 @@ import { FormModalComponent } from './pages/dailog-boxes/form-modal/form-modal.c
     MainHomeComponent,
     DoctorListComponent,
     FormModalComponent,
+    AlertDialogBoxComponent,
   ],
   imports: [
     BrowserModule,

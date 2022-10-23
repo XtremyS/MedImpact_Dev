@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Service } from 'src/services/service.service';
 import { AuthService } from 'src/services/auth.service';
 import { MatDialog } from '@angular/material/dialog';
+import { AlertDialogBoxComponent } from '../dailog-boxes/alert-dialog-box/alert-dialog-box.component';
 import { FormModalComponent } from '../dailog-boxes/form-modal/form-modal.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
@@ -35,23 +36,26 @@ export class DoctorListComponent implements OnInit {
     let IsAuthenticated: boolean = this._AuthService.GetLocalAuthToken();
     //* Checking Before Booking Appointment IsAuthenticated Or Not
     if (!IsAuthenticated) {
-      this.openSnackBar('Open_Form_Dialog');
+      this.OpentAlertDialog();
     } else {
       console.log(DoctorDetails);
       this._Service.GetUserData().subscribe((res) => {
         console.log(res.body, 'RESPONSE OF USER DATA WHICH IS LOGGED IN');
       });
+      this.openDialog();
     }
   }
 
   //* Alert Snack Bar Function
-  openSnackBar(Message: string) {
-    this._snackBar.openFromComponent(FormModalComponent, {
+  OpentAlertDialog() {
+    this._snackBar.openFromComponent(AlertDialogBoxComponent, {
       duration: this.DurationInSeconds * 1000,
       panelClass: ['Alert_SnackBar'],
       horizontalPosition: 'center',
       verticalPosition: 'top',
-      data: Message,
     });
+  }
+  openDialog(): void {
+    this.dialog.open(FormModalComponent, {});
   }
 }
