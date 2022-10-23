@@ -14,13 +14,10 @@ import { ModalService } from 'src/services/modal.service';
 export class DoctorListComponent implements OnInit {
   DocArray: any;
   PatientData: any;
-  //* Alert Dialog Configuration
-  DurationInSeconds = 5;
 
   constructor(
     private _Service: Service,
     private _AuthService: AuthService,
-    public dialog: MatDialog,
     private _ModalService: ModalService
   ) {}
 
@@ -42,11 +39,7 @@ export class DoctorListComponent implements OnInit {
       this._Service.GetUserData().subscribe((res) => {
         console.log(res.body, 'RESPONSE OF USER DATA WHICH IS LOGGED IN');
       });
-      this.openDialog();
+      this._ModalService.openDialog();
     }
-  }
-
-  openDialog(): void {
-    this.dialog.open(FormModalComponent, {});
   }
 }
