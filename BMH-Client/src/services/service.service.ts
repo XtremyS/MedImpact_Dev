@@ -29,6 +29,8 @@ export class Service {
   //! LOGOUT APIS
   LogOutUrl = '/api/v1/logout';
 
+  GetUserDataUrl = '/api/v1/get_user_data';
+
   //! REGISTRATION FUNCTIONS
   RegisterDoctor(Data: any): Observable<any> {
     return this.http.post(this.UrlDoctor, Data, {
@@ -92,6 +94,9 @@ export class Service {
     return this.http.get(this.GetLabDataUrl, {
       observe: 'response',
     });
+  }
+  GetUserData() {
+    return this.http.get(this.GetUserDataUrl, { observe: 'response' });
   }
 
   //! LOGOUT FUNCTION

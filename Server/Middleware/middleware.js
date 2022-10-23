@@ -2,7 +2,7 @@
 const jwt = require("jsonwebtoken");
 
 //* DOCTOR DB SCHEMA
-const Doctor = require("../DBSchema/doc_schema");
+const PatientS = require("../DBSchema/patient_schema");
 
 const Middleware = async (req, res, next) => {
   try {
@@ -13,16 +13,16 @@ const Middleware = async (req, res, next) => {
     const verifyToken = jwt.verify(token, process.env.AUTH_KEY);
 
     //* GETTING THAT USER WHOSE TOKEN IS VERIFIED
-    const rootUser = await Doctor.findOne({
+    const rootUser = await PatientS.findOne({
       _id: verifyToken._id,
       "tokens.token": token,
     });
 
     if (!rootUser) {
-      //IF USER NOT FOUND THROW ERROR
+      //*IF USER NOT FOUND THROW ERROR
       throw new Error("Couldn't find user!");
     } else {
-      // ASSIGNING TOKEN AND USERS DETAILS
+      //* ASSIGNING TOKEN AND USERS DETAILS
       req.token = token;
       req.rootUser = rootUser;
       req.userId = rootUser._id;

@@ -630,7 +630,7 @@ router.patch("/api/v1/book_appointment", async (req, res) => {
             patients_name: PatientName,
             patients_age: PatientAge,
             visting_reason: PatientVisitingReason,
-            appointmen_status: "pending",
+            appointmen_status: 2,
             patients_address: PatientAddress,
             patients_phone: PatientPhone,
           },
@@ -730,9 +730,21 @@ router.get("/api/v1/logout", (req, res) => {
   res.status(200).json({ message: "Logout Successfully!" });
 });
 
-//*  CONTACTUS USER DETAILS REQUEST
-router.get("/getdata", Middleware, (req, res) => {
-  res.send(req.rootUser);
+// TODO If Want To Get The User Data Use This //
+//* This Route Returns The User Details
+//* CONTACTUS USER DETAILS REQUEST
+router.get("/api/v1/get_user_data", Middleware, (req, res) => {
+  let UserObject = {
+    _id: req.rootUser._id,
+    full_name: req.rootUser.full_name,
+    gender: req.rootUser.gender,
+    phone: req.rootUser.phone,
+    email: req.rootUser.email,
+    address: req.rootUser.address,
+    tokens: req.rootUser.tokens,
+  };
+
+  res.send(UserObject);
 });
 
 module.exports = router;

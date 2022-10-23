@@ -1,4 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
+import {
+  MatSnackBarHorizontalPosition,
+  MatSnackBarVerticalPosition,
+  MatSnackBar,
+} from '@angular/material/snack-bar';
+import { MAT_SNACK_BAR_DATA } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-form-modal',
@@ -6,7 +12,12 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./form-modal.component.scss'],
 })
 export class FormModalComponent implements OnInit {
-  constructor() {}
+  FormsDialogBox: boolean = false;
+  constructor(@Inject(MAT_SNACK_BAR_DATA) public message: string) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    if (this.message === 'Open_Form_Dialog') {
+      this.FormsDialogBox = true;
+    }
+  }
 }

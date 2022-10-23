@@ -3,11 +3,7 @@ import { Service } from 'src/services/service.service';
 import { AuthService } from 'src/services/auth.service';
 import { MatDialog } from '@angular/material/dialog';
 import { FormModalComponent } from '../dailog-boxes/form-modal/form-modal.component';
-import {
-  MatSnackBarHorizontalPosition,
-  MatSnackBarVerticalPosition,
-  MatSnackBar,
-} from '@angular/material/snack-bar';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-doctor-list',
@@ -19,8 +15,6 @@ export class DoctorListComponent implements OnInit {
   PatientData: any;
   //* Alert Dialog Configuration
   DurationInSeconds = 5;
-  horizontalPosition: MatSnackBarHorizontalPosition = 'center';
-  verticalPosition: MatSnackBarVerticalPosition = 'top';
 
   constructor(
     private _Service: Service,
@@ -39,22 +33,25 @@ export class DoctorListComponent implements OnInit {
   BookAppointment(DoctorDetails: any) {
     //* Auth Token Initializtion
     let IsAuthenticated: boolean = this._AuthService.GetLocalAuthToken();
-
     //* Checking Before Booking Appointment IsAuthenticated Or Not
     if (!IsAuthenticated) {
-      this.openSnackBar('testing');
+      this.openSnackBar('Open_Form_Dialog');
     } else {
       console.log(DoctorDetails);
+      this._Service.GetUserData().subscribe((res) => {
+        console.log(res.body, 'RESPONSE OF USER DATA WHICH IS LOGGED IN');
+      });
     }
   }
 
   //* Alert Snack Bar Function
-  openSnackBar(Data: any) {
+  openSnackBar(Message: string) {
     this._snackBar.openFromComponent(FormModalComponent, {
       duration: this.DurationInSeconds * 1000,
       panelClass: ['Alert_SnackBar'],
-      horizontalPosition: this.horizontalPosition,
-      verticalPosition: this.verticalPosition,
+      horizontalPosition: 'center',
+      verticalPosition: 'top',
+      data: Message,
     });
   }
 }
