@@ -3,7 +3,11 @@ import { Service } from 'src/services/service.service';
 import { AuthService } from 'src/services/auth.service';
 import { MatDialog } from '@angular/material/dialog';
 import { FormModalComponent } from '../dailog-boxes/form-modal/form-modal.component';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import {
+  MatSnackBarHorizontalPosition,
+  MatSnackBarVerticalPosition,
+  MatSnackBar,
+} from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-doctor-list',
@@ -13,7 +17,11 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 export class DoctorListComponent implements OnInit {
   DocArray: any;
   PatientData: any;
-  DurationInSeconds = 30000;
+  //* Alert Dialog Configuration
+  DurationInSeconds = 5;
+  horizontalPosition: MatSnackBarHorizontalPosition = 'center';
+  verticalPosition: MatSnackBarVerticalPosition = 'top';
+
   constructor(
     private _Service: Service,
     private _AuthService: AuthService,
@@ -34,16 +42,19 @@ export class DoctorListComponent implements OnInit {
 
     //* Checking Before Booking Appointment IsAuthenticated Or Not
     if (!IsAuthenticated) {
-      this.openSnackBar();
+      this.openSnackBar('testing');
     } else {
       console.log(DoctorDetails);
     }
   }
 
   //* Alert Snack Bar Function
-  openSnackBar() {
+  openSnackBar(Data: any) {
     this._snackBar.openFromComponent(FormModalComponent, {
       duration: this.DurationInSeconds * 1000,
+      panelClass: ['Alert_SnackBar'],
+      horizontalPosition: this.horizontalPosition,
+      verticalPosition: this.verticalPosition,
     });
   }
 }
