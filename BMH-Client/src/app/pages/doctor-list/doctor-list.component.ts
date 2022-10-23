@@ -34,9 +34,9 @@ export class DoctorListComponent implements OnInit {
   BookAppointment(DoctorDetails: any) {
     //* Auth Token Initializtion
     let IsAuthenticated: boolean = this._AuthService.GetLocalAuthToken();
-    //* Checking Before Booking Appointment IsAuthenticated Or Not
+    //* Checking Before Booking Appointment User IsAuthenticated Or Not
     if (!IsAuthenticated) {
-      this.OpentAlertDialog();
+      this.OpentAlertDialog('Not_Authenticated');
     } else {
       console.log(DoctorDetails);
       this._Service.GetUserData().subscribe((res) => {
@@ -47,12 +47,13 @@ export class DoctorListComponent implements OnInit {
   }
 
   //* Alert Snack Bar Function
-  OpentAlertDialog() {
+  OpentAlertDialog(Message: string) {
     this._snackBar.openFromComponent(AlertDialogBoxComponent, {
       duration: this.DurationInSeconds * 1000,
       panelClass: ['Alert_SnackBar'],
       horizontalPosition: 'center',
       verticalPosition: 'top',
+      data: Message,
     });
   }
   openDialog(): void {

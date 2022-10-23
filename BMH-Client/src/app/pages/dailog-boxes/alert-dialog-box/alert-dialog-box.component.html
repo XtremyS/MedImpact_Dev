@@ -1,8 +1,29 @@
-<div class="Alert_Div_Parent">
-  <div class="Alert_Text_Parent_Div">
-    <span class="Alert_Text"> Please Login First!!</span>
+<ng-container *ngIf="LoginFailure">
+  <div class="Alert_Div_Parent">
+    <div class="Alert_Text_Parent_Div">
+      <span class="Alert_Text"> Please Login First!!</span>
+    </div>
+    <div class="Alert_Icon_Parent_Div">
+      <mat-icon
+        [ngClass]="LoginFailure == true ? 'Alert_Icon' : 'LoginSuccess'"
+        class="Alert_Icon"
+        >error_outline</mat-icon
+      >
+    </div>
   </div>
-  <div class="Alert_Icon_Parent_Div">
-    <mat-icon class="Alert_Icon">error_outline</mat-icon>
+</ng-container>
+
+<ng-container *ngIf="LoginSuccess">
+  <div class="Alert_Div_Parent">
+    <div class="Alert_Text_Parent_Div">
+      <span class="Alert_Text">Login Succesfully!!</span>
+    </div>
+    <div class="Alert_Icon_Parent_Div">
+      <mat-icon
+        [ngClass]="LoginSuccess == true ? 'LoginSuccess' : 'Alert_Icon'"
+        class="Alert_Icon"
+        >error_outline</mat-icon
+      >
+    </div>
   </div>
-</div>
+</ng-container>

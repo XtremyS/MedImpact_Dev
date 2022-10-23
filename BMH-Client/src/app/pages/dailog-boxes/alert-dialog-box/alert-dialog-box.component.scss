@@ -4,7 +4,7 @@
   align-items: center;
   .Alert_Text_Parent_Div {
     .Alert_Text {
-      color: red;
+      color: black;
     }
   }
   .Alert_Icon_Parent_Div {
@@ -15,4 +15,8 @@
       margin: 0 5px;
     }
   }
+}
+
+.LoginSuccess {
+  color: greenyellow !important;
 }

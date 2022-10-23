@@ -29,10 +29,9 @@ const UserSchema = new mongoose.Schema({
   appointment: [
     {
       patients_name: { type: String, required: true },
-      patients_age: { type: Number, required: true },
+      patients_age: { type: String, required: true },
       visting_reason: { type: String, required: true },
-      patients_phone: { type: Number, required: true },
-      patients_address: { type: String, required: true },
+      patients_phone: { type: String, required: true },
       appointmen_status: { type: Number },
     },
   ],

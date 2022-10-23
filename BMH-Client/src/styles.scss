@@ -9,10 +9,14 @@ body {
   font-family: Roboto, "Helvetica Neue", sans-serif;
 }
 
-//* Material Modal Syle
+//* Material Modal Style
 .cdk-global-scrollblock {
   position: initial;
   overflow-y: initial;
+}
+
+.cdk-overlay-pane {
+  width: 45%;
 }
 
 //* Alert Dialog Box
