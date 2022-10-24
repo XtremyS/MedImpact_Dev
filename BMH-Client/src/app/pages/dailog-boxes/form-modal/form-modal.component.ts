@@ -1,10 +1,5 @@
-import { Component, Inject, OnInit } from '@angular/core';
-import {
-  MatSnackBarHorizontalPosition,
-  MatSnackBarVerticalPosition,
-  MatSnackBar,
-} from '@angular/material/snack-bar';
-import { MAT_SNACK_BAR_DATA } from '@angular/material/snack-bar';
+import { Component, OnInit } from '@angular/core';
+import { FormGroup, FormBuilder } from '@angular/forms';
 
 @Component({
   selector: 'app-form-modal',
@@ -12,5 +7,17 @@ import { MAT_SNACK_BAR_DATA } from '@angular/material/snack-bar';
   styleUrls: ['./form-modal.component.scss'],
 })
 export class FormModalComponent implements OnInit {
-  ngOnInit(): void {}
+  AppointmentsForm = new FormGroup({});
+  constructor(private _FormBuilder: FormBuilder) {}
+  ngOnInit(): void {
+    this.AppointmentsForm = this._FormBuilder.group({
+      patients_name: this.AppointmentsForm.value.patients_name,
+      patients_age: this.AppointmentsForm.value.patients_age,
+      patients_phone: this.AppointmentsForm.value.patients_phone,
+      visting_reason: this.AppointmentsForm.value.visting_reason,
+    });
+  }
+  SubmitForm() {
+    console.log(this.AppointmentsForm.value);
+  }
 }
