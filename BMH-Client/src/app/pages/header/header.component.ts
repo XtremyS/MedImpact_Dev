@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Service } from 'src/services/service.service';
 import { AuthService } from '../../../services/auth.service';
+import { ModalService } from 'src/services/modal.service';
 
 @Component({
   selector: 'app-header',
@@ -21,7 +22,8 @@ export class HeaderComponent implements OnInit {
   constructor(
     private _FormBuilder: FormBuilder,
     private _Service: Service,
-    private _AuthService: AuthService
+    private _AuthService: AuthService,
+    private _ModalService: ModalService
   ) {
     this.LoginForm = this._FormBuilder.group({
       login_email: '',
@@ -40,6 +42,7 @@ export class HeaderComponent implements OnInit {
         console.log(data.body.response);
         if (data.status == 200) {
           //* SETTING API RESPONSE FROM API IN GLOBAL VARIABLE
+          this._ModalService.OpentAlertDialog('Authenticated');
           this.ApiUserDetails = data.body.response;
           this.IsLoggedIn = true;
           //* GETTING LAST AUTH TOKEN OF USER FROM API AND SETTING IT IN LOCAL STORAGE
@@ -59,6 +62,7 @@ export class HeaderComponent implements OnInit {
       this._Service.PatientLogin(this.LoginForm.value).subscribe((data) => {
         console.log(data.body.response);
         if (data.status == 200) {
+          this._ModalService.OpentAlertDialog('Authenticated');
           //* SETTING API RESPONSE FROM API IN GLOBAL VARIABLE
           this.ApiUserDetails = data.body.response;
           this.IsLoggedIn = true;
@@ -70,7 +74,6 @@ export class HeaderComponent implements OnInit {
           this._AuthService.SetLocalAuthToken(AuthToken);
           //* Reloading Page
           location.reload();
-
         }
       });
       this.LoginForm.patchValue({
@@ -125,6 +128,7 @@ export class HeaderComponent implements OnInit {
       this.ApiUserDetails = data;
       console.log(data.message);
       if (data.message == 'Logout Successfully!') {
+        this._ModalService.OpentAlertDialog('Logout');
         this.IsLoggedIn = false;
         this._AuthService.RemoveLocalAuthToken();
         location.reload();

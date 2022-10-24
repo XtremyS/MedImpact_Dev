@@ -1,3 +1,4 @@
+<!--* Login Authentication Alert  -->
 <ng-container *ngIf="LoginFailure">
   <div class="Alert_Div_Parent">
     <div class="Alert_Text_Parent_Div">
@@ -13,6 +14,7 @@
   </div>
 </ng-container>
 
+<!--* Login Alert  -->
 <ng-container *ngIf="LoginSuccess">
   <div class="Alert_Div_Parent">
     <div class="Alert_Text_Parent_Div">
@@ -22,7 +24,23 @@
       <mat-icon
         [ngClass]="LoginSuccess == true ? 'LoginSuccess' : 'Alert_Icon'"
         class="Alert_Icon"
-        >error_outline</mat-icon
+        >check_circle_outline</mat-icon
+      >
+    </div>
+  </div>
+</ng-container>
+
+<!--* Logout Alert  -->
+<ng-container *ngIf="Logout">
+  <div class="Alert_Div_Parent">
+    <div class="Alert_Text_Parent_Div">
+      <span class="Alert_Text">Logout Succesfully!!</span>
+    </div>
+    <div class="Alert_Icon_Parent_Div">
+      <mat-icon
+        [ngClass]="Logout == true ? 'LoginSuccess' : 'Alert_Icon'"
+        class="Alert_Icon"
+        >check_circle_outline</mat-icon
       >
     </div>
   </div>

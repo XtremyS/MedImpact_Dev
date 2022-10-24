@@ -9,6 +9,7 @@ import { MAT_SNACK_BAR_DATA } from '@angular/material/snack-bar';
 export class AlertDialogBoxComponent implements OnInit {
   LoginSuccess: boolean = false;
   LoginFailure: boolean = false;
+  Logout: boolean = false;
 
   constructor(@Inject(MAT_SNACK_BAR_DATA) public data: string) {}
   ngOnInit(): void {
@@ -16,6 +17,8 @@ export class AlertDialogBoxComponent implements OnInit {
       this.LoginFailure = true;
     } else if (this.data == 'Authenticated') {
       this.LoginSuccess = true;
+    } else if (this.data == 'Logout') {
+      this.Logout = true;
     }
 
     console.log(this.data, 'Message From DoctorListComponent');
