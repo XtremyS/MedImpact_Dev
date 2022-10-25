@@ -12,6 +12,7 @@ export class DoctorDetailsComponent implements OnInit, OnDestroy {
   DoctorName: any;
   PageTitle = 'MedImpact | ';
   DoctorDetails: any;
+  DoctorDetailsLocalStorage: any;
 
   constructor(
     private _titleService: Title,
@@ -29,15 +30,19 @@ export class DoctorDetailsComponent implements OnInit, OnDestroy {
     );
     this._AllPurposeService.DoctorsDetailsSubject.subscribe(
       async (data: any) => {
-        var DoctorDetails;
-        DoctorDetails = data;
+        this.DoctorDetails = data;
       }
     );
-    console.log(this.DoctorDetails, 'data fromm details');
+    //* Setting Doctor Details From Subject In LocalStorage To Keep Data On Page Load
+    this.DoctorDetailsLocalStorage = localStorage.setItem(
+      'tdd',
+      JSON.stringify(this.DoctorDetails)
+    );
   }
 
   ngOnDestroy(): void {
     //* Unsubscribing DoctorsDetailsSubject OnDestroy
     this._AllPurposeService.DoctorsDetailsSubject.unsubscribe;
+    localStorage.removeItem('tdd');
   }
 }
