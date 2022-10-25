@@ -1,7 +1,10 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AllPurposeService } from 'src/services/allpurpose.service';
+import { AuthService } from 'src/services/auth.service';
+import { ModalService } from 'src/services/modal.service';
+import { Service } from 'src/services/service.service';
 
 @Component({
   selector: 'app-doctor-details',
@@ -17,7 +20,11 @@ export class DoctorDetailsComponent implements OnInit, OnDestroy {
   constructor(
     private _titleService: Title,
     private _ActivatedRouteService: ActivatedRoute,
-    private _AllPurposeService: AllPurposeService
+    private _AllPurposeService: AllPurposeService,
+    private _Service: Service,
+    private _ModalService: ModalService,
+    private _RouterService: Router,
+    private _AuthService: AuthService
   ) {}
 
   ngOnInit() {
@@ -38,6 +45,17 @@ export class DoctorDetailsComponent implements OnInit, OnDestroy {
       'tdd',
       JSON.stringify(this.DoctorDetails)
     );
+  }
+
+  BookAppointment(Data: any) {
+    //* Auth Token Initialization
+    let IsAuthenticated: boolean = this._AuthService.GetLocalAuthToken();
+    //* Checking Before Booking Appointment User IsAuthenticated Or Not
+    if (!IsAuthenticated) {
+      this._ModalService.OpenAlertDialog('Not_Authenticated');
+    } else {
+      console.log(Data);
+    }
   }
 
   ngOnDestroy(): void {
