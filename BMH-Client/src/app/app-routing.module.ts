@@ -102,10 +102,16 @@ const routes: Routes = [
 
   {
     path: 'admin-dashboard',
-
     loadChildren: () =>
       import('./admin-dashboard/admin-dashboard.module').then(
         (m) => m.AdminDashboardModule
+      ),
+  },
+  {
+    path: 'doctor-dashboard',
+    loadChildren: () =>
+      import('./doctor-dashboard/doctor-dashboard.module').then(
+        (m) => m.DoctorDashboardModule
       ),
   },
   { path: '**', component: ErrorPageComponent },
