@@ -9,11 +9,11 @@ import { FormModalComponent } from 'src/app/pages/dailog-boxes/form-modal/form-m
 })
 export class ModalService {
   //* Alert Dialog Configuration
-  DurationInSeconds = 5;
+  DurationInSeconds = 5000;
   constructor(private _snackBar: MatSnackBar, public dialog: MatDialog) {}
 
   //* Alert Snack Bar Function
-  OpentAlertDialog(Message: string) {
+  OpenAlertDialog(Message: string) {
     this._snackBar.openFromComponent(AlertDialogBoxComponent, {
       duration: this.DurationInSeconds * 1000,
       panelClass: ['Alert_SnackBar'],

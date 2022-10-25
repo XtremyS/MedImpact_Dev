@@ -28,7 +28,10 @@
           <div class="dc-searchresult-grid">
             <div class="row">
               <ng-container *ngFor="let data of DocArray">
-                <div class="col-12 col-sm-6 col-md-12 col-lg-6 col-xl-4">
+                <div
+                  class="col-12 col-sm-6 col-md-12 col-lg-6 col-xl-4 Doctor_Cards_Main_Container"
+                  (click)="ViewDoctorDetails(data)"
+                >
                   <div class="dc-docpostholder">
                     <figure class="dc-docpostimg">
                       <img src="{{ data.img }}" alt="img description" />

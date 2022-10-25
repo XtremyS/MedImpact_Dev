@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Service } from 'src/services/service.service';
 import { AuthService } from 'src/services/auth.service';
-import { MatDialog } from '@angular/material/dialog';
-import { FormModalComponent } from '../dailog-boxes/form-modal/form-modal.component';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { ModalService } from 'src/services/modal.service';
+import { Router } from '@angular/router';
+import { Title } from '@angular/platform-browser';
+import { AllPurposeService } from 'src/services/allpurpose.service';
 
 @Component({
   selector: 'app-doctor-list',
@@ -12,16 +12,21 @@ import { ModalService } from 'src/services/modal.service';
   styleUrls: ['./doctor-list.component.scss'],
 })
 export class DoctorListComponent implements OnInit {
+  PageTitle = 'MedImpact | Doctor Lists';
   DocArray: any;
   PatientData: any;
 
   constructor(
     private _Service: Service,
     private _AuthService: AuthService,
-    private _ModalService: ModalService
+    private _ModalService: ModalService,
+    private _RouterService: Router,
+    private _titleService: Title,
+    private _AllPurposeService: AllPurposeService
   ) {}
 
   ngOnInit(): void {
+    this._titleService.setTitle(this.PageTitle);
     //* Getting All Doctors Data From API
     this._Service.GetDocData().subscribe((res) => {
       this.DocArray = res.body.data;
@@ -33,13 +38,20 @@ export class DoctorListComponent implements OnInit {
     let IsAuthenticated: boolean = this._AuthService.GetLocalAuthToken();
     //* Checking Before Booking Appointment User IsAuthenticated Or Not
     if (!IsAuthenticated) {
-      this._ModalService.OpentAlertDialog('Not_Authenticated');
+      this._ModalService.OpenAlertDialog('Not_Authenticated');
     } else {
       console.log(DoctorDetails);
-      this._Service.GetUserData().subscribe((res) => {
+      this._Service.GetUserData().subscribe(async (res) => {
         console.log(res.body, 'RESPONSE OF USER DATA WHICH IS LOGGED IN');
       });
       this._ModalService.openDialog();
     }
+  }
+
+  ViewDoctorDetails(DoctorDetails: any) {
+    //* Navigating To Doc List Component With Full_Name As Route Params
+    this._RouterService.navigate([`doctor-details/${DoctorDetails.full_name}`]);
+    //* Sending Selected Doctor Data To DocDetails Component
+    this._AllPurposeService.DoctorsDetailsSubject.next(DoctorDetails);
   }
 }

@@ -48,7 +48,7 @@ const routes: Routes = [
         component: DoctorListComponent,
       },
       {
-        path: 'doctor-details',
+        path: 'doctor-details/:full_name',
         component: DoctorDetailsComponent,
       },
       {

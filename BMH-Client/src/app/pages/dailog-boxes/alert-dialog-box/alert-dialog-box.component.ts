@@ -20,7 +20,5 @@ export class AlertDialogBoxComponent implements OnInit {
     } else if (this.data == 'Logout') {
       this.Logout = true;
     }
-
-    console.log(this.data, 'Message From DoctorListComponent');
   }
 }

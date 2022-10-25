@@ -42,7 +42,7 @@ export class HeaderComponent implements OnInit {
         console.log(data.body.response);
         if (data.status == 200) {
           //* SETTING API RESPONSE FROM API IN GLOBAL VARIABLE
-          this._ModalService.OpentAlertDialog('Authenticated');
+          this._ModalService.OpenAlertDialog('Authenticated');
           this.ApiUserDetails = data.body.response;
           this.IsLoggedIn = true;
           //* GETTING LAST AUTH TOKEN OF USER FROM API AND SETTING IT IN LOCAL STORAGE
@@ -62,7 +62,7 @@ export class HeaderComponent implements OnInit {
       this._Service.PatientLogin(this.LoginForm.value).subscribe((data) => {
         console.log(data.body.response);
         if (data.status == 200) {
-          this._ModalService.OpentAlertDialog('Authenticated');
+          this._ModalService.OpenAlertDialog('Authenticated');
           //* SETTING API RESPONSE FROM API IN GLOBAL VARIABLE
           this.ApiUserDetails = data.body.response;
           this.IsLoggedIn = true;
@@ -128,7 +128,7 @@ export class HeaderComponent implements OnInit {
       this.ApiUserDetails = data;
       console.log(data.message);
       if (data.message == 'Logout Successfully!') {
-        this._ModalService.OpentAlertDialog('Logout');
+        this._ModalService.OpenAlertDialog('Logout');
         this.IsLoggedIn = false;
         this._AuthService.RemoveLocalAuthToken();
         location.reload();
