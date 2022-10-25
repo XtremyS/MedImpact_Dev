@@ -15,6 +15,7 @@ export class DoctorListComponent implements OnInit {
   PageTitle = 'MedImpact | Doctor Lists';
   DocArray: any;
   PatientData: any;
+  Loading: boolean = false;
 
   constructor(
     private _Service: Service,
@@ -23,7 +24,9 @@ export class DoctorListComponent implements OnInit {
     private _RouterService: Router,
     private _titleService: Title,
     private _AllPurposeService: AllPurposeService
-  ) {}
+  ) {
+    this.Loading = false;
+  }
 
   ngOnInit(): void {
     this._titleService.setTitle(this.PageTitle);

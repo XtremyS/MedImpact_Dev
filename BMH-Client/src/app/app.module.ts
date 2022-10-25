@@ -27,6 +27,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModuleModule } from './pages/material-module/material-module.module';
 import { FormModalComponent } from './pages/dailog-boxes/form-modal/form-modal.component';
 import { AlertDialogBoxComponent } from './pages/dailog-boxes/alert-dialog-box/alert-dialog-box.component';
+import { ProgressLoaderComponent } from './pages/dailog-boxes/progress-loader/progress-loader.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -51,6 +52,7 @@ import { AlertDialogBoxComponent } from './pages/dailog-boxes/alert-dialog-box/a
     DoctorListComponent,
     FormModalComponent,
     AlertDialogBoxComponent,
+    ProgressLoaderComponent,
   ],
   imports: [
     BrowserModule,
