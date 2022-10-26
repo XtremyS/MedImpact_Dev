@@ -47,7 +47,7 @@ router.post(
           full_name,
           gender,
           email,
-          role,
+
           age,
           phone,
           password,
@@ -423,7 +423,7 @@ router.post("/api/v1/login-patient", async (req, res) => {
           age: 1,
           address: 1,
           phone: 1,
-          appointmen_status: 1,
+          appointment_status: 1,
         }
       );
 
@@ -617,8 +617,8 @@ router.patch("/api/v1/book_appointment", async (req, res) => {
     const Id = req.body._id;
     const PatientName = req.body.patients_name;
     const PatientAge = req.body.patients_age;
+    const PatientAppointmentDate = req.body.appointment_date;
     const PatientVisitingReason = req.body.visiting_reason;
-    const PatientAddress = req.body.patients_address;
     const PatientPhone = req.body.patients_phone;
 
     //* UPDATING SPECIFIC USER WITH ID
@@ -630,8 +630,8 @@ router.patch("/api/v1/book_appointment", async (req, res) => {
             patients_name: PatientName,
             patients_age: PatientAge,
             visiting_reason: PatientVisitingReason,
+            appointment_date: PatientAppointmentDate,
             appointment_status: 2,
-            patients_address: PatientAddress,
             patients_phone: PatientPhone,
           },
         },
@@ -732,7 +732,6 @@ router.get("/api/v1/logout", (req, res) => {
 
 // TODO If Want To Get The User Data Use This //
 //* This Route Returns The User Details
-//* CONTACTUS USER DETAILS REQUEST
 router.get("/api/v1/get_user_data", Middleware, (req, res) => {
   let UserObject = {
     _id: req.rootUser._id,

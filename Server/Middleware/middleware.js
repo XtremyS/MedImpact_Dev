@@ -2,7 +2,8 @@
 const jwt = require("jsonwebtoken");
 
 //* DOCTOR DB SCHEMA
-const PatientS = require("../DBSchema/patient_schema");
+const Patients = require("../DBSchema/patient_schema");
+// const Doctor = require("../DBSchema/doc_schema");
 
 const Middleware = async (req, res, next) => {
   try {
@@ -13,7 +14,7 @@ const Middleware = async (req, res, next) => {
     const verifyToken = jwt.verify(token, process.env.AUTH_KEY);
 
     //* GETTING THAT USER WHOSE TOKEN IS VERIFIED
-    const rootUser = await PatientS.findOne({
+    const rootUser = await Patients.findOne({
       _id: verifyToken._id,
       "tokens.token": token,
     });

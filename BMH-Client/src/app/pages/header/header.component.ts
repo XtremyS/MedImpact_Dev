@@ -50,7 +50,7 @@ export class HeaderComponent implements OnInit {
               .token;
           this._AuthService.SetLocalAuthToken(AuthToken);
           //* Reloading Page
-          // location.reload();
+          location.reload();
         }
       });
       this.LoginForm.patchValue({
