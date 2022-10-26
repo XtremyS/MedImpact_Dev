@@ -45,9 +45,6 @@
                         ><i class="fa fa-heart"></i
                       ></a>
                       <div class="dc-title">
-                        <a href="javascript:void(0)" class="dc-docstatus"
-                          >Neurosurgeon</a
-                        >
                         <h3>
                           <a href="javascript:void(0);"
                             >Dr. {{ data.full_name }}
@@ -81,28 +78,27 @@
                           ><i class="ti-direction-alt"></i> {{ data.state }},
                           {{ data.country }}</span
                         >
-                        <span
-                          ><i class="ti-direction-alt"></i>
-                          {{ data.clinic_address }}
-                        </span>
-                        <span
-                          ><i class="ti-calendar"></i> Mo, Tu,
-                          <em class="dc-dayon">We</em>, Th, Fr, Sa</span
-                        >
-                        <button
-                          type="submit"
-                          (click)="ViewDoctorDetails(data)"
-                          class="dc-btn"
-                        >
-                          View Details
-                        </button>
-                        <button
-                          type="submit"
-                          (click)="BookAppointment(data)"
-                          class="dc-btn"
-                        >
-                          Book Now
-                        </button>
+
+                        <div class="btn_container">
+                          <div>
+                            <button
+                              type="submit"
+                              (click)="ViewDoctorDetails(data)"
+                              class="dc-btn"
+                            >
+                              View Details
+                            </button>
+                          </div>
+                          <div>
+                            <button
+                              type="submit"
+                              (click)="BookAppointment(data)"
+                              class="dc-btn"
+                            >
+                              Book Now
+                            </button>
+                          </div>
+                        </div>
                       </div>
                     </div>
                   </div>

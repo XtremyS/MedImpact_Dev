@@ -10,6 +10,7 @@ export class AlertDialogBoxComponent implements OnInit {
   LoginSuccess: boolean = false;
   LoginFailure: boolean = false;
   Logout: boolean = false;
+  BookingRequest: boolean = false;
 
   constructor(@Inject(MAT_SNACK_BAR_DATA) public data: string) {}
   ngOnInit(): void {
@@ -19,6 +20,8 @@ export class AlertDialogBoxComponent implements OnInit {
       this.LoginSuccess = true;
     } else if (this.data == 'Logout') {
       this.Logout = true;
+    } else if (this.data == 'booking_request_success') {
+      this.BookingRequest = true;
     }
   }
 }

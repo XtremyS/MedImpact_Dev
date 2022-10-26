@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { AlertDialogBoxComponent } from 'src/app/pages/dailog-boxes/alert-dialog-box/alert-dialog-box.component';
 import { FormModalComponent } from 'src/app/pages/dailog-boxes/form-modal/form-modal.component';
@@ -9,8 +9,12 @@ import { FormModalComponent } from 'src/app/pages/dailog-boxes/form-modal/form-m
 })
 export class ModalService {
   //* Alert Dialog Configuration
-  DurationInSeconds = 5000;
-  constructor(private _snackBar: MatSnackBar, public dialog: MatDialog) {}
+  DurationInSeconds = 6;
+  constructor(
+    private _snackBar: MatSnackBar,
+    public dialog: MatDialog,
+    public dialogRef: MatDialogRef<FormModalComponent>
+  ) {}
 
   //* Alert Snack Bar Function
   OpenAlertDialog(Message: string) {
@@ -24,7 +28,10 @@ export class ModalService {
   }
 
   //* Form Dialog Box Function
-  openDialog(): void {
-    this.dialog.open(FormModalComponent, {});
+  OpenDialog(): void {
+    this.dialog.open(FormModalComponent);
+  }
+  CloseDialog(): void {
+    this.dialogRef.close();
   }
 }

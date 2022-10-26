@@ -629,8 +629,8 @@ router.patch("/api/v1/book_appointment", async (req, res) => {
           appointment: {
             patients_name: PatientName,
             patients_age: PatientAge,
-            visting_reason: PatientVisitingReason,
-            appointmen_status: 2,
+            visiting_reason: PatientVisitingReason,
+            appointment_status: 2,
             patients_address: PatientAddress,
             patients_phone: PatientPhone,
           },
@@ -642,7 +642,7 @@ router.patch("/api/v1/book_appointment", async (req, res) => {
     if (UpdateUser.acknowledged) {
       res
         .status(201)
-        .json({ response: "Appoinment reqeust sent successfully!" });
+        .json({ response: "Appointment request sent successfully!" });
     } else {
       res.status(400).json({ error: "Failed To Updated User Profile!" });
     }

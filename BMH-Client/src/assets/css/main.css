@@ -634,7 +634,7 @@ address {
   height: 500px;
 }
 .dc-btn {
-  min-width: 160px;
+  min-width: 120px;
   padding: 0 10px;
   position: relative;
   text-align: center;
@@ -3113,8 +3113,6 @@ body.dc-userlogin .dc-loginarea {
 }
 .dc-doclocation .dc-btn {
   margin-top: 18px;
-  margin-left: 18px;
-  margin-right: 18px;
   max-width: 145px;
   line-height: 32px;
 }

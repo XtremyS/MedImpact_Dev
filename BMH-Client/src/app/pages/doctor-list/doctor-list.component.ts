@@ -37,7 +37,7 @@ export class DoctorListComponent implements OnInit {
   }
 
   BookAppointment(DoctorDetails: any) {
-    //* Auth Token Initializtion
+    //* Auth Token Initialization
     let IsAuthenticated: boolean = this._AuthService.GetLocalAuthToken();
     //* Checking Before Booking Appointment User IsAuthenticated Or Not
     if (!IsAuthenticated) {
@@ -47,7 +47,9 @@ export class DoctorListComponent implements OnInit {
       this._Service.GetUserData().subscribe(async (res) => {
         console.log(res.body, 'RESPONSE OF USER DATA WHICH IS LOGGED IN');
       });
-      this._ModalService.openDialog();
+      //* Form Modal Open Method
+      this._AllPurposeService.DoctorsDetailsSubject.next(DoctorDetails);
+      this._ModalService.OpenDialog();
     }
   }
 

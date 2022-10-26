@@ -28,6 +28,7 @@ import { MaterialModuleModule } from './pages/material-module/material-module.mo
 import { FormModalComponent } from './pages/dailog-boxes/form-modal/form-modal.component';
 import { AlertDialogBoxComponent } from './pages/dailog-boxes/alert-dialog-box/alert-dialog-box.component';
 import { ProgressLoaderComponent } from './pages/dailog-boxes/progress-loader/progress-loader.component';
+import { MatDialogRef } from '@angular/material/dialog';
 @NgModule({
   declarations: [
     AppComponent,
@@ -62,7 +63,12 @@ import { ProgressLoaderComponent } from './pages/dailog-boxes/progress-loader/pr
     BrowserAnimationsModule,
     MaterialModuleModule,
   ],
-  providers: [],
+  providers: [
+    {
+      provide: MatDialogRef,
+      useValue: {},
+    },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
