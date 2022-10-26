@@ -57,7 +57,7 @@ router.post(
           state,
           country,
           education,
-          speciality,
+          specialty,
         } = req.body;
 
         //* CHECKING IF THE SAME EMAIL IS REGISTERED IN OTHER COLLECTION IN DATABASE
@@ -79,7 +79,7 @@ router.post(
           !cpassword ||
           !clinic_address ||
           !education ||
-          !speciality ||
+          !specialty ||
           !state ||
           !country ||
           !city
@@ -105,15 +105,15 @@ router.post(
               email,
               phone,
               age,
-              role,
+              role: "Doctor",
               clinic_address,
               city,
               state,
               country,
               education,
-              speciality,
+              specialty,
               isVerified: false,
-              SuperExperinced: false,
+              SuperExperienced: false,
               password,
               cpassword,
               img: ImgUrl,
@@ -565,9 +565,9 @@ router.get("/api/v1/doc-list", async (req, res) => {
         state: 1,
         country: 1,
         education: 1,
-        speciality: 1,
+        specialty: 1,
         isVerified: 1,
-        SuperExperinced: 1,
+        SuperExperienced: 1,
       }
     );
 
@@ -617,7 +617,7 @@ router.patch("/api/v1/book_appointment", async (req, res) => {
     const Id = req.body._id;
     const PatientName = req.body.patients_name;
     const PatientAge = req.body.patients_age;
-    const PatientVisitingReason = req.body.visting_reason;
+    const PatientVisitingReason = req.body.visiting_reason;
     const PatientAddress = req.body.patients_address;
     const PatientPhone = req.body.patients_phone;
 

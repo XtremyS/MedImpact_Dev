@@ -35,13 +35,13 @@ export class DoctorRegistrationComponent implements OnInit {
     'IIIT',
   ];
 
-  //* SPECIALITY FIELD INPUT VARIABLES
-  @ViewChild('SpecialityInput') SpecialityInput: ElementRef<HTMLInputElement>;
-  separatorKeysCodesSpeciality: number[] = [ENTER, COMMA];
-  SpecialityFormControl = new FormControl('');
-  FilterdSpecialityArray: Observable<string[]>;
-  SpecialityValue: string[] = [];
-  SpecialitySuggestionArray: string[] = [
+  //* Specialty FIELD INPUT VARIABLES
+  @ViewChild('SpecialtyInput') SpecialtyInput: ElementRef<HTMLInputElement>;
+  separatorKeysCodesSpecialty: number[] = [ENTER, COMMA];
+  SpecialtyFormControl = new FormControl('');
+  FilterdSpecialtyArray: Observable<string[]>;
+  SpecialtyValue: string[] = [];
+  SpecialtySuggestionArray: string[] = [
     'NERROSURGOEN',
     'DENTIST',
     'CHARDIOLOSITS',
@@ -66,12 +66,12 @@ export class DoctorRegistrationComponent implements OnInit {
     );
 
     //* SPECIALITY FIELD FILTER LOGIC
-    this.FilterdSpecialityArray = this.SpecialityFormControl.valueChanges.pipe(
+    this.FilterdSpecialtyArray = this.SpecialtyFormControl.valueChanges.pipe(
       startWith(null),
       map((Data: string | null) =>
         Data
-          ? this._FilterSpeciality(Data)
-          : this.SpecialitySuggestionArray.slice()
+          ? this._FilterSpecialty(Data)
+          : this.SpecialtySuggestionArray.slice()
       )
     );
   }
@@ -112,39 +112,39 @@ export class DoctorRegistrationComponent implements OnInit {
     );
   }
 
-  //* SPECIALITY FIELD FUNCTIONS
-  AddSpeciality(event: MatChipInputEvent): void {
+  //* Specialty FIELD FUNCTIONS
+  AddSpecialty(event: MatChipInputEvent): void {
     const value = (event.value || '').trim();
 
     // Add our fruit
     if (value) {
-      this.SpecialityValue.push(value);
+      this.SpecialtyValue.push(value);
     }
 
     // Clear the input value
     event.chipInput!.clear();
 
-    this.SpecialityFormControl.setValue(null);
+    this.SpecialtyFormControl.setValue(null);
   }
 
-  RemoveSpeciality(fruit: string): void {
-    const index = this.SpecialityValue.indexOf(fruit);
+  RemoveSpecialty(fruit: string): void {
+    const index = this.SpecialtyValue.indexOf(fruit);
 
     if (index >= 0) {
-      this.SpecialityValue.splice(index, 1);
+      this.SpecialtyValue.splice(index, 1);
     }
   }
 
-  SelectedSpeciality(event: MatAutocompleteSelectedEvent): void {
-    this.SpecialityValue.push(event.option.viewValue);
-    this.SpecialityInput.nativeElement.value = '';
-    this.SpecialityFormControl.setValue(null);
+  SelectedSpecialty(event: MatAutocompleteSelectedEvent): void {
+    this.SpecialtyValue.push(event.option.viewValue);
+    this.SpecialtyInput.nativeElement.value = '';
+    this.SpecialtyFormControl.setValue(null);
   }
 
-  private _FilterSpeciality(value: string): string[] {
+  private _FilterSpecialty(value: string): string[] {
     const filterValue = value.toLowerCase();
 
-    return this.SpecialitySuggestionArray.filter((fruit) =>
+    return this.SpecialtySuggestionArray.filter((fruit) =>
       fruit.toLowerCase().includes(filterValue)
     );
   }
@@ -156,7 +156,7 @@ export class DoctorRegistrationComponent implements OnInit {
       phone: '',
       age: '',
       education: '',
-      speciality: '',
+      specialty: '',
       clinic_address: '',
       city: '',
       state: '',
@@ -179,7 +179,7 @@ export class DoctorRegistrationComponent implements OnInit {
   async Register() {
     this.DoctorForm.patchValue({
       education: this.EducationValue,
-      speciality: this.SpecialityValue,
+      specialty: this.SpecialtyValue,
     });
 
     this.ImgFormData.append('gender', this.DoctorForm.value.gender);
@@ -187,7 +187,7 @@ export class DoctorRegistrationComponent implements OnInit {
     this.ImgFormData.append('phone', this.DoctorForm.value.phone);
     this.ImgFormData.append('age', this.DoctorForm.value.age);
     this.ImgFormData.append('education', this.DoctorForm.value.education);
-    this.ImgFormData.append('speciality', this.DoctorForm.value.speciality);
+    this.ImgFormData.append('specialty', this.DoctorForm.value.Specialty);
     this.ImgFormData.append(
       'clinic_address',
       this.DoctorForm.value.clinic_address

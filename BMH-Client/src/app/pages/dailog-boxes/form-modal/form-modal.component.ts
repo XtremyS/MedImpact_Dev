@@ -3,6 +3,7 @@ import { FormGroup, FormBuilder } from '@angular/forms';
 import { Service } from 'src/services/service.service';
 import { AllPurposeService } from 'src/services/allpurpose.service';
 import { ModalService } from 'src/services/modal.service';
+import { MatDialogRef } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-form-modal',
@@ -16,7 +17,8 @@ export class FormModalComponent implements OnInit {
     private _FormBuilder: FormBuilder,
     private _Service: Service,
     private _AllPurposeService: AllPurposeService,
-    private _ModalService: ModalService
+    private _ModalService: ModalService,
+    public FormDialogBox: MatDialogRef<FormModalComponent>
   ) {}
   ngOnInit(): void {
     //* Getting Doctor Id From DocList Component On Click Of Book Now BTN
@@ -35,14 +37,18 @@ export class FormModalComponent implements OnInit {
     });
   }
   SubmitForm() {
-    this._ModalService.CloseDialog();
-    // this._Service
-    //   .BookDocAppointment(this.AppointmentsForm.value)
-    //   .subscribe(async (data) => {
-    //     if (data.status == 201) {
-    //       this._ModalService.OpenAlertDialog('booking_request_success');
-    //     }
-    //     console.log(data, 'RESPONSE DATA OF MODAL');
-    //   });
+    this._Service
+      .BookDocAppointment(this.AppointmentsForm.value)
+      .subscribe(async (data) => {
+        if (data.status == 201) {
+          //* Opening Alert Modal WIth This Method
+          this._ModalService.OpenAlertDialog('booking_request_success');
+          //* Closing Form Dialog Box With This Method
+          this.FormDialogBox.close();
+        }
+        console.log(data, 'RESPONSE DATA OF MODAL');
+      });
+
+    console.log(this.AppointmentsForm.value);
   }
 }

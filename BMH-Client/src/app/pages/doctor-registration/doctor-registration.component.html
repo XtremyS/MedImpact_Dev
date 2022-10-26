@@ -118,17 +118,17 @@
                       </mat-autocomplete>
                     </mat-form-field>
                   </div>
-                  <!--* SPECIALITY FIELD -->
+                  <!--* Specialty FIELD -->
                   <div class="form-group form-group-half">
                     <mat-form-field class="example-chip-list" appearance="fill">
                       <mat-chip-list
-                        #chipListSpeciality
-                        aria-label="Speciality selection"
+                        #chipListSpecialty
+                        aria-label="Specialty selection"
                       >
                         <mat-chip
                           class="mat_chips"
-                          *ngFor="let Data of SpecialityValue"
-                          (removed)="RemoveSpeciality(Data)"
+                          *ngFor="let Data of SpecialtyValue"
+                          (removed)="RemoveSpecialty(Data)"
                         >
                           {{ Data }}
                           <button matChipRemove>
@@ -136,23 +136,23 @@
                           </button>
                         </mat-chip>
                         <input
-                          placeholder="Add Speciality"
-                          #SpecialityInput
-                          [formControl]="SpecialityFormControl"
-                          [matAutocomplete]="autoSpeciality"
-                          [matChipInputFor]="chipListSpeciality"
+                          placeholder="Add Specialty"
+                          #SpecialtyInput
+                          [formControl]="SpecialtyFormControl"
+                          [matAutocomplete]="autoSpecialty"
+                          [matChipInputFor]="chipListSpecialty"
                           [matChipInputSeparatorKeyCodes]="
-                            separatorKeysCodesSpeciality
+                            separatorKeysCodesSpecialty
                           "
-                          (matChipInputTokenEnd)="AddSpeciality($event)"
+                          (matChipInputTokenEnd)="AddSpecialty($event)"
                         />
                       </mat-chip-list>
                       <mat-autocomplete
-                        #autoSpeciality="matAutocomplete"
-                        (optionSelected)="SelectedSpeciality($event)"
+                        #autoSpecialty="matAutocomplete"
+                        (optionSelected)="SelectedSpecialty($event)"
                       >
                         <mat-option
-                          *ngFor="let Data of FilterdSpecialityArray | async"
+                          *ngFor="let Data of FilterdSpecialtyArray | async"
                           [value]="Data"
                         >
                           {{ Data }}

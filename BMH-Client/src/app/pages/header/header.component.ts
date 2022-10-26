@@ -17,7 +17,6 @@ export class HeaderComponent implements OnInit {
   IsLoggedIn = false;
   ApiUserDetails: any;
   LocalStorageAuthToken = this._AuthService.GetLocalAuthToken();
-  LocalStorageUserDetaials: any;
 
   constructor(
     private _FormBuilder: FormBuilder,
@@ -51,7 +50,7 @@ export class HeaderComponent implements OnInit {
               .token;
           this._AuthService.SetLocalAuthToken(AuthToken);
           //* Reloading Page
-          location.reload();
+          // location.reload();
         }
       });
       this.LoginForm.patchValue({
@@ -84,6 +83,7 @@ export class HeaderComponent implements OnInit {
       this._Service.LabLogin(this.LoginForm.value).subscribe((data) => {
         console.log(data.body.response);
         if (data.status == 200) {
+          this._ModalService.OpenAlertDialog('Authenticated');
           //* SETTING API RESPONSE FROM API IN GLOBAL VARIABLE
           this.ApiUserDetails = data.body.response;
           this.IsLoggedIn = true;
@@ -104,6 +104,7 @@ export class HeaderComponent implements OnInit {
       this._Service.PharmacyLogin(this.LoginForm.value).subscribe((data) => {
         console.log(data.body.response);
         if (data.status == 200) {
+          this._ModalService.OpenAlertDialog('Authenticated');
           //* SETTING API RESPONSE FROM API IN GLOBAL VARIABLE
           this.ApiUserDetails = data.body.response;
           this.IsLoggedIn = true;
