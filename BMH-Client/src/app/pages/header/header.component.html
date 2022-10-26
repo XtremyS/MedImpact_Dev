@@ -113,16 +113,18 @@
                       <li>
                         <a routerLink="/contact-us">Contact Us</a>
                       </li>
-                      <li>
+                      <!-- <li>
                         <a routerLink="admin-dashboard">Admin Dashboard</a>
-                      </li>
+                      </li> -->
                     </ul>
                   </li>
                   <ng-container *ngIf="IsLoggedIn">
                     <li class="menu-item-has-children page_item_has_children">
                       <a href="javascript:void(0);">Profile</a>
                       <ul class="sub-menu">
-                        <li><a routerLink="">Your Dashboard</a></li>
+                        <li>
+                          <a routerLink="doctor-dashboard">Your Dashboard</a>
+                        </li>
                         <li>
                           <a routerLink="" (click)="Logout()">Logout</a>
                         </li>
