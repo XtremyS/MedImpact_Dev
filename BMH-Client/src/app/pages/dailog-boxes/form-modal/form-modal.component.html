@@ -36,12 +36,21 @@
       formControlName="patients_phone"
     />
   </div>
+  <div class="mb-3 date_container">
+    <label for="dateofbirth">Date Of Appointment</label>
+    <input
+      formControlName="appointment_date"
+      type="date"
+      name="dateofbirth"
+      id="dateofbirth"
+    />
+  </div>
   <div class="mb-3">
     <label for="exampleFormControlTextarea1" class="form-label"
       >Visiting Reason</label
     >
     <textarea
-      class="form-control"
+      class="form-control text_area"
       id="exampleFormControlTextarea1"
       rows="3"
       placeholder="Please Write Visiting Reason"
@@ -49,6 +58,6 @@
     ></textarea>
   </div>
   <button type="button" (click)="SubmitForm()" class="btn btn-success">
-    Success
+    Submit
   </button>
 </form>

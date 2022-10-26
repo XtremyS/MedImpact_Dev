@@ -15,6 +15,7 @@ export class FormModalComponent implements OnInit {
       patients_age: this.AppointmentsForm.value.patients_age,
       patients_phone: this.AppointmentsForm.value.patients_phone,
       visting_reason: this.AppointmentsForm.value.visting_reason,
+      appointment_date: this.AppointmentsForm.value.appointment_date,
     });
   }
   SubmitForm() {

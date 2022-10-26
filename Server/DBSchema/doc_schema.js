@@ -31,6 +31,7 @@ const UserSchema = new mongoose.Schema({
       patients_name: { type: String, required: true },
       patients_age: { type: String, required: true },
       visting_reason: { type: String, required: true },
+      appointment_date: { type: String, required: true },
       patients_phone: { type: String, required: true },
       appointmen_status: { type: Number },
     },

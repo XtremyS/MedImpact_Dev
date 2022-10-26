@@ -30,7 +30,6 @@
               <ng-container *ngFor="let data of DocArray">
                 <div
                   class="col-12 col-sm-6 col-md-12 col-lg-6 col-xl-4 Doctor_Cards_Main_Container"
-                  (click)="ViewDoctorDetails(data)"
                 >
                   <div class="dc-docpostholder">
                     <figure class="dc-docpostimg">
@@ -90,6 +89,13 @@
                           ><i class="ti-calendar"></i> Mo, Tu,
                           <em class="dc-dayon">We</em>, Th, Fr, Sa</span
                         >
+                        <button
+                          type="submit"
+                          (click)="ViewDoctorDetails(data)"
+                          class="dc-btn"
+                        >
+                          View Details
+                        </button>
                         <button
                           type="submit"
                           (click)="BookAppointment(data)"
