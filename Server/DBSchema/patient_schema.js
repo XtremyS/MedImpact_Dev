@@ -33,7 +33,6 @@ UserSchema.pre("save", async function (next) {
 //GENERATING AUTH TOKEN
 UserSchema.methods.generateAuthToken = async function () {
   try {
-    // console.log("jwt code");
     const token = jwt.sign(
       {
         _id: this._id,
@@ -44,7 +43,6 @@ UserSchema.methods.generateAuthToken = async function () {
     //SAVING TOKEN IN DOCUMENT FIELD
     this.tokens = this.tokens.concat({ token: token });
     await this.save();
-    // console.log(token);
     return token;
   } catch (error) {
     console.log(error);

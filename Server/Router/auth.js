@@ -434,7 +434,6 @@ router.post("/api/v1/login-patient", async (req, res) => {
       if (UserLogin && HashPassword) {
         //* GENERATING AUTH TOKEN WHILE LOGIN (USING MIDDLEWEARE)
         const token = await UserLogin.generateAuthToken();
-        //*  console.log(token);
 
         //* SAVING AUTH TOKEN IN COOKIE
         res.cookie("jwt", token, {
@@ -719,17 +718,6 @@ router.patch("/api/v1/add_medicine", async (req, res) => {
   }
 });
 
-//*  GET ABOUT
-router.get("/api/v1/about", Middleware, (req, res) => {
-  res.send(req.rootUser);
-});
-
-//*  GET LOGOUT
-router.get("/api/v1/logout", (req, res) => {
-  res.clearCookie("jwt", { path: "/" });
-  res.status(200).json({ message: "Logout Successfully!" });
-});
-
 // TODO If Want To Get The User Data Use This //
 //* This Route Returns The User Details
 router.get("/api/v1/get_user_data", Middleware, (req, res) => {
@@ -744,6 +732,17 @@ router.get("/api/v1/get_user_data", Middleware, (req, res) => {
   };
 
   res.send(UserObject);
+});
+
+//*  GET ABOUT
+router.get("/api/v1/about", Middleware, (req, res) => {
+  res.send(req.rootUser);
+});
+
+//*  GET LOGOUT
+router.get("/api/v1/logout", (req, res) => {
+  res.clearCookie("jwt", { path: "/" });
+  res.status(200).json({ message: "Logout Successfully!" });
 });
 
 module.exports = router;
