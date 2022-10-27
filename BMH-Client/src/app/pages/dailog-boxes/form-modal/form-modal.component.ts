@@ -25,10 +25,6 @@ export class FormModalComponent implements OnInit {
     this._Service.GetUserData().subscribe(async (res) => {
       if (res.status == 200) {
         this.LoggedInUserData = res.body;
-        console.log(
-          this.LoggedInUserData,
-          'RESPONSE OF USER DATA WHICH IS LOGGED IN'
-        );
 
         //* Patching The Api User Data Into Form
         this.AppointmentsForm.patchValue({
@@ -55,6 +51,7 @@ export class FormModalComponent implements OnInit {
     });
   }
   SubmitForm() {
+    //* Book Appointment API called
     this._Service
       .BookDocAppointment(this.AppointmentsForm.value)
       .subscribe(async (data) => {

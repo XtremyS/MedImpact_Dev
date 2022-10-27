@@ -7,8 +7,10 @@ import { BehaviorSubject, Subject } from 'rxjs';
 export class AllPurposeService {
   //* Getting DoctorDetails From Local Storage
   GetDocLocalData = localStorage.getItem('tdd');
+
   //* Converting That Data To JSON
   GetDocLocalDataPars = JSON.parse(this.GetDocLocalData!);
+
   //* Setting Converted Data To BehaviorSubject
   DoctorsDetailsSubject = new BehaviorSubject(this.GetDocLocalDataPars);
   constructor() {}

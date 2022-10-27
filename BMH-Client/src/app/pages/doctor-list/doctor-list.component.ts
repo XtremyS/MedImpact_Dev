@@ -52,9 +52,18 @@ export class DoctorListComponent implements OnInit {
   }
 
   ViewDoctorDetails(DoctorDetails: any) {
-    //* Navigating To Doc List Component With Full_Name As Route Params
-    this._RouterService.navigate([`doctor-details/${DoctorDetails.full_name}`]);
-    //* Sending Selected Doctor Data To DocDetails Component
-    this._AllPurposeService.DoctorsDetailsSubject.next(DoctorDetails);
+    //* Auth Token Initialization
+    let IsAuthenticated: boolean = this._AuthService.GetLocalAuthToken();
+
+    if (!IsAuthenticated) {
+      this._ModalService.OpenAlertDialog('Not_Authenticated');
+    } else {
+      //* Navigating To Doc List Component With Full_Name As Route Params
+      this._RouterService.navigate([
+        `doctor-details/${DoctorDetails.full_name}`,
+      ]);
+      //* Sending Selected Doctor Data To DocDetails Component
+      this._AllPurposeService.DoctorsDetailsSubject.next(DoctorDetails);
+    }
   }
 }

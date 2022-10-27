@@ -35,6 +35,7 @@ export class DoctorDetailsComponent implements OnInit, OnDestroy {
     this._titleService.setTitle(
       this.PageTitle + `${this.DoctorName.full_name}`
     );
+    //* Getting Doctor Details From Subject
     this._AllPurposeService.DoctorsDetailsSubject.subscribe(
       async (data: any) => {
         this.DoctorDetails = data;
@@ -55,6 +56,7 @@ export class DoctorDetailsComponent implements OnInit, OnDestroy {
       this._ModalService.OpenAlertDialog('Not_Authenticated');
     } else {
       console.log(Data);
+      this._ModalService.OpenDialog();
     }
   }
 
