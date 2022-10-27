@@ -726,6 +726,7 @@ router.get("/api/v1/get_user_data", Middleware, (req, res) => {
     full_name: req.rootUser.full_name,
     gender: req.rootUser.gender,
     phone: req.rootUser.phone,
+    age: req.rootUser.age,
     email: req.rootUser.email,
     address: req.rootUser.address,
     tokens: req.rootUser.tokens,

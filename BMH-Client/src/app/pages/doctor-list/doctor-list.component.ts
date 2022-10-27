@@ -44,9 +44,7 @@ export class DoctorListComponent implements OnInit {
       this._ModalService.OpenAlertDialog('Not_Authenticated');
     } else {
       console.log(DoctorDetails);
-      this._Service.GetUserData().subscribe(async (res) => {
-        console.log(res.body, 'RESPONSE OF USER DATA WHICH IS LOGGED IN');
-      });
+
       //* Form Modal Open Method
       this._AllPurposeService.DoctorsDetailsSubject.next(DoctorDetails);
       this._ModalService.OpenDialog();

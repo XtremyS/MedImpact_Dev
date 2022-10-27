@@ -13,6 +13,7 @@ import { MatDialogRef } from '@angular/material/dialog';
 export class FormModalComponent implements OnInit {
   AppointmentsForm = new FormGroup({});
   DoctorId: any;
+  LoggedInUserData: any;
   constructor(
     private _FormBuilder: FormBuilder,
     private _Service: Service,
@@ -21,12 +22,29 @@ export class FormModalComponent implements OnInit {
     public FormDialogBox: MatDialogRef<FormModalComponent>
   ) {}
   ngOnInit(): void {
+    this._Service.GetUserData().subscribe(async (res) => {
+      if (res.status == 200) {
+        this.LoggedInUserData = res.body;
+        console.log(
+          this.LoggedInUserData,
+          'RESPONSE OF USER DATA WHICH IS LOGGED IN'
+        );
+
+        //* Patching The Api User Data Into Form
+        this.AppointmentsForm.patchValue({
+          patients_name: this.LoggedInUserData.full_name,
+          patients_age: this.LoggedInUserData.age,
+          patients_phone: this.LoggedInUserData.phone,
+        });
+      }
+    });
+
     //* Getting Doctor Id From DocList Component On Click Of Book Now BTN
     this._AllPurposeService.DoctorsDetailsSubject.subscribe(async (data) => {
       this.DoctorId = data._id;
     });
 
-    //* Sending All Form Data To Backend
+    //* Input Data From Form
     this.AppointmentsForm = this._FormBuilder.group({
       _id: this.DoctorId,
       patients_name: this.AppointmentsForm.value.patients_name,
