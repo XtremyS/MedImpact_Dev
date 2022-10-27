@@ -11,11 +11,11 @@ import { ModalService } from 'src/services/modal.service';
 })
 export class HeaderComponent implements OnInit {
   radioItems = ['Doctor', 'Patient', 'Lab', 'Pharmacy'];
-  model = { option: '' };
-
+  model = { option: 'null' };
   LoginForm = new FormGroup({});
   IsLoggedIn = false;
   ApiUserDetails: any;
+  IsLoginRadioBtnSelected: boolean = false;
   LocalStorageAuthToken = this._AuthService.GetLocalAuthToken();
 
   constructor(
@@ -35,99 +35,113 @@ export class HeaderComponent implements OnInit {
     }
   }
 
-  async Login() {
-    if (this.model.option == 'Doctor') {
-      this._Service.DoctorLogin(this.LoginForm.value).subscribe((data) => {
-        console.log(data.body.response);
-        if (data.status == 200) {
-          //* SETTING API RESPONSE FROM API IN GLOBAL VARIABLE
-          this._ModalService.OpenAlertDialog('Authenticated');
-          this.ApiUserDetails = data.body.response;
-          this.IsLoggedIn = true;
-          //* GETTING LAST AUTH TOKEN OF USER FROM API AND SETTING IT IN LOCAL STORAGE
-          let AuthToken =
-            this.ApiUserDetails.tokens[this.ApiUserDetails.tokens.length - 1]
-              .token;
-          this._AuthService.SetLocalAuthToken(AuthToken);
-          //* Reloading Page
-          location.reload();
-        }
-      });
-      this.LoginForm.patchValue({
-        login_email: '',
-        login_password: '',
-      });
-    } else if (this.model.option == 'Patient') {
-      this._Service.PatientLogin(this.LoginForm.value).subscribe((data) => {
-        console.log(data.body.response);
-        if (data.status == 200) {
-          this._ModalService.OpenAlertDialog('Authenticated');
-          //* SETTING API RESPONSE FROM API IN GLOBAL VARIABLE
-          this.ApiUserDetails = data.body.response;
-          this.IsLoggedIn = true;
-          //* GETTING LAST AUTH TOKEN OF USER FROM API AND SETTING IT IN LOCAL STORAGE
-          let AuthToken =
-            this.ApiUserDetails.tokens[this.ApiUserDetails.tokens.length - 1]
-              .token;
-          //* SETTING JWT TOKEN IN LOCAL STORAGE
-          this._AuthService.SetLocalAuthToken(AuthToken);
-          //* Reloading Page
-          location.reload();
-        }
-      });
-      this.LoginForm.patchValue({
-        login_email: '',
-        login_password: '',
-      });
-    } else if (this.model.option == 'Lab') {
-      this._Service.LabLogin(this.LoginForm.value).subscribe((data) => {
-        console.log(data.body.response);
-        if (data.status == 200) {
-          this._ModalService.OpenAlertDialog('Authenticated');
-          //* SETTING API RESPONSE FROM API IN GLOBAL VARIABLE
-          this.ApiUserDetails = data.body.response;
-          this.IsLoggedIn = true;
-          //* GETTING LAST AUTH TOKEN OF USER FROM API AND SETTING IT IN LOCAL STORAGE
-          let AuthToken =
-            this.ApiUserDetails.tokens[this.ApiUserDetails.tokens.length - 1]
-              .token;
-          this._AuthService.SetLocalAuthToken(AuthToken);
-          //* Reloading Page
-          location.reload();
-        }
-      });
-      this.LoginForm.patchValue({
-        login_email: '',
-        login_password: '',
-      });
-    } else if (this.model.option == 'Pharmacy') {
-      this._Service.PharmacyLogin(this.LoginForm.value).subscribe((data) => {
-        console.log(data.body.response);
-        if (data.status == 200) {
-          this._ModalService.OpenAlertDialog('Authenticated');
-          //* SETTING API RESPONSE FROM API IN GLOBAL VARIABLE
-          this.ApiUserDetails = data.body.response;
-          this.IsLoggedIn = true;
-          //* GETTING LAST AUTH TOKEN OF USER FROM API AND SETTING IT IN LOCAL STORAGE
-          let AuthToken =
-            this.ApiUserDetails.tokens[this.ApiUserDetails.tokens.length - 1]
-              .token;
-          this._AuthService.SetLocalAuthToken(AuthToken);
-          //* Reloading Page
-          location.reload();
-        }
-      });
-      this.LoginForm.patchValue({
-        login_email: '',
-        login_password: '',
-      });
-      console.log(this.LoginForm.value);
+  Login() {
+    if (this.model.option == 'null') {
+      //* Rendering Alert Div To Select Any Radio Btn To Login
+      this.IsLoginRadioBtnSelected = true;
+    } else {
+      if (this.model.option == 'Doctor') {
+        //* Doctor Login API called
+        this._Service.DoctorLogin(this.LoginForm.value).subscribe((data) => {
+          console.log(data.body.response);
+          if (data.status == 200) {
+            //* Login Alert Triggered
+            this._ModalService.OpenAlertDialog('Authenticated');
+            //* SETTING API RESPONSE FROM API IN GLOBAL VARIABLE
+            this.ApiUserDetails = data.body.response;
+            this.IsLoggedIn = true;
+            //* GETTING LAST AUTH TOKEN OF USER FROM API AND SETTING IT IN LOCAL STORAGE
+            let AuthToken =
+              this.ApiUserDetails.tokens[this.ApiUserDetails.tokens.length - 1]
+                .token;
+            this._AuthService.SetLocalAuthToken(AuthToken);
+            //* Reloading Page
+            location.reload();
+          }
+        });
+        this.LoginForm.patchValue({
+          login_email: '',
+          login_password: '',
+        });
+      } else if (this.model.option == 'Patient') {
+        //* Patient Login API called
+        this._Service.PatientLogin(this.LoginForm.value).subscribe((data) => {
+          console.log(data.body.response);
+          if (data.status == 200) {
+            //* Login Alert Triggered
+            this._ModalService.OpenAlertDialog('Authenticated');
+            //* SETTING API RESPONSE FROM API IN GLOBAL VARIABLE
+            this.ApiUserDetails = data.body.response;
+            this.IsLoggedIn = true;
+            //* GETTING LAST AUTH TOKEN OF USER FROM API AND SETTING IT IN LOCAL STORAGE
+            let AuthToken =
+              this.ApiUserDetails.tokens[this.ApiUserDetails.tokens.length - 1]
+                .token;
+            //* SETTING JWT TOKEN IN LOCAL STORAGE
+            this._AuthService.SetLocalAuthToken(AuthToken);
+            //* Reloading Page
+            location.reload();
+          }
+        });
+        this.LoginForm.patchValue({
+          login_email: '',
+          login_password: '',
+        });
+      } else if (this.model.option == 'Lab') {
+        //* Lab Login API called
+        this._Service.LabLogin(this.LoginForm.value).subscribe((data) => {
+          console.log(data.body.response);
+          if (data.status == 200) {
+            //* Login Alert Triggered
+            this._ModalService.OpenAlertDialog('Authenticated');
+            //* SETTING API RESPONSE FROM API IN GLOBAL VARIABLE
+            this.ApiUserDetails = data.body.response;
+            this.IsLoggedIn = true;
+            //* GETTING LAST AUTH TOKEN OF USER FROM API AND SETTING IT IN LOCAL STORAGE
+            let AuthToken =
+              this.ApiUserDetails.tokens[this.ApiUserDetails.tokens.length - 1]
+                .token;
+            this._AuthService.SetLocalAuthToken(AuthToken);
+            //* Reloading Page
+            location.reload();
+          }
+        });
+        this.LoginForm.patchValue({
+          login_email: '',
+          login_password: '',
+        });
+      } else if (this.model.option == 'Pharmacy') {
+        //* Pharmacy Login API called
+        this._Service.PharmacyLogin(this.LoginForm.value).subscribe((data) => {
+          console.log(data.body.response);
+          if (data.status == 200) {
+            this._ModalService.OpenAlertDialog('Authenticated');
+            //* SETTING API RESPONSE FROM API IN GLOBAL VARIABLE
+            this.ApiUserDetails = data.body.response;
+            this.IsLoggedIn = true;
+            //* GETTING LAST AUTH TOKEN OF USER FROM API AND SETTING IT IN LOCAL STORAGE
+            let AuthToken =
+              this.ApiUserDetails.tokens[this.ApiUserDetails.tokens.length - 1]
+                .token;
+            this._AuthService.SetLocalAuthToken(AuthToken);
+            //* Reloading Page
+            location.reload();
+          }
+        });
+        this.LoginForm.patchValue({
+          login_email: '',
+          login_password: '',
+        });
+        console.log(this.LoginForm.value);
+      }
     }
   }
   Logout() {
+    //* Logout API called
     this._Service.LogOut(this.LoginForm.value).subscribe((data) => {
       this.ApiUserDetails = data;
-      console.log(data.message);
+
+      //* Logout Message
       if (data.message == 'Logout Successfully!') {
         this._ModalService.OpenAlertDialog('Logout');
         this.IsLoggedIn = false;

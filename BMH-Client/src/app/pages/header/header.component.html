@@ -173,6 +173,22 @@
                       [formGroup]="LoginForm"
                       class="dc-formtheme dc-loginform do-login-form"
                     >
+                      <ng-container *ngIf="IsLoginRadioBtnSelected">
+                        <p
+                          style="
+                            float: none;
+                            margin: 10px 0;
+                            text-align: center;
+                          "
+                        >
+                          Please Select Any Login User
+                          <i
+                            style="font-size: 15px; color: red"
+                            class="fa-solid fa-triangle-exclamation fa-shake"
+                          ></i>
+                        </p>
+                      </ng-container>
+
                       <div class="radio_Btn_container">
                         <label *ngFor="let radiobutton of radioItems">
                           <input
@@ -183,71 +199,6 @@
                             [checked]="radiobutton === model.option"
                           />{{ radiobutton }}
                         </label>
-                        <!-- <div class="form-check form-check-inline">
-                          <input
-                            formControlName="doc_login"
-                            class="form-check-input"
-                            type="radio"
-                            name="flexRadioDefault"
-                            id="flexRadioDefault1"
-                            checked
-                            value="1"
-                          />
-                          <label
-                            class="form-check-label"
-                            for="flexRadioDefault1"
-                          >
-                            Doctor
-                          </label>
-                        </div>
-                        <div class="form-check form-check-inline">
-                          <input
-                            formControlName="patient_login"
-                            class="form-check-input"
-                            type="radio"
-                            name="flexRadioDefault"
-                            id="flexRadioDefault2"
-                            value="2"
-                          />
-                          <label
-                            class="form-check-label"
-                            for="flexRadioDefault2"
-                          >
-                            Patient
-                          </label>
-                        </div>
-                        <div class="form-check form-check-inline">
-                          <input
-                            formControlName="lab_login"
-                            class="form-check-input"
-                            type="radio"
-                            name="flexRadioDefault"
-                            id="flexRadioDefault3"
-                            value="3"
-                          />
-                          <label
-                            class="form-check-label"
-                            for="flexRadioDefault2"
-                          >
-                            Lab
-                          </label>
-                        </div>
-                        <div class="form-check form-check-inline">
-                          <input
-                            formControlName="pharmacy_login"
-                            class="form-check-input"
-                            type="radio"
-                            name="flexRadioDefault"
-                            id="flexRadioDefault3"
-                            value="4"
-                          />
-                          <label
-                            class="form-check-label"
-                            for="flexRadioDefault2"
-                          >
-                            Pharmacy
-                          </label>
-                        </div> -->
                       </div>
 
                       <fieldset>
@@ -308,7 +259,7 @@
 
                         <div class="dc-logininfo">
                           <a href="javascript:;" class="dc-btn do-get-password"
-                            >Get Pasword</a
+                            >Get Password</a
                           >
                         </div>
                       </fieldset>
