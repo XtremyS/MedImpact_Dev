@@ -26,7 +26,7 @@ const UserSchema = new mongoose.Schema({
   img: { type: String, required: true },
   password: { type: String, required: true },
   cpassword: { type: String, required: true },
-  appointment: [
+  appointments: [
     {
       patients_name: { type: String, required: true },
       patients_age: { type: String, required: true },

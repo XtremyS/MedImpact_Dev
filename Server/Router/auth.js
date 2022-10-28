@@ -609,7 +609,7 @@ router.get("/api/v1/lab-list", async (req, res) => {
   }
 });
 
-//*  DOCTOR APPOINTMENT
+//*  Booking Appointments
 router.patch("/api/v1/book_appointment", async (req, res) => {
   try {
     //*  GETTING USER UPDATING INPUT
@@ -718,8 +718,16 @@ router.patch("/api/v1/add_medicine", async (req, res) => {
   }
 });
 
-// TODO If Want To Get The User Data Use This //
-//* This Route Returns The User Details
+//*  Get Appointments Data Of DoctorsDetailsSubject
+router.get("/api/v1/appointments", Middleware, (req, res) => {
+  let UserObject = {
+    appointments: req.rootUser.appointments,
+  };
+
+  res.send(UserObject);
+});
+
+//* TODO If Want To Get The Doctor And Patients Data Use This
 router.get("/api/v1/get_user_data", Middleware, (req, res) => {
   let UserObject = {
     _id: req.rootUser._id,

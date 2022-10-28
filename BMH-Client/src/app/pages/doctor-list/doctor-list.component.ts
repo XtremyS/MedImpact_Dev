@@ -29,6 +29,7 @@ export class DoctorListComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    //* Setting Page Title Dynamically
     this._titleService.setTitle(this.PageTitle);
     //* Getting All Doctors Data From API
     this._Service.GetDocData().subscribe((res) => {

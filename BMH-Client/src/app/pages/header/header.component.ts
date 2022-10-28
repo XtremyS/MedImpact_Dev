@@ -35,7 +35,7 @@ export class HeaderComponent implements OnInit {
     });
   }
   ngOnInit() {
-    //* Getting Their Ng Container Value True In LocalStorage On COmponent Load
+    //* Getting Their Ng Container Value True In LocalStorage On Component Load
     this.IsDocRouteVisible = JSON.parse(localStorage.getItem('ddr')!);
     this.IsAdminRouteVisible = JSON.parse(localStorage.getItem('ar')!);
 
@@ -55,7 +55,7 @@ export class HeaderComponent implements OnInit {
           console.log(data.body.response);
           if (data.status == 200) {
             //* Setting True In LocalStorage To Doctor Dashboard Div
-            localStorage.setItem('ar', JSON.stringify(true));
+            localStorage.setItem('ddr', JSON.stringify(true));
             //* Login Alert Triggered
             this._ModalService.OpenAlertDialog('Authenticated');
             //* SETTING API RESPONSE FROM API IN GLOBAL VARIABLE
@@ -80,7 +80,7 @@ export class HeaderComponent implements OnInit {
           console.log(data.body.response);
           if (data.status == 200) {
             //* Setting True In LocalStorage To Doctor Dashboard Div
-            localStorage.setItem('ddr', JSON.stringify(true));
+            localStorage.setItem('ar', JSON.stringify(true));
             //* Login Alert Triggered
             this._ModalService.OpenAlertDialog('Authenticated');
             //* SETTING API RESPONSE FROM API IN GLOBAL VARIABLE

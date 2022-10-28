@@ -22,14 +22,14 @@ export class Service {
   //! GET APIS
   GetDoctorUrl = '/api/v1/doc-list';
   GetLabDataUrl = '/api/v1/lab-list';
+  GetDocAppointmentsUrl = '/api/v1/appointments';
+  GetUserDataUrl = '/api/v1/get_user_data';
 
   //! BOOKING DOCTOR APPOINTMENT API
   UrlBookAppointment = '/api/v1/book_appointment';
 
   //! LOGOUT APIS
   LogOutUrl = '/api/v1/logout';
-
-  GetUserDataUrl = '/api/v1/get_user_data';
 
   //! REGISTRATION FUNCTIONS
   RegisterDoctor(Data: any): Observable<any> {
@@ -97,6 +97,9 @@ export class Service {
   }
   GetUserData() {
     return this.http.get(this.GetUserDataUrl, { observe: 'response' });
+  }
+  GetAppointmentData() {
+    return this.http.get(this.GetDocAppointmentsUrl, { observe: 'response' });
   }
 
   //! LOGOUT FUNCTION
