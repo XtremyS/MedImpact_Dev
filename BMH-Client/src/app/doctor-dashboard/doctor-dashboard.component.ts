@@ -8,9 +8,11 @@ import { Title } from '@angular/platform-browser';
   styleUrls: ['./doctor-dashboard.component.scss'],
 })
 export class DoctorDashboardComponent implements OnInit {
-  PageTitle = 'MedImpact | doctor';
+  PageTitle = 'MedImpact | Doctor';
+  CopyrightYear = new Date().getFullYear();
   constructor(private _titleService: Title) {}
   ngOnInit(): void {
+    //* Setting Page Title Dynamically
     this._titleService.setTitle(this.PageTitle);
   }
 

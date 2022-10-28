@@ -2,7 +2,9 @@
 <div class="sb-nav-fixed" id="sb-nav-fixed">
   <!-- Vertical Navbar -->
   <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
-    <a class="navbar-brand" href="index.html">Doctor Dashboard Panel</a>
+    <div style="width: 200px; text-align: center">
+      <img src="../../../assets/images/logo.png" alt="" />
+    </div>
     <button
       class="btn btn-link btn-sm order-1 order-lg-0"
       id="sidebarToggle"
@@ -32,7 +34,7 @@
     </form>
     <!-- Navbar-->
     <ul class="navbar-nav ml-auto ml-md-0">
-      <li class="nav-item dropdown">
+      <li class="nav-item dropdown" style="list-style-type: none">
         <a
           class="nav-link dropdown-toggle"
           id="userDropdown"
@@ -217,7 +219,6 @@
             </div>
             <div class="sb-sidenav-footer">
               <div class="small">Logged in as:</div>
-              Start Bootstrap
             </div>
           </nav>
         </div>
@@ -231,7 +232,9 @@
               <div
                 class="d-flex align-items-center justify-content-between small"
               >
-                <div class="text-muted">Copyright &copy; Your Website 2020</div>
+                <div class="text-muted">
+                  Copyright &copy; MedImpact {{ CopyrightYear }}
+                </div>
                 <div>
                   <a href="#">Privacy Policy</a>
                   &middot;
