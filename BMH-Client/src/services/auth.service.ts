@@ -6,7 +6,7 @@ import { Injectable } from '@angular/core';
 export class AuthService {
   AuthToken = localStorage.getItem('11510199114101116');
 
-  //! MANAGING AUTHTOKEN IN LOCAL STORAGE
+  //! MANAGING AUTH TOKEN IN LOCAL STORAGE
   SetLocalAuthToken(Token: any) {
     localStorage.setItem('11510199114101116', Token);
   }
@@ -16,5 +16,7 @@ export class AuthService {
   RemoveLocalAuthToken() {
     localStorage.removeItem('11510199114101116');
     localStorage.removeItem('99105112104101114116101120116');
+    localStorage.removeItem('ddr');
+    localStorage.removeItem('ar');
   }
 }

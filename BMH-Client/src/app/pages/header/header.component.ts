@@ -17,6 +17,11 @@ export class HeaderComponent implements OnInit {
   ApiUserDetails: any;
   IsLoginRadioBtnSelected: boolean = false;
   LocalStorageAuthToken = this._AuthService.GetLocalAuthToken();
+  IsDocRouteVisible: boolean = false;
+  IsAdminRouteVisible: boolean = false;
+  //* Dashboard Routes
+  DoctorDashBoardRoute = 'doctor-dashboard';
+  AdminDashBoardRoute = 'admin-dashboard';
 
   constructor(
     private _FormBuilder: FormBuilder,
@@ -30,6 +35,10 @@ export class HeaderComponent implements OnInit {
     });
   }
   ngOnInit() {
+    //* Getting Their Ng Container Value True In LocalStorage On COmponent Load
+    this.IsDocRouteVisible = JSON.parse(localStorage.getItem('ddr')!);
+    this.IsAdminRouteVisible = JSON.parse(localStorage.getItem('ar')!);
+
     if (this.LocalStorageAuthToken) {
       this.IsLoggedIn = true;
     }
@@ -45,6 +54,8 @@ export class HeaderComponent implements OnInit {
         this._Service.DoctorLogin(this.LoginForm.value).subscribe((data) => {
           console.log(data.body.response);
           if (data.status == 200) {
+            //* Setting True In LocalStorage To Doctor Dashboard Div
+            localStorage.setItem('ar', JSON.stringify(true));
             //* Login Alert Triggered
             this._ModalService.OpenAlertDialog('Authenticated');
             //* SETTING API RESPONSE FROM API IN GLOBAL VARIABLE
@@ -68,6 +79,8 @@ export class HeaderComponent implements OnInit {
         this._Service.PatientLogin(this.LoginForm.value).subscribe((data) => {
           console.log(data.body.response);
           if (data.status == 200) {
+            //* Setting True In LocalStorage To Doctor Dashboard Div
+            localStorage.setItem('ddr', JSON.stringify(true));
             //* Login Alert Triggered
             this._ModalService.OpenAlertDialog('Authenticated');
             //* SETTING API RESPONSE FROM API IN GLOBAL VARIABLE

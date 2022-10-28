@@ -122,9 +122,21 @@
                     <li class="menu-item-has-children page_item_has_children">
                       <a href="javascript:void(0);">Profile</a>
                       <ul class="sub-menu">
-                        <li>
-                          <a routerLink="doctor-dashboard">Your Dashboard</a>
-                        </li>
+                        <ng-container *ngIf="IsDocRouteVisible">
+                          <li>
+                            <a [routerLink]="DoctorDashBoardRoute"
+                              >Your Dashboard</a
+                            >
+                          </li>
+                        </ng-container>
+                        <ng-container *ngIf="IsAdminRouteVisible">
+                          <li>
+                            <a [routerLink]="AdminDashBoardRoute"
+                              >Your Dashboard</a
+                            >
+                          </li>
+                        </ng-container>
+
                         <li>
                           <a routerLink="" (click)="Logout()">Logout</a>
                         </li>
