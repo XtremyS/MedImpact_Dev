@@ -625,7 +625,7 @@ router.patch("/api/v1/book_appointment", async (req, res) => {
       { _id: Id },
       {
         $push: {
-          appointment: {
+          appointments: {
             patients_name: PatientName,
             patients_age: PatientAge,
             visiting_reason: PatientVisitingReason,
@@ -645,6 +645,49 @@ router.patch("/api/v1/book_appointment", async (req, res) => {
     } else {
       res.status(400).json({ error: "Failed To Updated User Profile!" });
     }
+  } catch (error) {
+    console.log(error);
+  }
+});
+
+//*  Booking Status API Confirm || Reject || Approve
+router.patch("/api/v1/appointment_status", async (req, res) => {
+  try {
+    //*  GETTING USER UPDATING INPUT
+    const Id = req.body._id;
+
+    const PatientName = req.body.appointments.patients_name;
+    const PatientAge = req.body.appointments.patients_age;
+    const PatientAppointmentDate = req.body.appointments.appointment_date;
+    const PatientVisitingReason = req.body.appointments.visiting_reason;
+    const PatientPhone = req.body.appointments.patients_phone;
+
+    //* UPDATING SPECIFIC USER WITH ID
+    const UpdateUser = await Doctor.findOne(
+      {
+        _id: Id,
+      },
+      {
+        $push: {
+          appointments: {
+            patients_name: PatientName,
+            patients_age: PatientAge,
+            visiting_reason: PatientVisitingReason,
+            appointment_date: PatientAppointmentDate,
+            appointment_status: 2,
+            patients_phone: PatientPhone,
+          },
+        },
+      }
+    );
+
+    console.log(UpdateUser);
+    res.status(201).json({ response: UpdateUser });
+    //* SENDING RESPONSE
+    // if (UpdateUser.acknowledged) {
+    // } else {
+    //   res.status(400).json({ error: "Failed To Updated User Profile!" });
+    // }
   } catch (error) {
     console.log(error);
   }
@@ -724,7 +767,7 @@ router.get("/api/v1/appointments", Middleware, (req, res) => {
     appointments: req.rootUser.appointments,
   };
 
-  res.send(UserObject);
+  res.status(200).send(UserObject);
 });
 
 //* TODO If Want To Get The Doctor And Patients Data Use This

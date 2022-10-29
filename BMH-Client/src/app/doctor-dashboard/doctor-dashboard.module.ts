@@ -14,7 +14,5 @@ import { ManagePatientsComponent } from './manage-patients/manage-patients.compo
   imports: [CommonModule, DoctorDashboardRoutingModule],
 })
 export class DoctorDashboardModule {
-  constructor() {
-    console.log('DOC DASH MODULE LOADED');
-  }
+  constructor() {}
 }

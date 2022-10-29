@@ -27,10 +27,12 @@ export class ManagePatientsComponent implements OnInit {
     //* Setting Page Title Dynamically
     this._titleService.setTitle(this.PageTitle);
 
-    //* Appo
+    //* Appointments API Called
     this._Service.GetAppointmentData().subscribe(async (res: any) => {
-      this.AppointmentsArray = res.body.appointments;
-      console.log(this.AppointmentsArray);
+      if (res.status == 200) {
+        this.AppointmentsArray = res.body.appointments;
+        console.log(this.AppointmentsArray);
+      }
     });
   }
 }
