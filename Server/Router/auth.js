@@ -614,6 +614,7 @@ router.patch("/api/v1/book_appointment", async (req, res) => {
   try {
     //*  GETTING USER UPDATING INPUT
     const Id = req.body._id;
+
     const PatientName = req.body.patients_name;
     const PatientAge = req.body.patients_age;
     const PatientAppointmentDate = req.body.appointment_date;
@@ -661,9 +662,10 @@ router.patch("/api/v1/appointment_status", async (req, res) => {
     const PatientAppointmentDate = req.body.appointments.appointment_date;
     const PatientVisitingReason = req.body.appointments.visiting_reason;
     const PatientPhone = req.body.appointments.patients_phone;
+    const PatientAppointmentStatus = req.body.appointments.appointment_status;
 
     //* UPDATING SPECIFIC USER WITH ID
-    const UpdateUser = await Doctor.findOne(
+    const UpdateUser = await Doctor.findOneAndUpdate(
       {
         _id: Id,
       },
@@ -674,10 +676,12 @@ router.patch("/api/v1/appointment_status", async (req, res) => {
             patients_age: PatientAge,
             visiting_reason: PatientVisitingReason,
             appointment_date: PatientAppointmentDate,
-            appointment_status: 2,
-            patients_phone: PatientPhone,
+            appointment_status: PatientAppointmentStatus,
           },
         },
+      },
+      {
+        new: true,
       }
     );
 
