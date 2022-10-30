@@ -656,42 +656,39 @@ router.patch("/api/v1/appointment_status", async (req, res) => {
   try {
     //*  GETTING USER UPDATING INPUT
     const Id = req.body._id;
-
-    const PatientName = req.body.appointments.patients_name;
-    const PatientAge = req.body.appointments.patients_age;
-    const PatientAppointmentDate = req.body.appointments.appointment_date;
-    const PatientVisitingReason = req.body.appointments.visiting_reason;
-    const PatientPhone = req.body.appointments.patients_phone;
+    const PatientsAppointmentsId = req.body.appointments._id;
+    // const PatientName = req.body.appointments.patients_name;
+    // const PatientAge = req.body.appointments.patients_age;
+    // const PatientAppointmentDate = req.body.appointments.appointment_date;
+    // const PatientVisitingReason = req.body.appointments.visiting_reason;
+    // const PatientPhone = req.body.appointments.patients_phone;
     const PatientAppointmentStatus = req.body.appointments.appointment_status;
 
     //* UPDATING SPECIFIC USER WITH ID
-    const UpdateUser = await Doctor.findOneAndUpdate(
+
+    //! Working Query To Update Patient Array Of Obj
+
+    const UpdateUser = await Doctor.updateOne(
       {
         _id: Id,
-      },
-      {
-        $push: {
-          appointments: {
-            patients_name: PatientName,
-            patients_age: PatientAge,
-            visiting_reason: PatientVisitingReason,
-            appointment_date: PatientAppointmentDate,
-            appointment_status: PatientAppointmentStatus,
-          },
+        appointments: {
+          $elemMatch: { _id: PatientsAppointmentsId },
         },
       },
+
       {
-        new: true,
+        $set: { "appointments.$.appointment_status": PatientAppointmentStatus },
       }
     );
 
-    console.log(UpdateUser);
-    res.status(201).json({ response: UpdateUser });
     //* SENDING RESPONSE
-    // if (UpdateUser.acknowledged) {
-    // } else {
-    //   res.status(400).json({ error: "Failed To Updated User Profile!" });
-    // }
+    if (UpdateUser.modifiedCount == 1) {
+      res.status(200).json({ response: "Appointment Status Updated!" });
+    } else if (UpdateUser.modifiedCount == 0) {
+      res.status(304).json({ response: "Appointment Status Already Updated!" });
+    } else {
+      res.status(400).json({ error: "Failed To Updated Change Status!" });
+    }
   } catch (error) {
     console.log(error);
   }
