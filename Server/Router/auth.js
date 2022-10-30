@@ -651,22 +651,15 @@ router.patch("/api/v1/book_appointment", async (req, res) => {
   }
 });
 
-//*  Booking Status API Confirm || Reject || Approve
+//*  Appointment Status API Confirm || Reject || Approve
 router.patch("/api/v1/appointment_status", async (req, res) => {
   try {
-    //*  GETTING USER UPDATING INPUT
+    //*  Getting User Id And Patients Array Id From Front End To Update Patient Status
     const Id = req.body._id;
     const PatientsAppointmentsId = req.body.appointments._id;
-    // const PatientName = req.body.appointments.patients_name;
-    // const PatientAge = req.body.appointments.patients_age;
-    // const PatientAppointmentDate = req.body.appointments.appointment_date;
-    // const PatientVisitingReason = req.body.appointments.visiting_reason;
-    // const PatientPhone = req.body.appointments.patients_phone;
     const PatientAppointmentStatus = req.body.appointments.appointment_status;
 
     //* UPDATING SPECIFIC USER WITH ID
-
-    //! Working Query To Update Patient Array Of Obj
 
     const UpdateUser = await Doctor.updateOne(
       {
