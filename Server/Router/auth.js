@@ -615,18 +615,20 @@ router.patch("/api/v1/book_appointment", async (req, res) => {
     //*  GETTING USER UPDATING INPUT
     const Id = req.body._id;
 
+    const PatientsId = req.body.patients_id;
     const PatientName = req.body.patients_name;
     const PatientAge = req.body.patients_age;
     const PatientAppointmentDate = req.body.appointment_date;
     const PatientVisitingReason = req.body.visiting_reason;
     const PatientPhone = req.body.patients_phone;
 
-    //* UPDATING SPECIFIC USER WITH ID
+    //* UPDATING SPECIFIC Doctor WITH ID
     const UpdateUser = await Doctor.updateOne(
       { _id: Id },
       {
         $push: {
           appointments: {
+            patients_id: PatientsId,
             patients_name: PatientName,
             patients_age: PatientAge,
             visiting_reason: PatientVisitingReason,
@@ -656,16 +658,15 @@ router.patch("/api/v1/appointment_status", async (req, res) => {
   try {
     //*  Getting User Id And Patients Array Id From Front End To Update Patient Status
     const Id = req.body._id;
+
     const PatientsAppointmentsId = req.body.appointments._id;
     const PatientAppointmentStatus = req.body.appointments.appointment_status;
-
-    //* UPDATING SPECIFIC USER WITH ID
-
+    //* Updating Specific User With Id
     const UpdateUser = await Doctor.updateOne(
       {
-        _id: Id,
+        _id: Id, //* Doctor ID
         appointments: {
-          $elemMatch: { _id: PatientsAppointmentsId },
+          $elemMatch: { _id: PatientsAppointmentsId }, //* Patients ID
         },
       },
 

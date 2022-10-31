@@ -1,6 +1,8 @@
-import { style } from '@angular/animations';
 import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
+import { Service } from 'src/services/service.service';
+import { ModalService } from 'src/services/modal.service';
+import { AuthService } from './../../services/auth.service';
 
 @Component({
   selector: 'app-doctor-dashboard',
@@ -10,7 +12,14 @@ import { Title } from '@angular/platform-browser';
 export class DoctorDashboardComponent implements OnInit {
   PageTitle = 'MedImpact | Doctor';
   CopyrightYear = new Date().getFullYear();
-  constructor(private _titleService: Title) {}
+  ApiUserDetails: any;
+  constructor(
+    private _titleService: Title,
+    private _Service: Service,
+    private _ModalService: ModalService,
+    private _AuthService: AuthService
+  ) {}
+
   ngOnInit(): void {
     //* Setting Page Title Dynamically
     this._titleService.setTitle(this.PageTitle);

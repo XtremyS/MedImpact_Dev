@@ -31,6 +31,7 @@ export class FormModalComponent implements OnInit {
           patients_name: this.LoggedInUserData.full_name,
           patients_age: this.LoggedInUserData.age,
           patients_phone: this.LoggedInUserData.phone,
+          patients_id: this.LoggedInUserData._id,
         });
       }
     });
@@ -43,6 +44,7 @@ export class FormModalComponent implements OnInit {
     //* Input Data From Form
     this.AppointmentsForm = this._FormBuilder.group({
       _id: this.DoctorId,
+      patients_id: this.AppointmentsForm.value.patients_id,
       patients_name: this.AppointmentsForm.value.patients_name,
       patients_age: this.AppointmentsForm.value.patients_age,
       patients_phone: this.AppointmentsForm.value.patients_phone,
