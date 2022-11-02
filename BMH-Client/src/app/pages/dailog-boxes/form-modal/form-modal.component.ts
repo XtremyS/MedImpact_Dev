@@ -12,8 +12,9 @@ import { MatDialogRef } from '@angular/material/dialog';
 })
 export class FormModalComponent implements OnInit {
   AppointmentsForm = new FormGroup({});
-  DoctorId: any;
+  DoctorData: any;
   LoggedInUserData: any;
+
   constructor(
     private _FormBuilder: FormBuilder,
     private _Service: Service,
@@ -38,18 +39,31 @@ export class FormModalComponent implements OnInit {
 
     //* Getting Doctor Id From DocList Component On Click Of Book Now BTN
     this._AllPurposeService.DoctorsDetailsSubject.subscribe(async (data) => {
-      this.DoctorId = data._id;
+      this.DoctorData = data;
     });
 
     //* Input Data From Form
     this.AppointmentsForm = this._FormBuilder.group({
-      _id: this.DoctorId,
+      _id: this.DoctorData._id,
       patients_id: this.AppointmentsForm.value.patients_id,
       patients_name: this.AppointmentsForm.value.patients_name,
       patients_age: this.AppointmentsForm.value.patients_age,
       patients_phone: this.AppointmentsForm.value.patients_phone,
       visiting_reason: this.AppointmentsForm.value.visiting_reason,
       appointment_date: this.AppointmentsForm.value.appointment_date,
+
+      //* Sending Selected Doctor Data To Append This Data In Patients Schema
+      doctor_full_name: this.DoctorData.full_name,
+      doctor_education: this.DoctorData.education,
+      doctor_img: this.DoctorData.img,
+      doctor_specialty: this.DoctorData.specialty,
+      doctor_age: this.DoctorData.age,
+      doctor_isVerfied: this.DoctorData.isVerified,
+      doctor_SuperExperienced: this.DoctorData.SuperExperienced,
+      doctor_clinic_address: this.DoctorData.clinic_address,
+      doctor_city: this.DoctorData.city,
+      doctor_state: this.DoctorData.state,
+      doctor_country: this.DoctorData.country,
     });
   }
   SubmitForm() {

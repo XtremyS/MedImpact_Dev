@@ -19,9 +19,12 @@ export class HeaderComponent implements OnInit {
   LocalStorageAuthToken = this._AuthService.GetLocalAuthToken();
   IsDocRouteVisible: boolean = false;
   IsAdminRouteVisible: boolean = false;
+  IsPatientRouteVisible: boolean = false;
+
   //* Dashboard Routes
   DoctorDashBoardRoute = 'doctor-dashboard';
   AdminDashBoardRoute = 'admin-dashboard';
+  PatientDashBoardRoute = 'patient-dashboard';
 
   constructor(
     private _FormBuilder: FormBuilder,
@@ -37,7 +40,8 @@ export class HeaderComponent implements OnInit {
   ngOnInit() {
     //* Getting Their Ng Container Value True In LocalStorage On Component Load
     this.IsDocRouteVisible = JSON.parse(localStorage.getItem('ddr')!);
-    this.IsAdminRouteVisible = JSON.parse(localStorage.getItem('ar')!);
+    this.IsAdminRouteVisible = JSON.parse(localStorage.getItem('adr')!);
+    this.IsPatientRouteVisible = JSON.parse(localStorage.getItem('pdr')!);
 
     if (this.LocalStorageAuthToken) {
       this.IsLoggedIn = true;
@@ -58,6 +62,7 @@ export class HeaderComponent implements OnInit {
             localStorage.setItem('ddr', JSON.stringify(true));
             //* Login Alert Triggered
             this._ModalService.OpenAlertDialog('Authenticated');
+
             //* SETTING API RESPONSE FROM API IN GLOBAL VARIABLE
             this.ApiUserDetails = data.body.response;
             this.IsLoggedIn = true;
@@ -79,8 +84,8 @@ export class HeaderComponent implements OnInit {
         this._Service.PatientLogin(this.LoginForm.value).subscribe((data) => {
           console.log(data.body.response);
           if (data.status == 200) {
-            //* Setting True In LocalStorage To Doctor Dashboard Div
-            localStorage.setItem('ar', JSON.stringify(true));
+            //* Setting True In LocalStorage To Patient Dashboard Div
+            localStorage.setItem('pdr', JSON.stringify(true));
             //* Login Alert Triggered
             this._ModalService.OpenAlertDialog('Authenticated');
             //* SETTING API RESPONSE FROM API IN GLOBAL VARIABLE

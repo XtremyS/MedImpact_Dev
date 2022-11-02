@@ -118,6 +118,7 @@
                       </li> -->
                     </ul>
                   </li>
+                  <!--* Div Visible If User Logged In  -->
                   <ng-container *ngIf="IsLoggedIn">
                     <li class="menu-item-has-children page_item_has_children">
                       <a href="javascript:void(0);">Profile</a>
@@ -129,9 +130,9 @@
                             >
                           </li>
                         </ng-container>
-                        <ng-container *ngIf="IsAdminRouteVisible">
+                        <ng-container *ngIf="IsPatientRouteVisible">
                           <li>
-                            <a [routerLink]="AdminDashBoardRoute"
+                            <a [routerLink]="PatientDashBoardRoute"
                               >Your Dashboard</a
                             >
                           </li>

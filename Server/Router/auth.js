@@ -613,22 +613,34 @@ router.get("/api/v1/lab-list", async (req, res) => {
 router.patch("/api/v1/book_appointment", async (req, res) => {
   try {
     //*  GETTING USER UPDATING INPUT
-    const Id = req.body._id;
+    const DocId = req.body._id;
 
-    const PatientsId = req.body.patients_id;
+    const PatientId = req.body.patients_id;
     const PatientName = req.body.patients_name;
     const PatientAge = req.body.patients_age;
     const PatientAppointmentDate = req.body.appointment_date;
     const PatientVisitingReason = req.body.visiting_reason;
     const PatientPhone = req.body.patients_phone;
 
-    //* UPDATING SPECIFIC Doctor WITH ID
-    const UpdateUser = await Doctor.updateOne(
-      { _id: Id },
+    const DoctorName = req.body.doctor_full_name;
+    const DoctorAge = req.body.doctor_age;
+    const DoctorEducation = req.body.doctor_education;
+    const DoctorImg = req.body.doctor_img;
+    const DoctorSpeciality = req.body.doctor_speciality;
+    const DoctorIsVerified = req.body.doctor_is_verified;
+    const DoctorIsExperienced = req.body.doctor_SuperExperienced;
+    const DoctorClinicAddress = req.body.doctor_clinic_address;
+    const DoctorCity = req.body.doctor_city;
+    const DoctorState = req.body.doctor_state;
+    const DoctorCountry = req.body.doctor_country;
+
+    //* Updating SPECIFIC Doctor WITH ID
+    const UpdateDoctor = await Doctor.updateOne(
+      { _id: DocId },
       {
         $push: {
           appointments: {
-            patients_id: PatientsId,
+            patients_id: PatientId,
             patients_name: PatientName,
             patients_age: PatientAge,
             visiting_reason: PatientVisitingReason,
@@ -640,13 +652,36 @@ router.patch("/api/v1/book_appointment", async (req, res) => {
       }
     );
 
+    //* Updating Specific Patient With Patient ID
+    const UpdatePatient = await Patient.updateOne(
+      { _id: PatientId },
+      {
+        $push: {
+          booked_doctors: {
+            doctor_id: DocId,
+            doctor_full_name: DoctorName,
+            doctor_education: DoctorEducation,
+            doctor_img: DoctorImg,
+            doctor_specialty: DoctorSpeciality,
+            doctor_age: DoctorAge,
+            doctor_isVerfied: DoctorIsVerified,
+            doctor_SuperExperienced: DoctorIsExperienced,
+            doctor_clinic_address: DoctorClinicAddress,
+            doctor_city: DoctorCity,
+            doctor_state: DoctorState,
+            doctor_country: DoctorCountry,
+          },
+        },
+      }
+    );
+
     //* SENDING RESPONSE
-    if (UpdateUser.acknowledged) {
+    if (UpdateDoctor.modifiedCount == 1 && UpdatePatient.modifiedCount == 1) {
       res
         .status(201)
         .json({ response: "Appointment request sent successfully!" });
     } else {
-      res.status(400).json({ error: "Failed To Updated User Profile!" });
+      res.status(400).json({ error: "Failed to send appointment request!" });
     }
   } catch (error) {
     console.log(error);
@@ -682,40 +717,6 @@ router.patch("/api/v1/appointment_status", async (req, res) => {
       res.status(304).json({ response: "Appointment Status Already Updated!" });
     } else {
       res.status(400).json({ error: "Failed To Updated Change Status!" });
-    }
-  } catch (error) {
-    console.log(error);
-  }
-});
-
-//*  ADDING MEDICINES
-router.patch("/api/v1/add_medicine", async (req, res) => {
-  try {
-    //*  GETTING USER UPDATING INPUT
-    const Id = req.body._id;
-    const MedicineName = req.body.medicine_name;
-    const MedicineFormula = req.body.medicine_formula;
-    const MedicinePrice = req.body.medicine_price;
-
-    //* UPDATING SPECIFIC USER WITH ID
-    const UpdateUser = await Pharmacy.updateOne(
-      { _id: Id },
-      {
-        $push: {
-          medicines: {
-            medicine_name: MedicineName,
-            medicine_formula: MedicineFormula,
-            medicine_price: MedicinePrice,
-          },
-        },
-      }
-    );
-
-    //* SENDING RESPONSE
-    if (UpdateUser.acknowledged) {
-      res.status(201).json({ response: "Details Updated Successfully!" });
-    } else {
-      res.status(400).json({ error: "Failed To Updated User Profile!" });
     }
   } catch (error) {
     console.log(error);
