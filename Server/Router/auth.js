@@ -180,6 +180,7 @@ router.post("/api/v1/patients-registration", async (req, res) => {
         gender,
         email,
         phone,
+        age,
         password,
         cpassword,
       });
