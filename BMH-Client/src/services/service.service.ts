@@ -23,6 +23,7 @@ export class Service {
   GetDoctorUrl = '/api/v1/doc-list';
   GetLabDataUrl = '/api/v1/lab-list';
   GetDocAppointmentsUrl = '/api/v1/appointments';
+  GetPatientsBookedDocsUrl = '/api/v1/yourappointments';
   GetUserDataUrl = '/api/v1/get_user_data';
 
   //! BOOKING DOCTOR APPOINTMENT API
@@ -95,11 +96,16 @@ export class Service {
       observe: 'response',
     });
   }
-  GetUserData() {
+  GetUserData(): Observable<any> {
     return this.http.get(this.GetUserDataUrl, { observe: 'response' });
   }
-  GetAppointmentData() {
+  GetAppointmentData(): Observable<any> {
     return this.http.get(this.GetDocAppointmentsUrl, { observe: 'response' });
+  }
+  GetPatientsBookedDocsData(): Observable<any> {
+    return this.http.get(this.GetPatientsBookedDocsUrl, {
+      observe: 'response',
+    });
   }
 
   //! LOGOUT FUNCTION

@@ -18,5 +18,6 @@ export class AuthService {
     localStorage.removeItem('99105112104101114116101120116');
     localStorage.removeItem('ddr');
     localStorage.removeItem('ar');
+    localStorage.removeItem('pdr');
   }
 }

@@ -609,6 +609,7 @@ router.get("/api/v1/lab-list", async (req, res) => {
     console.log(error);
   }
 });
+//TODO: Patch Doctor Data When You Are Pushing Patients Appointments Into Doctor Schema To Get Appointment Status In Patients Dashnoard
 
 //*  Booking Appointments
 router.patch("/api/v1/book_appointment", async (req, res) => {
@@ -627,7 +628,7 @@ router.patch("/api/v1/book_appointment", async (req, res) => {
     const DoctorAge = req.body.doctor_age;
     const DoctorEducation = req.body.doctor_education;
     const DoctorImg = req.body.doctor_img;
-    const DoctorSpeciality = req.body.doctor_speciality;
+    const DoctorSpeciality = req.body.doctor_specialty;
     const DoctorIsVerified = req.body.doctor_is_verified;
     const DoctorIsExperienced = req.body.doctor_SuperExperienced;
     const DoctorClinicAddress = req.body.doctor_clinic_address;
@@ -726,6 +727,42 @@ router.patch("/api/v1/appointment_status", async (req, res) => {
   }
 });
 
+//*  Get Appointments Data Of For Doctor To Get All Appointments DoctorsDetailsSubject
+router.get("/api/v1/appointments", Middleware, (req, res) => {
+  let UserObject = {
+    appointments: req.rootUser.appointments,
+  };
+
+  res.status(200).send(UserObject);
+});
+
+//*  Getting Booked Doctor Data Of Patient
+router.get("/api/v1/yourappointments", Middleware, (req, res) => {
+  console.log(req.rootUser, "ROOT USER");
+
+  let UserObject = {
+    booked_doctors: req.rootUser.booked_doctors,
+  };
+
+  res.status(200).send(UserObject);
+});
+
+//* TODO If Want To Get The Doctor And Patients Data Use This
+router.get("/api/v1/get_user_data", Middleware, (req, res) => {
+  let UserObject = {
+    _id: req.rootUser._id,
+    full_name: req.rootUser.full_name,
+    gender: req.rootUser.gender,
+    phone: req.rootUser.phone,
+    age: req.rootUser.age,
+    email: req.rootUser.email,
+    address: req.rootUser.address,
+    tokens: req.rootUser.tokens,
+  };
+
+  res.send(UserObject);
+});
+
 //*  ADDING MEDICINES
 router.patch("/api/v1/add_medicine", async (req, res) => {
   try {
@@ -758,31 +795,6 @@ router.patch("/api/v1/add_medicine", async (req, res) => {
   } catch (error) {
     console.log(error);
   }
-});
-
-//*  Get Appointments Data Of DoctorsDetailsSubject
-router.get("/api/v1/appointments", Middleware, (req, res) => {
-  let UserObject = {
-    appointments: req.rootUser.appointments,
-  };
-
-  res.status(200).send(UserObject);
-});
-
-//* TODO If Want To Get The Doctor And Patients Data Use This
-router.get("/api/v1/get_user_data", Middleware, (req, res) => {
-  let UserObject = {
-    _id: req.rootUser._id,
-    full_name: req.rootUser.full_name,
-    gender: req.rootUser.gender,
-    phone: req.rootUser.phone,
-    age: req.rootUser.age,
-    email: req.rootUser.email,
-    address: req.rootUser.address,
-    tokens: req.rootUser.tokens,
-  };
-
-  res.send(UserObject);
 });
 
 //*  GET ABOUT

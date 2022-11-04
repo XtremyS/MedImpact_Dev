@@ -40,15 +40,17 @@
                 </tr>
               </tfoot>
               <tbody>
-                <ng-container *ngFor="let Patients of AppointmentsArray">
+                <ng-container
+                  *ngFor="let BookedDoctor of YourAppointmentsArray"
+                >
                   <tr>
-                    <td>teteet</td>
-                    <td>ettetet</td>
-                    <td>etetet</td>
-                    <td>etete}</td>
-                    <td>ette</td>
+                    <td>{{ BookedDoctor.doctor_full_name }}</td>
+                    <td>{{ BookedDoctor.doctor_full_name }}</td>
+                    <td>{{ BookedDoctor.doctor_full_name }}</td>
+                    <td>{{ BookedDoctor.doctor_full_name }}}</td>
+                    <td>{{ BookedDoctor.doctor_full_name }}</td>
 
-                    <ng-container *ngIf="Patients.appointment_status == 2">
+                    <!-- <ng-container *ngIf="Patients.appointment_status == 2">
                       <td style="color: orange">
                         Pending
                         <ng-container *ngIf="Patients.appointment_status == 2">
@@ -63,7 +65,7 @@
                     </ng-container>
                     <ng-container *ngIf="Patients.appointment_status == 0">
                       <td style="color: red">Rejected</td>
-                    </ng-container>
+                    </ng-container> -->
                   </tr>
                 </ng-container>
               </tbody>

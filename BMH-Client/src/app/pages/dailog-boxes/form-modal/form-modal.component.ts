@@ -40,6 +40,7 @@ export class FormModalComponent implements OnInit {
     //* Getting Doctor Id From DocList Component On Click Of Book Now BTN
     this._AllPurposeService.DoctorsDetailsSubject.subscribe(async (data) => {
       this.DoctorData = data;
+      console.log(this.DoctorData.specialty, 'doctor details');
     });
 
     //* Input Data From Form
@@ -64,11 +65,11 @@ export class FormModalComponent implements OnInit {
       doctor_city: this.DoctorData.city,
       doctor_state: this.DoctorData.state,
       doctor_country: this.DoctorData.country,
-      doctor_appointment_date: this.AppointmentsForm.value.appointment_date,
+      doctor_appointment_date: null,
     });
   }
   SubmitForm() {
-    //* Patching The Api User Data Into Form
+    //* Patching The Api Doctor Appointment Date Into Form
     this.AppointmentsForm.patchValue({
       doctor_appointment_date: this.AppointmentsForm.value.appointment_date,
     });
