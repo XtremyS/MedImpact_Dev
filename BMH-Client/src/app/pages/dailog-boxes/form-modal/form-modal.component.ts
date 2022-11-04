@@ -64,9 +64,15 @@ export class FormModalComponent implements OnInit {
       doctor_city: this.DoctorData.city,
       doctor_state: this.DoctorData.state,
       doctor_country: this.DoctorData.country,
+      doctor_appointment_date: this.AppointmentsForm.value.appointment_date,
     });
   }
   SubmitForm() {
+    //* Patching The Api User Data Into Form
+    this.AppointmentsForm.patchValue({
+      doctor_appointment_date: this.AppointmentsForm.value.appointment_date,
+    });
+
     //* Book Appointment API called
     this._Service
       .BookDocAppointment(this.AppointmentsForm.value)

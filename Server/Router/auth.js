@@ -634,6 +634,7 @@ router.patch("/api/v1/book_appointment", async (req, res) => {
     const DoctorCity = req.body.doctor_city;
     const DoctorState = req.body.doctor_state;
     const DoctorCountry = req.body.doctor_country;
+    const DoctorAppointmentDate = req.body.doctor_appointment_date;
 
     //* Updating SPECIFIC Doctor WITH ID
     const UpdateDoctor = await Doctor.updateOne(
@@ -671,6 +672,7 @@ router.patch("/api/v1/book_appointment", async (req, res) => {
             doctor_city: DoctorCity,
             doctor_state: DoctorState,
             doctor_country: DoctorCountry,
+            doctor_appointment_date: DoctorAppointmentDate,
           },
         },
       }

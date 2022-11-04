@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { PatientDashboardHomeComponent } from './patient-dashboard-home/patient-dashboard-home.component';
 import { PatientDashboardComponent } from './patient-dashboard.component';
+import { YourAppointmentsComponent } from './your-appointments/your-appointments.component';
 
 const routes: Routes = [
   {
@@ -23,6 +24,10 @@ const routes: Routes = [
       {
         path: 'patient-dashboard-home',
         component: PatientDashboardHomeComponent,
+      },
+      {
+        path: 'your-appointments',
+        component: YourAppointmentsComponent,
       },
       // {
       //   path: 'admin-transaction-details',

@@ -187,7 +187,7 @@ export class DoctorRegistrationComponent implements OnInit {
     this.ImgFormData.append('phone', this.DoctorForm.value.phone);
     this.ImgFormData.append('age', this.DoctorForm.value.age);
     this.ImgFormData.append('education', this.DoctorForm.value.education);
-    this.ImgFormData.append('specialty', this.DoctorForm.value.Specialty);
+    this.ImgFormData.append('specialty', this.DoctorForm.value.specialty);
     this.ImgFormData.append(
       'clinic_address',
       this.DoctorForm.value.clinic_address
