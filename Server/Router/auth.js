@@ -349,6 +349,8 @@ router.post("/api/v1/pharmacy-registration", async (req, res) => {
   }
 });
 
+//! *********************************************** LOGIN APIS STARTS HERE ************************************************* !//
+
 //* POST DOCTOR LOGIN
 router.post("/api/v1/login-doctor", async (req, res) => {
   try {
@@ -378,7 +380,7 @@ router.post("/api/v1/login-doctor", async (req, res) => {
 
         //* SAVING AUTH TOKEN IN COOKIE
         res.cookie("jwt", token, {
-          expires: new Date(Date.now() + 300000),
+          expires: new Date(Date.now() + 7000000),
           httpOnly: true,
         });
 
@@ -438,7 +440,7 @@ router.post("/api/v1/login-patient", async (req, res) => {
 
         //* SAVING AUTH TOKEN IN COOKIE
         res.cookie("jwt", token, {
-          expires: new Date(Date.now() + 300000),
+          expires: new Date(Date.now() + 7000000),
           httpOnly: true,
         });
 
@@ -485,7 +487,7 @@ router.post("/api/v1/login-lab", async (req, res) => {
 
         //* SAVING AUTH TOKEN IN COOKIE
         res.cookie("jwt", token, {
-          expires: new Date(Date.now() + 300000),
+          expires: new Date(Date.now() + 700000),
           httpOnly: true,
         });
 
@@ -609,7 +611,6 @@ router.get("/api/v1/lab-list", async (req, res) => {
     console.log(error);
   }
 });
-//TODO: Patch Doctor Data When You Are Pushing Patients Appointments Into Doctor Schema To Get Appointment Status In Patients Dashnoard
 
 //*  Booking Appointments
 router.patch("/api/v1/book_appointment", async (req, res) => {
@@ -648,12 +649,25 @@ router.patch("/api/v1/book_appointment", async (req, res) => {
             patients_age: PatientAge,
             visiting_reason: PatientVisitingReason,
             appointment_date: PatientAppointmentDate,
-            appointment_status: 2,
             patients_phone: PatientPhone,
+            appointment_status: 2,
           },
         },
       }
     );
+
+    const DocAppointment = await Doctor.aggregate([
+      {
+        $unwind: "$appointments",
+      },
+      {
+        $match: {
+          "appointments.patients_id": "63651d89718b22e648a9bec1",
+        },
+      },
+    ]);
+
+    console.log(DocAppointment, "RETURNING DOC DATA");
 
     //* Updating Specific Patient With Patient ID
     const UpdatePatient = await Patient.updateOne(
@@ -700,6 +714,7 @@ router.patch("/api/v1/appointment_status", async (req, res) => {
 
     const PatientsAppointmentsId = req.body.appointments._id;
     const PatientAppointmentStatus = req.body.appointments.appointment_status;
+
     //* Updating Specific User With Id
     const UpdateUser = await Doctor.updateOne(
       {
@@ -727,7 +742,7 @@ router.patch("/api/v1/appointment_status", async (req, res) => {
   }
 });
 
-//*  Get Appointments Data Of For Doctor To Get All Appointments DoctorsDetailsSubject
+//*  Get Appointments Data Of Doctor To Get All Appointments DoctorsDetailsSubject
 router.get("/api/v1/appointments", Middleware, (req, res) => {
   let UserObject = {
     appointments: req.rootUser.appointments,
@@ -736,15 +751,21 @@ router.get("/api/v1/appointments", Middleware, (req, res) => {
   res.status(200).send(UserObject);
 });
 
+//TODO : Patients Appointments Data Is Coming Now Check How Doctor Will Change Appointment Status Of Patient
 //*  Getting Booked Doctor Data Of Patient
-router.get("/api/v1/yourappointments", Middleware, (req, res) => {
-  console.log(req.rootUser, "ROOT USER");
+router.get("/api/v1/yourappointments", Middleware, async (req, res) => {
+  try {
+    const Patient_Id = req.rootUser._id;
+    const UpdateUser = await Patient.findOne(
+      { _id: Patient_Id },
+      { booked_doctors: 1, _id: 0 }
+    );
 
-  let UserObject = {
-    booked_doctors: req.rootUser.booked_doctors,
-  };
-
-  res.status(200).send(UserObject);
+    res.status(200).send(UpdateUser);
+  } catch (error) {
+    res.status(400).send("Something went wrong!");
+    console.log("Something Went Wrong!", error.message);
+  }
 });
 
 //* TODO If Want To Get The Doctor And Patients Data Use This

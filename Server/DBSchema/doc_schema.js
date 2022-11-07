@@ -28,12 +28,13 @@ const UserSchema = new mongoose.Schema({
   cpassword: { type: String, required: true },
   appointments: [
     {
+      patients_id: { type: String, required: true },
       patients_name: { type: String, required: true },
       patients_age: { type: String, required: true },
       visiting_reason: { type: String, required: true },
       appointment_date: { type: String, required: true },
-      patients_phone: { type: String, required: true },
       appointment_status: { type: Number },
+      patients_phone: { type: String, required: true },
     },
   ],
   img: { type: String },
