@@ -75,7 +75,7 @@
                   <li class="menu-item-has-children page_item_has_children">
                     <a routerLink="/doctor-list">Doctors</a>
                   </li>
-                  <li class="menu-item-has-children page_item_has_children">
+                  <!-- <li class="menu-item-has-children page_item_has_children">
                     <a href="javascript:void(0);">Labs</a>
                     <ul class="sub-menu">
                       <li><a routerLink="/radiology">Radiology</a></li>
@@ -83,9 +83,9 @@
                         <a routerLink="/pathology"> Pathology</a>
                       </li>
                     </ul>
-                  </li>
-
-                  <li
+                  </li> -->
+                  <!--! Uncomment This For Actual Production  -->
+                  <!-- <li
                     class="menu-item-has-children page_item_has_children dc-navactive"
                   >
                     <a href="javascript:void(0);">Pages</a>
@@ -113,11 +113,11 @@
                       <li>
                         <a routerLink="/contact-us">Contact Us</a>
                       </li>
-                      <!-- <li>
+                       <li>
                         <a routerLink="admin-dashboard">Admin Dashboard</a>
-                      </li> -->
+                      </li>
                     </ul>
-                  </li>
+                  </li> -->
                   <!--* Div Visible If User Logged In  -->
                   <ng-container *ngIf="IsLoggedIn">
                     <li class="menu-item-has-children page_item_has_children">
@@ -147,20 +147,20 @@
 
                   <ng-container *ngIf="!IsLoggedIn">
                     <li class="menu-item-has-children page_item_has_children">
-                      <a href="javascript:void(0);">Register As</a>
+                      <a href="javascript:void(0);">Register yourself as</a>
                       <ul class="sub-menu">
                         <li>
                           <a routerLink="/register-doctor">Doctor</a>
                         </li>
                         <li>
-                          <a routerLink="/register-patient">Patient</a>
+                          <a routerLink="/register-patient">User</a>
                         </li>
-                        <li>
+                        <!-- <li>
                           <a routerLink="/register-lab">Lab</a>
                         </li>
                         <li>
                           <a routerLink="/register-pharmacy">Pharmacy</a>
-                        </li>
+                        </li> -->
                       </ul>
                     </li>
                   </ng-container>

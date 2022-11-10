@@ -35,14 +35,14 @@ const routes: Routes = [
         path: 'register-patient',
         component: PatientRegistrationComponent,
       },
-      {
-        path: 'register-lab',
-        component: LabRegistrationComponent,
-      },
-      {
-        path: 'register-pharmacy',
-        component: PharmacyRegistrationComponent,
-      },
+      // {
+      //   path: 'register-lab',
+      //   component: LabRegistrationComponent,
+      // },
+      // {
+      //   path: 'register-pharmacy',
+      //   component: PharmacyRegistrationComponent,
+      // },
       {
         path: 'doctor-list',
         component: DoctorListComponent,
@@ -59,44 +59,44 @@ const routes: Routes = [
         path: 'about-us',
         component: AboutUsComponent,
       },
-      {
-        path: 'pathology',
-        component: PathologyComponent,
-        children: [
-          {
-            redirectTo: 'pathology-home',
-            path: '',
-            pathMatch: 'full',
-          },
-          {
-            path: 'pathology-home',
-            component: PathologyHomeComponent,
-          },
-          {
-            path: 'view-pathology',
-            component: ViewPathologyComponent,
-          },
-        ],
-      },
-      {
-        path: 'radiology',
-        component: RadiologyComponent,
-        children: [
-          {
-            redirectTo: 'radiology-home',
-            path: '',
-            pathMatch: 'full',
-          },
-          {
-            path: 'radiology-home',
-            component: RadiologyHomeComponent,
-          },
-          {
-            path: 'view-radiology',
-            component: ViewRadiologyComponent,
-          },
-        ],
-      },
+      // {
+      //   path: 'pathology',
+      //   component: PathologyComponent,
+      //   children: [
+      //     {
+      //       redirectTo: 'pathology-home',
+      //       path: '',
+      //       pathMatch: 'full',
+      //     },
+      //     {
+      //       path: 'pathology-home',
+      //       component: PathologyHomeComponent,
+      //     },
+      //     {
+      //       path: 'view-pathology',
+      //       component: ViewPathologyComponent,
+      //     },
+      //   ],
+      // },
+      // {
+      //   path: 'radiology',
+      //   component: RadiologyComponent,
+      //   children: [
+      //     {
+      //       redirectTo: 'radiology-home',
+      //       path: '',
+      //       pathMatch: 'full',
+      //     },
+      //     {
+      //       path: 'radiology-home',
+      //       component: RadiologyHomeComponent,
+      //     },
+      //     {
+      //       path: 'view-radiology',
+      //       component: ViewRadiologyComponent,
+      //     },
+      //   ],
+      // },
     ],
   },
 
