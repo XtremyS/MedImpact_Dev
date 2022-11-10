@@ -23,7 +23,7 @@ const UserSchema = new mongoose.Schema({
       doctor_img: { type: String },
       doctor_specialty: { type: Array },
       doctor_age: { type: Number },
-      doctor_isVerfied: { type: String },
+      doctor_isVerified: { type: String },
       doctor_appointment_date: { type: String },
       doctor_SuperExperienced: { type: Boolean },
       doctor_clinic_address: { type: String, lowercase: true },

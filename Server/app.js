@@ -103,11 +103,6 @@ UpdateIndexHtml = (data) => {
   return htmlData;
 };
 
-//* THIS METHOD HELPS RENDERING ALL PAGES IN SINGLE PAGE APPLICATION
-// app.get("/*", async (req, res, next) => {
-//   res.send(await UpdateIndexHtml(DefaultMetaData));
-// });
-
 //* LISTING PORT
 app.listen(port, () => {
   console.log(`Server is running at PORT: ${port}`);

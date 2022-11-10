@@ -59,7 +59,7 @@ export class FormModalComponent implements OnInit {
       doctor_img: this.DoctorData.img,
       doctor_specialty: this.DoctorData.specialty,
       doctor_age: this.DoctorData.age,
-      doctor_isVerfied: this.DoctorData.isVerified,
+      doctor_isVerified: this.DoctorData.isVerified,
       doctor_SuperExperienced: this.DoctorData.SuperExperienced,
       doctor_clinic_address: this.DoctorData.clinic_address,
       doctor_city: this.DoctorData.city,

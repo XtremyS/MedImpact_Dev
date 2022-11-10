@@ -616,10 +616,10 @@ router.get("/api/v1/lab-list", async (req, res) => {
   }
 });
 
-//*  Booking Appointments
+//* Booking Appointments
+//* (What It Does Is,Push The Data Of Logged In User Into Each Other DB)
 router.patch("/api/v1/book_appointment", async (req, res) => {
   try {
-    //*  GETTING USER UPDATING INPUT
     const DocId = req.body._id;
 
     const PatientId = req.body.patients_id;
@@ -629,11 +629,14 @@ router.patch("/api/v1/book_appointment", async (req, res) => {
     const PatientVisitingReason = req.body.visiting_reason;
     const PatientPhone = req.body.patients_phone;
 
+    //*******************************************************
+    //*******************************************************
+
     const DoctorName = req.body.doctor_full_name;
     const DoctorAge = req.body.doctor_age;
     const DoctorEducation = req.body.doctor_education;
     const DoctorImg = req.body.doctor_img;
-    const DoctorSpeciality = req.body.doctor_specialty;
+    const DoctorSpecialty = req.body.doctor_specialty;
     const DoctorIsVerified = req.body.doctor_is_verified;
     const DoctorIsExperienced = req.body.doctor_SuperExperienced;
     const DoctorClinicAddress = req.body.doctor_clinic_address;
@@ -642,7 +645,7 @@ router.patch("/api/v1/book_appointment", async (req, res) => {
     const DoctorCountry = req.body.doctor_country;
     const DoctorAppointmentDate = req.body.doctor_appointment_date;
 
-    //* Updating SPECIFIC Doctor WITH ID
+    //* Updating Specific Doctor With Its Object ID
     const UpdateDoctor = await Doctor.updateOne(
       { _id: DocId },
       {
@@ -670,10 +673,9 @@ router.patch("/api/v1/book_appointment", async (req, res) => {
     //     },
     //   },
     // ]);
-
     // console.log(DocAppointment, "RETURNING DOC DATA");
 
-    //* Updating Specific Patient With Patient ID
+    //* Updating Specific Patient With Patient Object ID
     const UpdatePatient = await Patient.updateOne(
       { _id: PatientId },
       {
@@ -683,9 +685,9 @@ router.patch("/api/v1/book_appointment", async (req, res) => {
             doctor_full_name: DoctorName,
             doctor_education: DoctorEducation,
             doctor_img: DoctorImg,
-            doctor_specialty: DoctorSpeciality,
+            doctor_specialty: DoctorSpecialty,
             doctor_age: DoctorAge,
-            doctor_isVerfied: DoctorIsVerified,
+            doctor_isVerified: DoctorIsVerified,
             doctor_SuperExperienced: DoctorIsExperienced,
             doctor_clinic_address: DoctorClinicAddress,
             doctor_city: DoctorCity,
@@ -698,7 +700,7 @@ router.patch("/api/v1/book_appointment", async (req, res) => {
       }
     );
 
-    //* SENDING RESPONSE
+    //* Sending Response
     if (UpdateDoctor.modifiedCount == 1 && UpdatePatient.modifiedCount == 1) {
       res
         .status(201)
@@ -712,54 +714,67 @@ router.patch("/api/v1/book_appointment", async (req, res) => {
 });
 
 //*  Appointment Status API Confirm || Reject || Approve
-router.patch("/api/v1/appointment_status", Middleware, async (req, res) => {
-  try {
-    //*  Getting User Id And Patients Array Id From Front End To Update Patient Status
-    const Id = req.rootUser._id;
+router.patch(
+  "/api/v1/update_appointment_status",
+  Middleware,
+  async (req, res) => {
+    try {
+      //*  Getting User Id And Patients Array Id From Front End To Update Patient Status
+      const Id = req.rootUser._id;
 
-    const PatientsAppointmentObjId = req.body._id;
-    const PatientAppointmentStatus = req.body.appointment_status;
+      const PatientsAppointmentObjId = req.body._id;
+      const PatientAppointmentStatus = req.body.appointment_status;
+      const PatientsId = req.body.patients_id;
 
-    //* Updating Specific User With Id
-    const UpdateUser = await Doctor.updateOne(
-      {
-        _id: Id, //* Doctor ID
-        appointments: {
-          $elemMatch: { _id: PatientsAppointmentObjId }, //* Patients Object ID
+      //* Updating Specific User With Id
+      const UpdateDoctor = await Doctor.updateOne(
+        {
+          _id: Id, //* Doctor ID
+          appointments: {
+            $elemMatch: { _id: PatientsAppointmentObjId }, //* Patients Object ID
+          },
         },
-      },
 
-      {
-        $set: { "appointments.$.appointment_status": PatientAppointmentStatus },
-      }
-    );
+        {
+          $set: {
+            "appointments.$.appointment_status": PatientAppointmentStatus,
+          },
+        }
+      );
 
-    //* Updating Specific User With Id
-    const UpdatePatient = await Patient.updateOne(
-      {
-        _id: Id, //* Patient Document Object ID
-        booked_doctors: {
-          $elemMatch: { _id: PatientsAppointmentObjId }, //* Patients Object ID
+      //* Updating Specific User With Id
+      const UpdatePatient = await Patient.updateOne(
+        {
+          _id: PatientsId, //* Patient Document Object ID
+          booked_doctors: {
+            $elemMatch: {
+              doctor_id: DoctorObjId,
+            }, //* Patients Object ID
+          },
         },
-      },
 
-      {
-        $set: { "appointments.$.appointment_status": PatientAppointmentStatus },
+        {
+          $set: {
+            "booked_doctors.$.booked_doctor_appointment_status":
+              PatientAppointmentStatus,
+          },
+        }
+      );
+      //* SENDING RESPONSE
+      if (UpdateDoctor.modifiedCount == 1 && UpdatePatient.modifiedCount == 1) {
+        res.status(200).json({ response: "Appointment Status Updated!" });
+      } else if (UpdateDoctor.modifiedCount == 0) {
+        res
+          .status(304)
+          .json({ response: "Appointment Status Already Updated!" });
+      } else {
+        res.status(400).json({ error: "Failed To Updated Change Status!" });
       }
-    );
-
-    //* SENDING RESPONSE
-    if (UpdateUser.modifiedCount == 1) {
-      res.status(200).json({ response: "Appointment Status Updated!" });
-    } else if (UpdateUser.modifiedCount == 0) {
-      res.status(304).json({ response: "Appointment Status Already Updated!" });
-    } else {
-      res.status(400).json({ error: "Failed To Updated Change Status!" });
+    } catch (error) {
+      console.log(error);
     }
-  } catch (error) {
-    console.log(error);
   }
-});
+);
 
 //*  Get Appointments Data Of Doctor To Get All Appointments DoctorsDetailsSubject
 router.get("/api/v1/appointments", Middleware, (req, res) => {
@@ -770,9 +785,8 @@ router.get("/api/v1/appointments", Middleware, (req, res) => {
   res.status(200).send(UserObject);
 });
 
-//TODO : Patients Appointments Data Is Coming Now Check How Doctor Will Change Appointment Status Of Patient
 //*  Getting Booked Doctor Data Of Patient
-router.get("/api/v1/yourappointments", Middleware, async (req, res) => {
+router.get("/api/v1/your_appointments", Middleware, async (req, res) => {
   try {
     const Patient_Id = req.rootUser._id;
     const UpdateUser = await Patient.findOne(

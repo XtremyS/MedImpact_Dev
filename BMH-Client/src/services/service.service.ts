@@ -23,11 +23,11 @@ export class Service {
   GetDoctorUrl = '/api/v1/doc-list';
   GetLabDataUrl = '/api/v1/lab-list';
   GetDocAppointmentsUrl = '/api/v1/appointments';
-  GetPatientsBookedDocsUrl = '/api/v1/yourappointments';
+  GetPatientsBookedDocsUrl = '/api/v1/your_appointments';
   GetUserDataUrl = '/api/v1/get_user_data';
 
   //! UPDATING APPOINTMENT STATUS API
-  UrlUpdatePatientStatus = '/api/v1/appointment_status';
+  UrlUpdatePatientStatus = '/api/v1/update_appointment_status';
 
   //! BOOKING DOCTOR APPOINTMENT API
   UrlBookAppointment = '/api/v1/book_appointment';
