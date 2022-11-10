@@ -6,7 +6,11 @@ import { PatientDashboardHomeComponent } from './patient-dashboard-home/patient-
 import { YourAppointmentsComponent } from './your-appointments/your-appointments.component';
 
 @NgModule({
-  declarations: [PatientDashboardComponent, PatientDashboardHomeComponent, YourAppointmentsComponent],
+  declarations: [
+    PatientDashboardComponent,
+    PatientDashboardHomeComponent,
+    YourAppointmentsComponent,
+  ],
   imports: [CommonModule, DoctorDashboardRoutingModule],
 })
 export class PatientDashboardModule {
