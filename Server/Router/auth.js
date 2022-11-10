@@ -29,6 +29,10 @@ const Middleware = require("../Middleware/middleware");
 
 router.use(cookieParser());
 
+router.get("/", async (req, res) => {
+  res.status(200).json("Server Started!");
+});
+
 //*  POST DOCTORS REGISTRATION
 let ImgUrl = "";
 router.post(
