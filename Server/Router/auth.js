@@ -656,18 +656,18 @@ router.patch("/api/v1/book_appointment", async (req, res) => {
       }
     );
 
-    const DocAppointment = await Doctor.aggregate([
-      {
-        $unwind: "$appointments",
-      },
-      {
-        $match: {
-          "appointments.patients_id": "63651d89718b22e648a9bec1",
-        },
-      },
-    ]);
+    // const DocAppointment = await Doctor.aggregate([
+    //   {
+    //     $unwind: "$appointments",
+    //   },
+    //   {
+    //     $match: {
+    //       "appointments.patients_id": "63651d89718b22e648a9bec1",
+    //     },
+    //   },
+    // ]);
 
-    console.log(DocAppointment, "RETURNING DOC DATA");
+    // console.log(DocAppointment, "RETURNING DOC DATA");
 
     //* Updating Specific Patient With Patient ID
     const UpdatePatient = await Patient.updateOne(
@@ -688,6 +688,7 @@ router.patch("/api/v1/book_appointment", async (req, res) => {
             doctor_state: DoctorState,
             doctor_country: DoctorCountry,
             doctor_appointment_date: DoctorAppointmentDate,
+            booked_doctor_appointment_status: 2,
           },
         },
       }
@@ -707,20 +708,34 @@ router.patch("/api/v1/book_appointment", async (req, res) => {
 });
 
 //*  Appointment Status API Confirm || Reject || Approve
-router.patch("/api/v1/appointment_status", async (req, res) => {
+router.patch("/api/v1/appointment_status", Middleware, async (req, res) => {
   try {
     //*  Getting User Id And Patients Array Id From Front End To Update Patient Status
-    const Id = req.body._id;
+    const Id = req.rootUser._id;
 
-    const PatientsAppointmentsId = req.body.appointments._id;
-    const PatientAppointmentStatus = req.body.appointments.appointment_status;
+    const PatientsAppointmentObjId = req.body._id;
+    const PatientAppointmentStatus = req.body.appointment_status;
 
     //* Updating Specific User With Id
     const UpdateUser = await Doctor.updateOne(
       {
         _id: Id, //* Doctor ID
         appointments: {
-          $elemMatch: { _id: PatientsAppointmentsId }, //* Patients ID
+          $elemMatch: { _id: PatientsAppointmentObjId }, //* Patients Object ID
+        },
+      },
+
+      {
+        $set: { "appointments.$.appointment_status": PatientAppointmentStatus },
+      }
+    );
+
+    //* Updating Specific User With Id
+    const UpdatePatient = await Patient.updateOne(
+      {
+        _id: Id, //* Patient Document Object ID
+        booked_doctors: {
+          $elemMatch: { _id: PatientsAppointmentObjId }, //* Patients Object ID
         },
       },
 

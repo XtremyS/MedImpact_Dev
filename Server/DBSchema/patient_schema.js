@@ -30,6 +30,7 @@ const UserSchema = new mongoose.Schema({
       doctor_city: { type: String },
       doctor_state: { type: String },
       doctor_country: { type: String },
+      booked_doctor_appointment_status: { type: Number },
     },
   ],
   address: { type: String },

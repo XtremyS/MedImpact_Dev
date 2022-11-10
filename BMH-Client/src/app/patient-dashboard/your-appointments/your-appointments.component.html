@@ -21,21 +21,17 @@
             >
               <thead>
                 <tr>
-                  <th>Name</th>
-                  <th>Age</th>
-                  <th>Phone Number</th>
+                  <th>Doctor Name</th>
+                  <th>Doctor Age</th>
                   <th>Appointment Date</th>
-                  <th>Visiting Reason</th>
                   <th>Appointment Status</th>
                 </tr>
               </thead>
               <tfoot>
                 <tr>
-                  <th>Name</th>
-                  <th>Age</th>
-                  <th>Phone Number</th>
+                  <th>Doctor Name</th>
+                  <th>Doctor Age</th>
                   <th>Appointment Date</th>
-                  <th>Visiting Reason</th>
                   <th>Appointment Status</th>
                 </tr>
               </tfoot>
@@ -45,27 +41,26 @@
                 >
                   <tr>
                     <td>{{ BookedDoctor.doctor_full_name }}</td>
-                    <td>{{ BookedDoctor.doctor_full_name }}</td>
-                    <td>{{ BookedDoctor.doctor_full_name }}</td>
-                    <td>{{ BookedDoctor.doctor_full_name }}}</td>
-                    <td>{{ BookedDoctor.doctor_full_name }}</td>
+                    <td>{{ BookedDoctor.doctor_age }}</td>
+                    <td>{{ BookedDoctor.doctor_appointment_date }}</td>
 
-                    <!-- <ng-container *ngIf="Patients.appointment_status == 2">
-                      <td style="color: orange">
-                        Pending
-                        <ng-container *ngIf="Patients.appointment_status == 2">
-                          <button class="btn-success btn-sm">Approve</button>
-                          <button class="btn-danger btn-sm">Reject</button>
-                        </ng-container>
-                      </td>
+                    <ng-container
+                      *ngIf="BookedDoctor.booked_doctor_appointment_status == 2"
+                    >
+                      <td style="color: orange">Pending</td>
                     </ng-container>
 
-                    <ng-container *ngIf="Patients.appointment_status == 1">
+                    <ng-container
+                      *ngIf="BookedDoctor.booked_doctor_appointment_status == 1"
+                    >
                       <td style="color: green">Accepted</td>
                     </ng-container>
-                    <ng-container *ngIf="Patients.appointment_status == 0">
+
+                    <ng-container
+                      *ngIf="BookedDoctor.booked_doctor_appointment_status == 0"
+                    >
                       <td style="color: red">Rejected</td>
-                    </ng-container> -->
+                    </ng-container>
                   </tr>
                 </ng-container>
               </tbody>

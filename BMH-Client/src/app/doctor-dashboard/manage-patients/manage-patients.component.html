@@ -51,15 +51,25 @@
                     <ng-container *ngIf="Patients.appointment_status == 2">
                       <td style="color: orange">
                         Pending
-                        <ng-container *ngIf="Patients.appointment_status == 2">
-                          <button class="btn-success btn-sm">Approve</button>
-                          <button class="btn-danger btn-sm">Reject</button>
+                        <ng-container *ngIf="BtnsIsVisible">
+                          <button
+                            class="btn-success btn-sm"
+                            (click)="Approve(Patients, 'Approved')"
+                          >
+                            Approve
+                          </button>
+                          <button
+                            class="btn-danger btn-sm"
+                            (click)="Approve(Patients, 'Rejected')"
+                          >
+                            Reject
+                          </button>
                         </ng-container>
                       </td>
                     </ng-container>
 
                     <ng-container *ngIf="Patients.appointment_status == 1">
-                      <td style="color: green">Accepted</td>
+                      <td style="color: green">Approved</td>
                     </ng-container>
                     <ng-container *ngIf="Patients.appointment_status == 0">
                       <td style="color: red">Rejected</td>

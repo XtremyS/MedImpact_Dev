@@ -26,6 +26,9 @@ export class Service {
   GetPatientsBookedDocsUrl = '/api/v1/yourappointments';
   GetUserDataUrl = '/api/v1/get_user_data';
 
+  //! UPDATING APPOINTMENT STATUS API
+  UrlUpdatePatientStatus = '/api/v1/appointment_status';
+
   //! BOOKING DOCTOR APPOINTMENT API
   UrlBookAppointment = '/api/v1/book_appointment';
 
@@ -85,7 +88,7 @@ export class Service {
     });
   }
 
-  //! GET API FUNCTIONS
+  //! GET DATA FUNCTIONS
   GetDocData(): Observable<any> {
     return this.http.get(this.GetDoctorUrl, {
       observe: 'response',
@@ -104,6 +107,13 @@ export class Service {
   }
   GetPatientsBookedDocsData(): Observable<any> {
     return this.http.get(this.GetPatientsBookedDocsUrl, {
+      observe: 'response',
+    });
+  }
+
+  //! PATCH APIS FUNCTIONS
+  UpdateAppointmentStatus(Data: any): Observable<any> {
+    return this.http.patch(this.UrlUpdatePatientStatus, Data, {
       observe: 'response',
     });
   }

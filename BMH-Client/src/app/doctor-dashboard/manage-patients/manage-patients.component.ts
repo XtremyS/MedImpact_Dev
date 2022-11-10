@@ -14,6 +14,12 @@ import { Service } from 'src/services/service.service';
 export class ManagePatientsComponent implements OnInit {
   PageTitle = 'MedImpact | Admin Manage Patients';
   AppointmentsArray: any;
+  DoctorId: any;
+  BtnsIsVisible: boolean = true;
+  DetailsObj: Object = {
+    _id: undefined,
+    appointment_status: undefined,
+  };
   constructor(
     private _Service: Service,
     private _AuthService: AuthService,
@@ -34,5 +40,35 @@ export class ManagePatientsComponent implements OnInit {
         console.log(this.AppointmentsArray);
       }
     });
+  }
+
+  Approve(PatientsData: any, Status: string) {
+    console.log(Status);
+    this.BtnsIsVisible = false;
+
+    //* Sending Patients Data To Backend
+    if (Status == 'Approved') {
+      this.DetailsObj = {
+        _id: PatientsData._id,
+        appointment_status: 1,
+      };
+    }
+
+    if (Status == 'Rejected') {
+      this.DetailsObj = {
+        _id: PatientsData._id,
+        appointment_status: 0,
+      };
+    }
+
+    //* Updating Patients Appointments Status API Called
+    this._Service
+      .UpdateAppointmentStatus(this.DetailsObj)
+      .subscribe(async (res: any) => {
+        if (res.status == 200) {
+          this.BtnsIsVisible = false;
+        }
+        console.log(res, 'APPROVE RES');
+      });
   }
 }
