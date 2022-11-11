@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { Title } from '@angular/platform-browser';
 import { Router } from '@angular/router';
+import { ModalService } from 'src/services/modal.service';
 import { Service } from 'src/services/service.service';
 
 @Component({
@@ -19,7 +20,8 @@ export class PharmacyRegistrationComponent implements OnInit {
     private Route: Router,
     private _FormBuilder: FormBuilder,
     private _Service: Service,
-    private _titleService: Title
+    private _titleService: Title,
+    private _ModalService: ModalService
   ) {}
 
   ngOnInit(): void {
@@ -49,8 +51,11 @@ export class PharmacyRegistrationComponent implements OnInit {
     this.ImgFormData.append('img', this.Images);
     this._Service
       .RegisterPharmacy(this.PharmacyForm.value)
-      .subscribe((data) => {
-        console.log(data);
+      .subscribe(async (res) => {
+        if (res.status === 201) {
+          //* Registerd Alert Triggered
+          this._ModalService.OpenAlertDialog('Registered');
+        }
       });
   }
 }

@@ -3,6 +3,7 @@ import { FormGroup, FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Service } from 'src/services/service.service';
 import { Title } from '@angular/platform-browser';
+import { ModalService } from 'src/services/modal.service';
 
 @Component({
   selector: 'app-lab-registration',
@@ -18,7 +19,8 @@ export class LabRegistrationComponent implements OnInit {
     private Route: Router,
     private _FormBuilder: FormBuilder,
     private _Service: Service,
-    private _titleService: Title
+    private _titleService: Title,
+    private _ModalService: ModalService
   ) {}
 
   ngOnInit(): void {
@@ -48,8 +50,11 @@ export class LabRegistrationComponent implements OnInit {
   async Register() {
     this.ImgFormData.append('img', this.Images);
 
-    this._Service.RegisterLabs(this.LabForm.value).subscribe((data) => {
-      console.log(data);
+    this._Service.RegisterLabs(this.LabForm.value).subscribe(async (res) => {
+      if (res.status === 201) {
+        //* Registerd Alert Triggered
+        this._ModalService.OpenAlertDialog('Registered');
+      }
     });
     console.log(this.LabForm.value);
   }

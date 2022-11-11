@@ -60,6 +60,7 @@ export class HeaderComponent implements OnInit {
           if (data.status == 200) {
             //* Setting True In LocalStorage To Doctor Dashboard Div
             localStorage.setItem('ddr', JSON.stringify(true));
+
             //* Login Alert Triggered
             this._ModalService.OpenAlertDialog('Authenticated');
 

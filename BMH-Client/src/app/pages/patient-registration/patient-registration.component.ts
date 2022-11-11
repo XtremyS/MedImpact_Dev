@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Title } from '@angular/platform-browser';
 import { Router } from '@angular/router';
+import { AuthService } from 'src/services/auth.service';
+import { ModalService } from 'src/services/modal.service';
 import { Service } from 'src/services/service.service';
 
 @Component({
@@ -19,7 +21,9 @@ export class PatientRegistrationComponent implements OnInit {
     private Route: Router,
     private _FormBuilder: FormBuilder,
     private _Service: Service,
-    private _titleService: Title
+    private _titleService: Title,
+    private _AuthService: AuthService,
+    private _ModalService: ModalService
   ) {}
 
   ngOnInit(): void {
@@ -46,8 +50,14 @@ export class PatientRegistrationComponent implements OnInit {
   }
   async Register() {
     this.ImgFormData.append('img', this.Images);
-    this._Service.RegisterPatient(this.PatientForm.value).subscribe((data) => {
-      console.log(data);
-    });
+    this._Service
+      .RegisterPatient(this.PatientForm.value)
+      .subscribe(async (res) => {
+        if (res.status === 201) {
+          //* Login Alert Triggered
+          this._ModalService.OpenAlertDialog('Registered');
+        }
+        console.log(res);
+      });
   }
 }

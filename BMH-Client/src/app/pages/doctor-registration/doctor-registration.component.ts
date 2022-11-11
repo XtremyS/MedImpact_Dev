@@ -9,6 +9,7 @@ import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import { MatChipInputEvent } from '@angular/material/chips';
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
+import { ModalService } from 'src/services/modal.service';
 
 @Component({
   selector: 'app-doctor-registration',
@@ -53,7 +54,8 @@ export class DoctorRegistrationComponent implements OnInit {
     private Route: Router,
     private _FormBuilder: FormBuilder,
     private _Service: Service,
-    private _titleService: Title
+    private _titleService: Title,
+    private _ModalService: ModalService
   ) {
     //* EDUCATION FIELD FILTER LOGIC
     this.FilterdEducationArray = this.EducationFormControl.valueChanges.pipe(
@@ -200,8 +202,12 @@ export class DoctorRegistrationComponent implements OnInit {
     this.ImgFormData.append('cpassword', this.DoctorForm.value.cpassword);
     this.ImgFormData.append('img', this.Images);
 
-    this._Service.RegisterDoctor(this.ImgFormData).subscribe((data) => {
-      console.log(data);
+    this._Service.RegisterDoctor(this.ImgFormData).subscribe(async (res) => {
+      if (res.status === 201) {
+        //* Registerd Alert Triggered
+        this._ModalService.OpenAlertDialog('Registered');
+      }
+      console.log(res);
     });
   }
 }
