@@ -10,13 +10,13 @@ import { ModalService } from 'src/services/modal.service';
   styleUrls: ['./header.component.scss'],
 })
 export class HeaderComponent implements OnInit {
-  radioItems = ['Doctor', 'Patient'];
+  radioItems = ['Doctor', 'User', 'Lab', 'Pharmacies'];
   model = { option: 'null' };
   LoginForm = new FormGroup({});
   IsLoggedIn = false;
   ApiUserDetails: any;
   IsLoginRadioBtnSelected: boolean = false;
-  LocalStorageAuthToken = this._AuthService.GetLocalAuthToken();
+  LocalStorageAuthToken = this._AuthService.GetLocalLoginValue();
   IsDocRouteVisible: boolean = false;
   IsAdminRouteVisible: boolean = false;
   IsPatientRouteVisible: boolean = false;
@@ -63,14 +63,11 @@ export class HeaderComponent implements OnInit {
             //* Login Alert Triggered
             this._ModalService.OpenAlertDialog('Authenticated');
 
-            //* SETTING API RESPONSE FROM API IN GLOBAL VARIABLE
+            //* SETTING API RESPONSE IN GLOBAL VARIABLE
             this.ApiUserDetails = data.body.response;
             this.IsLoggedIn = true;
-            //* GETTING LAST AUTH TOKEN OF USER FROM API AND SETTING IT IN LOCAL STORAGE
-            let AuthToken =
-              this.ApiUserDetails.tokens[this.ApiUserDetails.tokens.length - 1]
-                .token;
-            this._AuthService.SetLocalAuthToken(AuthToken);
+
+            this._AuthService.SetLocalLoginValue(this.IsLoggedIn);
             //* Reloading Page
             location.reload();
           }
@@ -79,7 +76,7 @@ export class HeaderComponent implements OnInit {
           login_email: '',
           login_password: '',
         });
-      } else if (this.model.option == 'Patient') {
+      } else if (this.model.option == 'User') {
         //* Patient Login API called
         this._Service.PatientLogin(this.LoginForm.value).subscribe((data) => {
           console.log(data.body.response);
@@ -88,15 +85,12 @@ export class HeaderComponent implements OnInit {
             localStorage.setItem('pdr', JSON.stringify(true));
             //* Login Alert Triggered
             this._ModalService.OpenAlertDialog('Authenticated');
-            //* SETTING API RESPONSE FROM API IN GLOBAL VARIABLE
+
+            //* SETTING API RESPONSE IN GLOBAL VARIABLE
             this.ApiUserDetails = data.body.response;
             this.IsLoggedIn = true;
-            //* GETTING LAST AUTH TOKEN OF USER FROM API AND SETTING IT IN LOCAL STORAGE
-            let AuthToken =
-              this.ApiUserDetails.tokens[this.ApiUserDetails.tokens.length - 1]
-                .token;
-            //* SETTING JWT TOKEN IN LOCAL STORAGE
-            this._AuthService.SetLocalAuthToken(AuthToken);
+
+            this._AuthService.SetLocalLoginValue(this.IsLoggedIn);
             //* Reloading Page
             location.reload();
           }
@@ -105,52 +99,47 @@ export class HeaderComponent implements OnInit {
           login_email: '',
           login_password: '',
         });
-        // } else if (this.model.option == 'Lab') {
-        //   //* Lab Login API called
-        //   this._Service.LabLogin(this.LoginForm.value).subscribe((data) => {
-        //     console.log(data.body.response);
-        //     if (data.status == 200) {
-        //       //* Login Alert Triggered
-        //       this._ModalService.OpenAlertDialog('Authenticated');
-        //       //* SETTING API RESPONSE FROM API IN GLOBAL VARIABLE
-        //       this.ApiUserDetails = data.body.response;
-        //       this.IsLoggedIn = true;
-        //       //* GETTING LAST AUTH TOKEN OF USER FROM API AND SETTING IT IN LOCAL STORAGE
-        //       let AuthToken =
-        //         this.ApiUserDetails.tokens[this.ApiUserDetails.tokens.length - 1]
-        //           .token;
-        //       this._AuthService.SetLocalAuthToken(AuthToken);
-        //       //* Reloading Page
-        //       location.reload();
-        //     }
-        //   });
-        //   this.LoginForm.patchValue({
-        //     login_email: '',
-        //     login_password: '',
-        //   });
-        // } else if (this.model.option == 'Pharmacy') {
-        //   //* Pharmacy Login API called
-        //   this._Service.PharmacyLogin(this.LoginForm.value).subscribe((data) => {
-        //     console.log(data.body.response);
-        //     if (data.status == 200) {
-        //       this._ModalService.OpenAlertDialog('Authenticated');
-        //       //* SETTING API RESPONSE FROM API IN GLOBAL VARIABLE
-        //       this.ApiUserDetails = data.body.response;
-        //       this.IsLoggedIn = true;
-        //       //* GETTING LAST AUTH TOKEN OF USER FROM API AND SETTING IT IN LOCAL STORAGE
-        //       let AuthToken =
-        //         this.ApiUserDetails.tokens[this.ApiUserDetails.tokens.length - 1]
-        //           .token;
-        //       this._AuthService.SetLocalAuthToken(AuthToken);
-        //       //* Reloading Page
-        //       location.reload();
-        //     }
-        //   });
-        //   this.LoginForm.patchValue({
-        //     login_email: '',
-        //     login_password: '',
-        //   });
-        //   console.log(this.LoginForm.value);
+      } else if (this.model.option == 'Lab') {
+        //* Lab Login API called
+        this._Service.LabLogin(this.LoginForm.value).subscribe((data) => {
+          console.log(data.body.response);
+          if (data.status == 200) {
+            //* Login Alert Triggered
+            this._ModalService.OpenAlertDialog('Authenticated');
+            //* SETTING API RESPONSE IN GLOBAL VARIABLE
+            this.ApiUserDetails = data.body.response;
+            this.IsLoggedIn = true;
+
+            this._AuthService.SetLocalLoginValue(this.IsLoggedIn);
+            //* Reloading Page
+            location.reload();
+          }
+        });
+        this.LoginForm.patchValue({
+          login_email: '',
+          login_password: '',
+        });
+      } else if (this.model.option == 'Pharmacies') {
+        //* Pharmacy Login API called
+        this._Service.PharmacyLogin(this.LoginForm.value).subscribe((data) => {
+          console.log(data.body.response);
+          if (data.status == 200) {
+            this._ModalService.OpenAlertDialog('Authenticated');
+            //* SETTING API RESPONSE IN GLOBAL VARIABLE
+            this.ApiUserDetails = data.body.response;
+            this.IsLoggedIn = true;
+
+            //* GETTING LAST AUTH TOKEN OF USER FROM API AND SETTING IT IN LOCAL STORAGE
+            this._AuthService.SetLocalLoginValue(this.IsLoggedIn);
+            //* Reloading Page
+            location.reload();
+          }
+        });
+        this.LoginForm.patchValue({
+          login_email: '',
+          login_password: '',
+        });
+        console.log(this.LoginForm.value);
       }
     }
   }

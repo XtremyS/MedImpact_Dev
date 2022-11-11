@@ -39,7 +39,7 @@ const UserSchema = new mongoose.Schema({
   ],
   img: { type: String },
   date: { type: Date, default: Date.now },
-  tokens: [{ token: { type: String, required: true } }],
+  token: { type: String, required: true },
 });
 
 //HASHING PASSWORD USING MIDDLEWARE
@@ -52,10 +52,9 @@ UserSchema.pre("save", async function (next) {
   next();
 });
 
-//GENERATING AUTH TOKEN
+//* GENERATING AUTH TOKEN
 UserSchema.methods.generateAuthToken = async function () {
   try {
-    // console.log("jwt code");
     const token = jwt.sign(
       {
         _id: this._id,
@@ -63,8 +62,8 @@ UserSchema.methods.generateAuthToken = async function () {
       process.env.AUTH_KEY
     );
 
-    //SAVING TOKEN IN DOCUMENT FIELD
-    this.tokens = this.tokens.concat({ token: token });
+    //* Saving Token In Document Field When User Logged In
+    this.token = token;
     await this.save();
     // console.log(token);
     return token;
@@ -73,6 +72,6 @@ UserSchema.methods.generateAuthToken = async function () {
   }
 };
 
-//INITIALIZATION DB MODAL
+//* INITIALIZATION DB MODAL
 const Doctor = mongoose.model("Doctors", UserSchema);
 module.exports = Doctor;

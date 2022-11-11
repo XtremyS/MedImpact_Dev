@@ -15,7 +15,7 @@ export class DoctorListComponent implements OnInit {
   PageTitle = 'MedImpact | Doctor Lists';
   DocArray: any;
   PatientData: any;
-  Loading: boolean = false;
+  Loading: boolean = true;
 
   constructor(
     private _Service: Service,
@@ -24,22 +24,25 @@ export class DoctorListComponent implements OnInit {
     private _RouterService: Router,
     private _titleService: Title,
     private _AllPurposeService: AllPurposeService
-  ) {
-    this.Loading = false;
-  }
+  ) {}
 
   ngOnInit(): void {
     //* Setting Page Title Dynamically
     this._titleService.setTitle(this.PageTitle);
+
     //* Getting All Doctors Data From API
     this._Service.GetDocData().subscribe((res) => {
-      this.DocArray = res.body.data;
+      //*  If API Response Is "200"
+      if (res.status == 200) {
+        this.Loading = true;
+        this.DocArray = res.body.data;
+      }
     });
   }
 
   BookAppointment(DoctorDetails: any) {
     //* Auth Token Initialization
-    let IsAuthenticated: boolean = this._AuthService.GetLocalAuthToken();
+    let IsAuthenticated: boolean = this._AuthService.GetLocalLoginValue();
     //* Checking Before Booking Appointment User IsAuthenticated Or Not
     if (!IsAuthenticated) {
       this._ModalService.OpenAlertDialog('Not_Authenticated');
@@ -54,7 +57,7 @@ export class DoctorListComponent implements OnInit {
 
   ViewDoctorDetails(DoctorDetails: any) {
     //* Auth Token Initialization
-    let IsAuthenticated: boolean = this._AuthService.GetLocalAuthToken();
+    let IsAuthenticated: boolean = this._AuthService.GetLocalLoginValue();
 
     if (!IsAuthenticated) {
       this._ModalService.OpenAlertDialog('Not_Authenticated');

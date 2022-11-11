@@ -50,7 +50,7 @@ export class DoctorDetailsComponent implements OnInit, OnDestroy {
 
   BookAppointment(Data: any) {
     //* Auth Token Initialization
-    let IsAuthenticated: boolean = this._AuthService.GetLocalAuthToken();
+    let IsAuthenticated: boolean = this._AuthService.GetLocalLoginValue();
     //* Checking Before Booking Appointment User IsAuthenticated Or Not
     if (!IsAuthenticated) {
       this._ModalService.OpenAlertDialog('Not_Authenticated');

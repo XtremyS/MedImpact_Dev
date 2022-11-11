@@ -51,7 +51,6 @@ router.post(
           full_name,
           gender,
           email,
-
           age,
           phone,
           password,

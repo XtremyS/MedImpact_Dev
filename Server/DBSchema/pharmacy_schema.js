@@ -26,7 +26,7 @@ const UserSchema = new mongoose.Schema({
     },
   ],
   date: { type: Date, default: Date.now },
-  tokens: [{ token: { type: String, required: true } }],
+  token: { type: String, required: true },
 });
 
 //HASHING PASSWORD USING MIDDLEWARE
@@ -50,8 +50,8 @@ UserSchema.methods.generateAuthToken = async function () {
       process.env.AUTH_KEY
     );
 
-    //SAVING TOKEN IN DOCUMENT FIELD
-    this.tokens = this.tokens.concat({ token: token });
+    //* Saving Token In Document Field When User Logged In
+    this.token = token;
     await this.save();
     // console.log(token);
     return token;

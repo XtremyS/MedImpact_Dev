@@ -5,6 +5,11 @@
         <div class="dc-searchresult-holder">
           <div class="dc-searchresult-head">
             <h4>Doctors lists</h4>
+            <!-- <ng-container *ngIf="Loading">
+              <div class="Loader_Container">
+                <app-progress-loader></app-progress-loader>
+              </div>
+            </ng-container> -->
             <ng-container *ngIf="DocArray == ''">
               <div>
                 <p>No Doctors to show.</p>
@@ -90,7 +95,7 @@
                               (click)="ViewDoctorDetails(data)"
                               class="dc-btn"
                             >
-                              View Details
+                              More Details
                             </button>
                           </div>
                           <div>
