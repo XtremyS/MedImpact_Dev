@@ -29,8 +29,8 @@ export class PatientRegistrationComponent implements OnInit {
   ngOnInit(): void {
     this._titleService.setTitle(this.PageTitle);
     this.PatientForm = this._FormBuilder.group({
-      gender: 'Gender',
       full_name: '',
+      gender: 'Gender',
       phone: '',
       age: '',
       email: '',
@@ -49,15 +49,21 @@ export class PatientRegistrationComponent implements OnInit {
     }
   }
   async Register() {
+    this.ImgFormData.append('full_name', this.PatientForm.value.full_name);
+    this.ImgFormData.append('gender', this.PatientForm.value.gender);
+    this.ImgFormData.append('phone', this.PatientForm.value.phone);
+    this.ImgFormData.append('age', this.PatientForm.value.age);
+    this.ImgFormData.append('email', this.PatientForm.value.email);
+    this.ImgFormData.append('password', this.PatientForm.value.password);
+    this.ImgFormData.append('cpassword', this.PatientForm.value.cpassword);
     this.ImgFormData.append('img', this.Images);
-    this._Service
-      .RegisterPatient(this.PatientForm.value)
-      .subscribe(async (res) => {
-        if (res.status === 201) {
-          //* Login Alert Triggered
-          this._ModalService.OpenAlertDialog('Registered');
-        }
-        console.log(res);
-      });
+
+    this._Service.RegisterPatient(this.ImgFormData).subscribe(async (res) => {
+      if (res.status === 201) {
+        //* Login Alert Triggered
+        this._ModalService.OpenAlertDialog('Registered');
+      }
+      console.log(res);
+    });
   }
 }

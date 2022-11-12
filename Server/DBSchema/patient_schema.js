@@ -15,6 +15,7 @@ const UserSchema = new mongoose.Schema({
   email: { type: String, required: true, lowercase: true },
   phone: { type: Number, required: true },
   role: { type: String },
+  img: { type: String },
   booked_doctors: [
     {
       doctor_id: { type: String, required: true },

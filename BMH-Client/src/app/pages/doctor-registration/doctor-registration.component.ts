@@ -204,7 +204,7 @@ export class DoctorRegistrationComponent implements OnInit {
 
     this._Service.RegisterDoctor(this.ImgFormData).subscribe(async (res) => {
       if (res.status === 201) {
-        //* Registerd Alert Triggered
+        //* Registered Alert Triggered
         this._ModalService.OpenAlertDialog('Registered');
       }
       console.log(res);

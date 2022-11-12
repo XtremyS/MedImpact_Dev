@@ -143,69 +143,98 @@ router.post(
 );
 
 //* POST PATIENTS REGISTRATIONS
-router.post("/api/v1/patients-registration", async (req, res) => {
-  //* DESTRUCTURED USER FILLED DATA
-  const { full_name, gender, email, age, phone, password, cpassword } =
-    req.body;
+router.post(
+  "/api/v1/patients-registration",
+  fileUpload({
+    useTempFiles: true,
+  }),
+  async (req, res) => {
+    try {
+      const file = req.files.img;
+      CloudinaryFileUpload.uploader.upload(
+        file.tempFilePath,
+        async (error, response) => {
+          try {
+            ImgUrl = response.secure_url;
+            //* DESTRUCTURED USER FILLED DATA
+            const {
+              full_name,
+              gender,
+              email,
+              age,
+              phone,
+              password,
+              cpassword,
+            } = req.body;
 
-  //* CHECKING IF THE SAME EMAIL IS REGISTERED IN OTHER COLLECTION IN DATABASE
-  const DoctorEmailExists = await Doctor.findOne({ email: email });
-  const LabEmailExists = await Lab.findOne({ email: email });
+            //* CHECKING IF THE SAME EMAIL IS REGISTERED IN OTHER COLLECTION IN DATABASE
+            const DoctorEmailExists = await Doctor.findOne({ email: email });
+            const LabEmailExists = await Lab.findOne({ email: email });
 
-  if (DoctorEmailExists || LabEmailExists) {
-    return res.status(422).json({ error: "Email Already In Use!" });
-  }
+            if (DoctorEmailExists || LabEmailExists) {
+              return res.status(422).json({ error: "Email Already In Use!" });
+            }
 
-  //* CHECKING IF THE FIELDS ARE EMPTY OR NOT
-  if (
-    !age ||
-    !full_name ||
-    !gender ||
-    !email ||
-    !phone ||
-    !password ||
-    !cpassword
-  ) {
-    return res.status(422).json({ error: "Fields Cannot Be Empty!" });
-  }
-  try {
-    //* USER DETAILS WHICH EMAILS MATCH IN DB
-    const userExist = await Patient.findOne({ email: email });
-    //* CHECKING PASS AND C PASS
-    if (password !== cpassword) {
-      return res
-        .status(400)
-        .json({ error: "Password & Confirm Password Mismatch!" });
-    } else if (userExist) {
-      //*  CHECKING EMAIL ALREADY EXIST IN DB
-      return res.status(422).json({ error: "Email Already Exist!" });
-    } else {
-      //* IF USER NOT EXIST CREATING NEW USER IN DB
-      const Patients = new Patient({
-        full_name,
-        gender,
-        email,
-        phone,
-        age,
-        password,
-        cpassword,
-      });
+            //* CHECKING IF THE FIELDS ARE EMPTY OR NOT
+            if (
+              !age ||
+              !full_name ||
+              !gender ||
+              !email ||
+              !phone ||
+              !password ||
+              !cpassword
+            ) {
+              return res.status(422).json({ error: "Fields Cannot Be Empty!" });
+            }
+            try {
+              //* USER DETAILS WHICH EMAILS MATCH IN DB
+              const userExist = await Patient.findOne({ email: email });
+              //* CHECKING PASS AND C PASS
+              if (password !== cpassword) {
+                return res
+                  .status(400)
+                  .json({ error: "Password & Confirm Password Mismatch!" });
+              } else if (userExist) {
+                //*  CHECKING EMAIL ALREADY EXIST IN DB
+                return res.status(422).json({ error: "Email Already Exist!" });
+              } else {
+                //* IF USER NOT EXIST CREATING NEW USER IN DB
+                const Patients = new Patient({
+                  full_name,
+                  gender,
+                  email,
+                  phone,
+                  age,
+                  password,
+                  img: ImgUrl,
+                  cpassword,
+                });
 
-      //*  HASHING PASSWORD HERE FROM SCHEMA.JS THROUGH MIDDLEWARE
+                //*  HASHING PASSWORD HERE FROM SCHEMA.JS THROUGH MIDDLEWARE
 
-      //* Generating & Setting Auth Token When Creating New User
-      const token = await UserLogin.generateAuthToken();
+                //* Generating & Setting Auth Token When Creating New User
+                const token = await Patients.generateAuthToken();
 
-      //* SAVING DATA IN DB
-      await Patients.save();
+                //* SAVING DATA IN DB
+                await Patients.save();
 
-      //* SENDING RESPONSE
-      res.status(201).json({ response: "User Registered!" });
+                //* SENDING RESPONSE
+                res.status(201).json({ response: "User Registered!" });
+              }
+            } catch (error) {
+              res.status(500).json({ error: error.message });
+            }
+          } catch (error) {
+            console.log(error, "ERROR OF CLOUDINARY");
+          }
+        }
+      );
+    } catch (error) {
+      console.log(error, "ERROR OF MAIN FUNC");
     }
-  } catch (error) {
-    res.status(500).json({ error: error.message });
   }
-});
+);
 
 //* POST LABS REGISTRATIONS
 router.post("/api/v1/labs-registration", async (req, res) => {
@@ -274,7 +303,7 @@ router.post("/api/v1/labs-registration", async (req, res) => {
       //*  HASHING PASSWORD HERE FROM SCHEMA.JS THROUGH MIDDLEWARE
 
       //* Generating Auth Token While Creating New User
-      const token = await UserLogin.generateAuthToken();
+      const token = await Labs.generateAuthToken();
 
       //* SAVING DATA IN DB
       await Labs.save();
@@ -351,7 +380,7 @@ router.post("/api/v1/pharmacy-registration", async (req, res) => {
       //*  HASHING PASSWORD HERE FROM SCHEMA.JS THROUGH MIDDLEWARE
 
       //* Generating Auth Token While Creating New User
-      const token = await UserLogin.generateAuthToken();
+      const token = await Pharmacies.generateAuthToken();
 
       //* SAVING DATA IN DB
       await Pharmacies.save();

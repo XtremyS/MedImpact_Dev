@@ -18,6 +18,8 @@ const UserSchema = new mongoose.Schema({
   address: { type: String, required: true },
   password: { type: String, required: true },
   cpassword: { type: String, required: true },
+  img: { type: String },
+
   medicines: [
     {
       medicine_name: { type: String, required: true },

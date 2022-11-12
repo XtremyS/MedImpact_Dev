@@ -18,6 +18,8 @@ const UserSchema = new mongoose.Schema({
   email: { type: String, required: true, lowercase: true },
   phone: { type: Number, required: true },
   role: { type: String },
+  img: { type: String },
+
   password: { type: String, required: true },
   cpassword: { type: String, required: true },
   date: { type: Date, default: Date.now },
