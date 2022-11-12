@@ -124,6 +124,9 @@ router.post(
 
             //* HASHING PASSWORD HERE FROM SCHEMA.JS THROUGH MIDDLEWARE
 
+            //* Generating & Setting Auth Token When Creating New User
+            const token = await UserLogin.generateAuthToken();
+
             //* SAVING DATA IN DB
 
             await Doctors.save();
@@ -189,6 +192,9 @@ router.post("/api/v1/patients-registration", async (req, res) => {
       });
 
       //*  HASHING PASSWORD HERE FROM SCHEMA.JS THROUGH MIDDLEWARE
+
+      //* Generating & Setting Auth Token When Creating New User
+      const token = await UserLogin.generateAuthToken();
 
       //* SAVING DATA IN DB
       await Patients.save();
@@ -267,6 +273,9 @@ router.post("/api/v1/labs-registration", async (req, res) => {
 
       //*  HASHING PASSWORD HERE FROM SCHEMA.JS THROUGH MIDDLEWARE
 
+      //* Generating Auth Token While Creating New User
+      const token = await UserLogin.generateAuthToken();
+
       //* SAVING DATA IN DB
       await Labs.save();
 
@@ -340,6 +349,9 @@ router.post("/api/v1/pharmacy-registration", async (req, res) => {
       });
 
       //*  HASHING PASSWORD HERE FROM SCHEMA.JS THROUGH MIDDLEWARE
+
+      //* Generating Auth Token While Creating New User
+      const token = await UserLogin.generateAuthToken();
 
       //* SAVING DATA IN DB
       await Pharmacies.save();
@@ -438,7 +450,7 @@ router.post("/api/v1/login-patient", async (req, res) => {
 
       //* CHECKING IF THE USER EXIST IN DB OR NOT WHILE LOGIN
       if (UserLogin && HashPassword) {
-        //* GENERATING AUTH TOKEN WHILE LOGIN (USING MIDDLEWEARE)
+        //* Generating Auth Token While LOGIN (USING MIDDLEWARE)
         const token = await UserLogin.generateAuthToken();
 
         //* SAVING AUTH TOKEN IN COOKIE
