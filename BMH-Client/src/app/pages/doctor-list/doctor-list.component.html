@@ -5,11 +5,6 @@
         <div class="dc-searchresult-holder">
           <div class="dc-searchresult-head">
             <h4>Doctors lists</h4>
-            <!-- <ng-container *ngIf="Loading">
-              <div class="Loader_Container">
-                <app-progress-loader></app-progress-loader>
-              </div>
-            </ng-container> -->
             <ng-container *ngIf="DocArray == ''">
               <div>
                 <p>No Doctors to show.</p>
@@ -31,6 +26,12 @@
           </div>
 
           <div class="dc-searchresult-grid">
+            <ng-container *ngIf="Loading == true">
+              <div class="Progress_Loader_Div">
+                <app-progress-loader></app-progress-loader>
+              </div>
+            </ng-container>
+
             <div class="row">
               <ng-container *ngFor="let data of DocArray">
                 <div
@@ -39,7 +40,7 @@
                   <div class="dc-docpostholder">
                     <figure class="dc-docpostimg">
                       <img
-                        src="{{ data.img }}"
+                        [src]="data.img"
                         class="Doc_img"
                         alt="img description"
                       />
@@ -71,15 +72,25 @@
                         </h3>
                         <ul class="dc-docinfo">
                           <li>
-                            <em>Education {{ data.education }}</em>
+                            <em>
+                              <span class="ti-medall"></span> Education
+                              <span class="Doc_Speciality_Text">
+                                {{ data.education }}
+                              </span>
+                            </em>
                           </li>
                           <li>
-                            <em>Specialist {{ data.specialty }}</em>
+                            <em
+                              ><span class="ti-pulse"></span> Specialist
+                              <span class="Doc_Speciality_Text">
+                                {{ data.specialty }}
+                              </span>
+                            </em>
                           </li>
-                          <li>
+                          <!-- <li>
                             <span class="dc-stars"><span></span></span
                             ><em>2100 Feedback</em>
-                          </li>
+                          </li> -->
                         </ul>
                       </div>
                       <div class="dc-doclocation">

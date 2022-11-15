@@ -34,7 +34,7 @@ export class DoctorListComponent implements OnInit {
     this._Service.GetDocData().subscribe((res) => {
       //*  If API Response Is "200"
       if (res.status == 200) {
-        this.Loading = true;
+        this.Loading = false;
         this.DocArray = res.body.data;
       }
     });

@@ -695,6 +695,7 @@ router.get("/api/v1/doc-list", async (req, res) => {
         specialty: 1,
         isVerified: 1,
         SuperExperienced: 1,
+        availability: 1,
       }
     );
 
