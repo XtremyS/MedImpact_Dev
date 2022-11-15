@@ -63,14 +63,30 @@
 </ng-container>
 
 <!--* Registration Success Alert  -->
-<ng-container *ngIf="Registered">
+<ng-container *ngIf="RegisteredSuccess">
   <div class="Alert_Div_Parent">
     <div class="Alert_Text_Parent_Div">
       <span class="Alert_Text">Registered Successfully!</span>
     </div>
     <div class="Alert_Icon_Parent_Div">
       <mat-icon
-        [ngClass]="Registered == true ? 'LoginSuccess' : 'Alert_Icon'"
+        [ngClass]="RegisteredSuccess == true ? 'LoginSuccess' : 'Alert_Icon'"
+        class="Alert_Icon"
+        ><span class="fa fa-check-circle"></span
+      ></mat-icon>
+    </div>
+  </div>
+</ng-container>
+
+<!--* Availability Update Alert  -->
+<ng-container *ngIf="AvailabilityUpdated">
+  <div class="Alert_Div_Parent">
+    <div class="Alert_Text_Parent_Div">
+      <span class="Alert_Text">Availability Days Updated Successfully</span>
+    </div>
+    <div class="Alert_Icon_Parent_Div">
+      <mat-icon
+        [ngClass]="AvailabilityUpdated == true ? 'LoginSuccess' : 'Alert_Icon'"
         class="Alert_Icon"
         ><span class="fa fa-check-circle"></span
       ></mat-icon>

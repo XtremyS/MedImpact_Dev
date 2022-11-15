@@ -12,9 +12,13 @@ export class AlertDialogBoxComponent implements OnInit {
   Logout: boolean = false;
   BookingRequest: boolean = false;
   Registered: boolean = false;
+  RegisteredSuccess: boolean = false;
+  AvailabilityUpdated: boolean = false;
 
   constructor(@Inject(MAT_SNACK_BAR_DATA) public data: string) {}
   ngOnInit(): void {
+    console.log(this.data, 'DATA FROM INPUT ALERT');
+
     if (this.data == 'Not_Authenticated') {
       this.NotLoggedIn = true;
     } else if (this.data == 'Authenticated') {
@@ -23,8 +27,10 @@ export class AlertDialogBoxComponent implements OnInit {
       this.Logout = true;
     } else if (this.data == 'booking_request_success') {
       this.BookingRequest = true;
-    } else if (this.data == 'Registered') {
-      this.Registered = true;
+    } else if (this.data == 'Registered Successfully') {
+      this.RegisteredSuccess = true;
+    } else if (this.data == 'Availability Updated') {
+      this.AvailabilityUpdated = true;
     }
   }
 }

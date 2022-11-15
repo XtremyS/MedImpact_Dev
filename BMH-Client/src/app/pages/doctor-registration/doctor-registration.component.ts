@@ -51,7 +51,7 @@ export class DoctorRegistrationComponent implements OnInit {
   ];
 
   constructor(
-    private Route: Router,
+    private _Route: Router,
     private _FormBuilder: FormBuilder,
     private _Service: Service,
     private _titleService: Title,
@@ -204,10 +204,14 @@ export class DoctorRegistrationComponent implements OnInit {
 
     this._Service.RegisterDoctor(this.ImgFormData).subscribe(async (res) => {
       if (res.status === 201) {
-        //* Registered Alert Triggered
-        this._ModalService.OpenAlertDialog('Registered');
+        //* If Doctor Register successfully Triggered Modal
+        this._ModalService.OpenAlertDialog('Registered Successfully');
+
+        //* Routing User To Home Page After 2 Second
+        setTimeout(() => {
+          this._Route.navigate(['/']);
+        }, 2000);
       }
-      console.log(res);
     });
   }
 }

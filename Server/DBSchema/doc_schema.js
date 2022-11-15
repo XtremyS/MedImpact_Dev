@@ -26,6 +26,24 @@ const UserSchema = new mongoose.Schema({
   img: { type: String, required: true },
   password: { type: String, required: true },
   cpassword: { type: String, required: true },
+  availability: [
+    {
+      week_day1: { type: String },
+      week_day1_status: { type: Number },
+      week_day2: { type: String },
+      week_day2_status: { type: Number },
+      week_day3: { type: String },
+      week_day3_status: { type: Number },
+      week_day4: { type: String },
+      week_day4_status: { type: Number },
+      week_day5: { type: String },
+      week_day5_status: { type: Number },
+      week_day6: { type: String },
+      week_day6_status: { type: Number },
+      week_day7: { type: String },
+      week_day7_status: { type: Number },
+    },
+  ],
   appointments: [
     {
       patients_id: { type: String, required: true },

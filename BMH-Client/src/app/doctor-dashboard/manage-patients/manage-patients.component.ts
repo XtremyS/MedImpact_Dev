@@ -13,7 +13,7 @@ import { Service } from 'src/services/service.service';
 })
 export class ManagePatientsComponent implements OnInit {
   PageTitle = 'MedImpact | Admin Manage Patients';
-  AppointmentsArray: any;
+  AppointmentsArray: any[] = [];
   DoctorId: any;
   BtnsIsVisible: boolean = true;
   DetailsObj: Object = {
@@ -43,7 +43,7 @@ export class ManagePatientsComponent implements OnInit {
   }
 
   Approve(PatientsData: any, Status: string) {
-    console.log(Status);
+    // console.log(Status);
     this.BtnsIsVisible = false;
 
     //* Sending Patients Data To Backend
@@ -51,6 +51,7 @@ export class ManagePatientsComponent implements OnInit {
       this.DetailsObj = {
         _id: PatientsData._id,
         appointment_status: 1,
+        patients_id: PatientsData.patients_id,
       };
     }
 
@@ -58,6 +59,7 @@ export class ManagePatientsComponent implements OnInit {
       this.DetailsObj = {
         _id: PatientsData._id,
         appointment_status: 0,
+        patients_id: PatientsData.patients_id,
       };
     }
 

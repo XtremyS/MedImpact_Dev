@@ -32,6 +32,9 @@ export class Service {
   //! BOOKING DOCTOR APPOINTMENT API
   UrlBookAppointment = '/api/v1/book_appointment';
 
+  //! DOCTOR AVAILABILITY API
+  UrlAvailability = '/api/v1/update_availability';
+
   //! LOGOUT APIS
   LogOutUrl = '/api/v1/logout';
 
@@ -118,6 +121,11 @@ export class Service {
     });
   }
 
+  UpdateDoctorAvailability(Data: any): Observable<any> {
+    return this.http.patch(this.UrlAvailability, Data, {
+      observe: 'response',
+    });
+  }
   //! LOGOUT FUNCTION
   LogOut(Data: any): Observable<any> {
     return this.http.get(this.LogOutUrl, Data);

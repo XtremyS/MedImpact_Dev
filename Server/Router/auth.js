@@ -33,7 +33,8 @@ router.get("/", async (req, res) => {
   res.status(200).json("Server Started!");
 });
 
-//*  POST DOCTORS REGISTRATION
+//! *********************************** REGISTRATION API ********************************** !\\
+//*  DOCTORS REGISTRATION
 let ImgUrl = "";
 router.post(
   "/api/v1/doctors-registration",
@@ -117,6 +118,22 @@ router.post(
               specialty,
               isVerified: false,
               SuperExperienced: false,
+              availability: {
+                week_day1: "Sun",
+                week_day1_status: 0,
+                week_day2: "Mon",
+                week_day2_status: 1,
+                week_day3: "Tue",
+                week_day3_status: 1,
+                week_day4: "Wed",
+                week_day4_status: 1,
+                week_day5: "Thu",
+                week_day5_status: 1,
+                week_day6: "Fri",
+                week_day6_status: 1,
+                week_day7: "Sat",
+                week_day7_status: 1,
+              },
               password,
               cpassword,
               img: ImgUrl,
@@ -125,7 +142,7 @@ router.post(
             //* HASHING PASSWORD HERE FROM SCHEMA.JS THROUGH MIDDLEWARE
 
             //* Generating & Setting Auth Token When Creating New User
-            const token = await UserLogin.generateAuthToken();
+            const token = await Doctors.generateAuthToken();
 
             //* SAVING DATA IN DB
 
@@ -142,94 +159,74 @@ router.post(
   }
 );
 
-//* POST PATIENTS REGISTRATIONS
+//* PATIENTS REGISTRATIONS
 router.post(
   "/api/v1/patients-registration",
-  fileUpload({
-    useTempFiles: true,
-  }),
+
   async (req, res) => {
     try {
-      const file = req.files.img;
-      CloudinaryFileUpload.uploader.upload(
-        file.tempFilePath,
-        async (error, response) => {
-          try {
-            ImgUrl = response.secure_url;
-            //* DESTRUCTURED USER FILLED DATA
-            const {
-              full_name,
-              gender,
-              email,
-              age,
-              phone,
-              password,
-              cpassword,
-            } = req.body;
+      //* DESTRUCTURED USER FILLED DATA
+      const { full_name, gender, email, age, phone, password, cpassword } =
+        req.body;
 
-            //* CHECKING IF THE SAME EMAIL IS REGISTERED IN OTHER COLLECTION IN DATABASE
-            const DoctorEmailExists = await Doctor.findOne({ email: email });
-            const LabEmailExists = await Lab.findOne({ email: email });
+      //* CHECKING IF THE SAME EMAIL IS REGISTERED IN OTHER COLLECTION IN DATABASE
+      const DoctorEmailExists = await Doctor.findOne({ email: email });
+      const LabEmailExists = await Lab.findOne({ email: email });
 
-            if (DoctorEmailExists || LabEmailExists) {
-              return res.status(422).json({ error: "Email Already In Use!" });
-            }
+      if (DoctorEmailExists || LabEmailExists) {
+        return res.status(422).json({ error: "Email Already In Use!" });
+      }
 
-            //* CHECKING IF THE FIELDS ARE EMPTY OR NOT
-            if (
-              !age ||
-              !full_name ||
-              !gender ||
-              !email ||
-              !phone ||
-              !password ||
-              !cpassword
-            ) {
-              return res.status(422).json({ error: "Fields Cannot Be Empty!" });
-            }
-            try {
-              //* USER DETAILS WHICH EMAILS MATCH IN DB
-              const userExist = await Patient.findOne({ email: email });
-              //* CHECKING PASS AND C PASS
-              if (password !== cpassword) {
-                return res
-                  .status(400)
-                  .json({ error: "Password & Confirm Password Mismatch!" });
-              } else if (userExist) {
-                //*  CHECKING EMAIL ALREADY EXIST IN DB
-                return res.status(422).json({ error: "Email Already Exist!" });
-              } else {
-                //* IF USER NOT EXIST CREATING NEW USER IN DB
-                const Patients = new Patient({
-                  full_name,
-                  gender,
-                  email,
-                  phone,
-                  age,
-                  password,
-                  img: ImgUrl,
-                  cpassword,
-                });
+      //* CHECKING IF THE FIELDS ARE EMPTY OR NOT
+      if (
+        !age ||
+        !full_name ||
+        !gender ||
+        !email ||
+        !phone ||
+        !password ||
+        !cpassword
+      ) {
+        return res.status(422).json({ error: "Fields Cannot Be Empty!" });
+      }
+      try {
+        //* USER DETAILS WHICH EMAILS MATCH IN DB
+        const userExist = await Patient.findOne({ email: email });
+        //* CHECKING PASS AND C PASS
+        if (password !== cpassword) {
+          return res
+            .status(400)
+            .json({ error: "Password & Confirm Password Mismatch!" });
+        } else if (userExist) {
+          //*  CHECKING EMAIL ALREADY EXIST IN DB
+          return res.status(422).json({ error: "Email Already Exist!" });
+        } else {
+          //* IF USER NOT EXIST CREATING NEW USER IN DB
+          const Patients = new Patient({
+            full_name,
+            gender,
+            email,
+            phone,
+            age,
+            password,
+            img: ImgUrl,
+            cpassword,
+          });
 
-                //*  HASHING PASSWORD HERE FROM SCHEMA.JS THROUGH MIDDLEWARE
+          //*  HASHING PASSWORD HERE FROM SCHEMA.JS THROUGH MIDDLEWARE
 
-                //* Generating & Setting Auth Token When Creating New User
-                const token = await Patients.generateAuthToken();
+          //* Generating & Setting Auth Token When Creating New User
+          const token = await Patients.generateAuthToken();
 
-                //* SAVING DATA IN DB
-                await Patients.save();
+          //* SAVING DATA IN DB
+          await Patients.save();
 
-                //* SENDING RESPONSE
-                res.status(201).json({ response: "User Registered!" });
-              }
-            } catch (error) {
-              res.status(500).json({ error: error.message });
-            }
-          } catch (error) {
-            console.log(error, "ERROR OF CLOUDINARY");
-          }
+          //* SENDING RESPONSE
+          res.status(201).json({ response: "User Registered!" });
         }
-      );
+      } catch (error) {
+        res.status(500).json({ error: error.message });
+      }
     } catch (error) {
       console.log(error, "ERROR OF MAIN FUNC");
     }
@@ -595,6 +592,90 @@ router.post("/api/v1/login-pharmacy", async (req, res) => {
   }
 });
 
+//! *********************************************** OTHER APIS STARTS HERE ************************************************* !//
+
+//*  Doctor Availability
+router.patch("/api/v1/update_availability", Middleware, async (req, res) => {
+  try {
+    const DoctorObjId = req.rootUser._id;
+
+    const WeekDaysObjId = req.body._id;
+
+    const WeekDaySunday = req.body.week_day1;
+    const WeekDaySundayStatus = req.body.week_day1_status;
+
+    const WeekDayMonday = req.body.week_day2;
+    const WeekDayMondayStatus = req.body.week_day2_status;
+
+    const WeekDayTuesday = req.body.week_day3;
+    const WeekDayTuesdayStatus = req.body.week_day3_status;
+
+    const WeekDayWednesday = req.body.week_day4;
+    const WeekDayWednesdayStatus = req.body.week_day4_status;
+
+    const WeekDayThursday = req.body.week_day5;
+    const WeekDayThursdayStatus = req.body.week_day5_status;
+
+    const WeekDayFriday = req.body.week_day6;
+    const WeekDayFridayStatus = req.body.week_day6_status;
+
+    const WeekDaySaturday = req.body.week_day7;
+    const WeekDaySaturdayStatus = req.body.week_day7_status;
+
+    if (
+      WeekDaySundayStatus == null ||
+      WeekDayMondayStatus == null ||
+      WeekDayTuesdayStatus == null ||
+      WeekDayWednesdayStatus == null ||
+      WeekDayThursdayStatus == null ||
+      WeekDayFridayStatus == null ||
+      WeekDaySaturdayStatus == null
+    ) {
+      return res
+        .status(400)
+        .json({ response: "Please Select All Days Availability!" });
+    } else {
+      try {
+        const UpdateDoctor = await Doctor.updateOne(
+          {
+            _id: DoctorObjId, //* Doctor ID
+            availability: {
+              $elemMatch: { _id: WeekDaysObjId }, //* Availability Array Object ID
+            },
+          },
+
+          {
+            $set: {
+              "availability.$.week_day1_status": WeekDaySundayStatus,
+              "availability.$.week_day2_status": WeekDayMondayStatus,
+              "availability.$.week_day3_status": WeekDayTuesdayStatus,
+              "availability.$.week_day4_status": WeekDayWednesdayStatus,
+              "availability.$.week_day5_status": WeekDayThursdayStatus,
+              "availability.$.week_day6_status": WeekDayFridayStatus,
+              "availability.$.week_day7_status": WeekDaySaturdayStatus,
+            },
+          }
+        );
+
+        //* Sending Response
+        if (UpdateDoctor.modifiedCount == 1) {
+          return res
+            .status(201)
+            .json({ response: "Availability updated successfully!" });
+        } else {
+          return res
+            .status(400)
+            .json({ error: "Failed to update availability!" });
+        }
+      } catch (error) {
+        console.log(error, "Something Went Wrong!");
+      }
+    }
+  } catch (error) {
+    console.log(error, "Something Went Wrong!");
+  }
+});
+
 //* GET LAB DATA
 router.get("/api/v1/doc-list", async (req, res) => {
   try {
@@ -760,16 +841,16 @@ router.patch(
   async (req, res) => {
     try {
       //*  Getting User Id And Patients Array Id From Front End To Update Patient Status
-      const Id = req.rootUser._id;
+      const DoctorObjId = req.rootUser._id;
 
       const PatientsAppointmentObjId = req.body._id;
       const PatientAppointmentStatus = req.body.appointment_status;
       const PatientsId = req.body.patients_id;
 
       //* Updating Specific User With Id
-      const UpdateDoctor = await Doctor.updateOne(
+      const UpdateUser = await Doctor.updateOne(
         {
-          _id: Id, //* Doctor ID
+          _id: DoctorObjId, //* Doctor ID
           appointments: {
             $elemMatch: { _id: PatientsAppointmentObjId }, //* Patients Object ID
           },
@@ -800,10 +881,11 @@ router.patch(
           },
         }
       );
+
       //* SENDING RESPONSE
-      if (UpdateDoctor.modifiedCount == 1 && UpdatePatient.modifiedCount == 1) {
+      if (UpdateUser.modifiedCount == 1 && UpdatePatient.modifiedCount == 1) {
         res.status(200).json({ response: "Appointment Status Updated!" });
-      } else if (UpdateDoctor.modifiedCount == 0) {
+      } else if (UpdateUser.modifiedCount == 0) {
         res
           .status(304)
           .json({ response: "Appointment Status Already Updated!" });
@@ -815,7 +897,6 @@ router.patch(
     }
   }
 );
-
 //*  Get Appointments Data Of Doctor To Get All Appointments DoctorsDetailsSubject
 router.get("/api/v1/appointments", Middleware, (req, res) => {
   let UserObject = {
@@ -850,8 +931,13 @@ router.get("/api/v1/get_user_data", Middleware, (req, res) => {
     phone: req.rootUser.phone,
     age: req.rootUser.age,
     email: req.rootUser.email,
+    city: req.rootUser.city,
+    state: req.rootUser.state,
+    country: req.rootUser.country,
     address: req.rootUser.address,
-    tokens: req.rootUser.tokens,
+    availability: req.rootUser.availability,
+    isVerified: req.rootUser.isVerified,
+    img: req.rootUser.img,
   };
 
   res.send(UserObject);
